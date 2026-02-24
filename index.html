@@ -121,6 +121,113 @@ body{font-family:'Crimson Text',Georgia,serif;background:var(--parch);color:var(
 .overlay.active{display:flex;}
 /* Badge skill assassin */
 .assassin-skill-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;background:rgba(192,57,43,.2);border:1px solid var(--red2);color:var(--red);margin-top:6px;}
+
+/* ═══════════════════════════════════════════════════
+   NIGHT SCREEN — FULL PURPLE / IMMERSIVE DARK MODE
+═══════════════════════════════════════════════════ */
+.screen-night{
+  background:linear-gradient(160deg,#0d0520 0%,#160a30 45%,#0a1230 100%) !important;
+  padding:0 !important;
+}
+.night-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  padding:28px 16px 72px;width:100%;min-height:100vh;
+  background:
+    radial-gradient(ellipse at 15% 10%,rgba(140,60,255,.2) 0%,transparent 50%),
+    radial-gradient(ellipse at 85% 85%,rgba(80,30,160,.25) 0%,transparent 50%);
+}
+.night-stars{
+  font-family:'Cinzel',serif;font-size:12px;letter-spacing:8px;
+  color:rgba(200,160,255,.35);text-align:center;margin-bottom:8px;
+  animation:twinkle 3s ease-in-out infinite alternate;
+}
+@keyframes twinkle{from{opacity:.35;}to{opacity:.7;}}
+.night-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(26px,8vw,42px);font-weight:900;
+  color:#d4a8ff;text-align:center;line-height:1.2;
+  text-shadow:0 0 40px rgba(180,100,255,.7),0 0 80px rgba(140,60,255,.3),0 3px 12px rgba(0,0,0,.6);
+  margin:4px 0 10px;letter-spacing:3px;
+}
+.night-subtitle{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;
+  color:rgba(180,130,255,.65);text-transform:uppercase;
+  text-align:center;margin-bottom:24px;
+}
+.night-card{
+  background:rgba(25,8,60,.82);
+  border:1.5px solid rgba(160,100,255,.35);
+  border-radius:18px;padding:20px 18px;
+  width:100%;max-width:420px;
+  box-shadow:0 6px 40px rgba(100,40,200,.25),inset 0 1px 0 rgba(200,150,255,.07);
+  margin-bottom:18px;
+}
+.night-card-label{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;
+  color:#b080ff;text-transform:uppercase;margin-bottom:12px;
+  border-bottom:1px solid rgba(160,100,255,.2);padding-bottom:8px;
+}
+.night-instr-text{font-size:16px;line-height:2;color:#ede0ff;font-weight:500;}
+.night-instr-text b{color:#f2daff;font-weight:700;}
+.night-instr-text em{color:#c8a0ff;font-style:italic;}
+.night-instr-sub{
+  font-size:13px;color:rgba(180,140,255,.65);font-style:italic;
+  margin-top:10px;line-height:1.7;border-top:1px solid rgba(160,100,255,.15);padding-top:8px;
+}
+.btn-night{
+  background:rgba(70,30,150,.7);color:#ede0ff;
+  border:1.5px solid rgba(160,100,255,.5);
+  width:100%;padding:15px;border-radius:13px;
+  font-family:'Cinzel',serif;font-size:11px;
+  letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;transition:all .25s;margin:5px 0;
+  box-shadow:0 4px 20px rgba(100,40,200,.3);font-weight:700;
+}
+.btn-night:active{transform:scale(.97);background:rgba(100,55,200,.8);}
+.btn-skip-night{
+  width:100%;padding:13px;border-radius:12px;
+  background:rgba(50,20,90,.45);
+  border:1px solid rgba(120,70,200,.28);
+  color:rgba(170,130,255,.55);
+  font-family:'Cinzel',serif;font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;margin:4px 0;
+}
+.btn-skip-night:active{transform:scale(.97);}
+/* Night overlay */
+.overlay-night{
+  background:linear-gradient(160deg,#0d0520,#1a0a35) !important;
+  overflow-y:auto;align-items:flex-start !important;padding:30px 16px !important;
+}
+.night-overlay-inner{width:100%;max-width:400px;margin:0 auto;}
+.night-role-name{
+  font-family:'Cinzel',serif;font-size:20px;color:#d4a8ff;
+  margin:8px 0 3px;text-shadow:0 0 20px rgba(180,100,255,.5);font-weight:700;
+}
+.night-player-name{font-size:14px;color:rgba(180,140,255,.65);font-family:'Crimson Text',serif;}
+.night-desc-box{
+  background:rgba(25,8,60,.85);border:1.5px solid rgba(160,100,255,.3);
+  border-radius:14px;padding:16px;margin-bottom:16px;
+}
+.night-desc-text{font-size:15px;color:#ede0ff;line-height:1.85;}
+.night-sel-indicator{
+  margin:10px 0;padding:13px 16px;
+  background:rgba(160,100,255,.15);border:1.5px solid #b080ff;
+  border-radius:12px;text-align:center;color:#ede0ff;font-size:14px;
+  box-shadow:0 0 20px rgba(160,100,255,.2);
+}
+/* Night target buttons */
+.night-target-btn{
+  background:rgba(25,8,60,.8) !important;
+  border-color:rgba(140,80,220,.4) !important;
+  color:#ede0ff !important;
+}
+.night-target-btn.selected{
+  border-color:#c07ffd !important;
+  background:rgba(80,35,170,.65) !important;
+  color:#fff !important;
+  box-shadow:0 0 0 3px rgba(192,127,253,.28),0 0 28px rgba(142,68,173,.35) !important;
+}
 </style>
 </head>
 <body>
@@ -293,35 +400,39 @@ body{font-family:'Crimson Text',Georgia,serif;background:var(--parch);color:var(
 </div>
 
 <!-- ██ NIGHT PHASE ██ -->
-<div class="screen" id="sc-night">
-<div class="w100 flex-col" style="background:linear-gradient(160deg,#05030f,#0a0520);min-height:100vh;padding:20px 14px;">
-  <div style="font-size:40px;text-align:center;margin:8px 0;">🌙</div>
-  <h1 style="font-family:'Cinzel Decorative',serif;font-size:20px;color:#c07ffd;text-align:center;margin-bottom:4px;">MALAM TIBA</h1>
-  <p style="font-size:11px;color:#8060b0;text-align:center;letter-spacing:3px;margin-bottom:16px;">SEMUA PEMAIN TUTUP MATA</p>
-  <div style="background:rgba(20,5,50,.85);border:1px solid rgba(142,68,173,.4);border-radius:14px;padding:18px;width:100%;max-width:400px;color:#e8d8ff;margin-bottom:14px;">
-    <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:#c07ffd;margin-bottom:10px;">📜 INSTRUKSI NARATOR</div>
-    <div style="font-size:15px;line-height:1.9;" id="night-instr"></div>
-    <div style="font-size:12px;color:#8060b0;font-style:italic;margin-top:8px;" id="night-sub"></div>
+<div class="screen screen-night" id="sc-night">
+<div class="night-wrap">
+  <!-- Stars decoration -->
+  <div class="night-stars">✦ &nbsp; ✧ &nbsp; ✦ &nbsp; ✧ &nbsp; ✦</div>
+  <div style="font-size:52px;text-align:center;margin:10px 0;filter:drop-shadow(0 0 18px rgba(200,150,255,.5));">🌙</div>
+  <h1 class="night-title">MALAM TIBA</h1>
+  <p class="night-subtitle">✦ SEMUA PEMAIN TUTUP MATA ✦</p>
+
+  <div class="night-card">
+    <div class="night-card-label">📜 INSTRUKSI NARATOR</div>
+    <div class="night-instr-text" id="night-instr"></div>
+    <div class="night-instr-sub" id="night-sub"></div>
   </div>
-  <div id="night-acts" style="width:100%;max-width:400px;"></div>
+
+  <div id="night-acts" style="width:100%;max-width:420px;"></div>
 </div>
 </div>
 
 <!-- ██ NIGHT ACTION OVERLAY ██ -->
-<div class="overlay" id="ov-night" style="background:rgba(5,2,18,.97);">
-<div style="width:100%;max-width:360px;">
-  <div style="text-align:center;margin-bottom:14px;">
-    <div style="font-size:34px;" id="na-icon"></div>
-    <div style="font-family:'Cinzel',serif;font-size:16px;color:#c07ffd;margin:4px 0;" id="na-rname"></div>
-    <div style="font-size:13px;color:#8060b0;" id="na-pname"></div>
+<div class="overlay overlay-night" id="ov-night">
+<div class="night-overlay-inner">
+  <div style="text-align:center;margin-bottom:16px;">
+    <div style="font-size:46px;filter:drop-shadow(0 0 14px rgba(200,150,255,.6));" id="na-icon"></div>
+    <div class="night-role-name" id="na-rname"></div>
+    <div class="night-player-name" id="na-pname"></div>
   </div>
-  <div style="background:rgba(255,255,255,.06);border:1px solid rgba(142,68,173,.4);border-radius:12px;padding:14px;margin-bottom:12px;">
-    <div style="font-size:14px;color:#e8d8ff;line-height:1.75;" id="na-desc"></div>
+  <div class="night-desc-box">
+    <div class="night-desc-text" id="na-desc"></div>
   </div>
   <div id="na-targets"></div>
-  <div id="na-sel-indicator" style="display:none;margin:10px 0;padding:10px 14px;background:rgba(192,127,253,.15);border:1.5px solid #c07ffd;border-radius:10px;text-align:center;color:#e8d8ff;font-size:14px;"></div>
+  <div id="na-sel-indicator" class="night-sel-indicator" style="display:none;"></div>
   <button class="btn btn-purple mt8" id="na-confirm" disabled onclick="nightConfirm()">✅ KONFIRMASI PILIHAN</button>
-  <button class="btn" style="background:rgba(255,255,255,.05);color:#604880;margin-top:4px;" onclick="nightSkip()">⏩ SKIP — Tidak Pakai Kemampuan</button>
+  <button class="btn-skip-night" onclick="nightSkip()">⏩ SKIP — Tidak Pakai Kemampuan</button>
 </div>
 </div>
 
