@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Realm of Light</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<!-- ═══ DATA FILES — Edit file-file ini untuk update konten ═══ -->
+<!-- Karakter & Peran: edit rol-data-characters.js             -->
+<!-- Bank Soal:        edit rol-data-questions.js              -->
+<script src="rol-data-characters.js"></script>
+<script src="rol-data-questions.js"></script>
+
+<style>
+:root{
+  --parch:#fdf8ee;--gold:#c9940a;--gold2:#e8b020;--gold3:#7a5500;
+  --ink:#2a1800;--ink2:#4a3000;--ink3:#7a5a18;
+  --red:#8b1a1a;--red2:#c0392b;--green:#1a5c2a;--green2:#27ae60;
+  --blue:#1a3a6b;--blue2:#2980b9;--purple2:#8e44ad;
+  --shadow:rgba(44,26,0,.14);--border:rgba(201,148,10,.28);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Crimson Text',Georgia,serif;background:var(--parch);color:var(--ink);min-height:100vh;overflow-x:hidden;user-select:none;
+  background-image:radial-gradient(ellipse at 15% 10%,rgba(230,180,30,.1) 0%,transparent 45%),radial-gradient(ellipse at 85% 90%,rgba(200,148,10,.08) 0%,transparent 45%);}
+.screen{position:relative;z-index:1;min-height:100vh;display:none;flex-direction:column;align-items:center;padding:16px 14px 48px;animation:fadeUp .4s ease;}
+.screen.active{display:flex;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.game-title{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,6vw,34px);font-weight:900;text-align:center;line-height:1.2;color:var(--gold3);text-shadow:1px 2px 5px rgba(139,100,0,.2);margin:6px 0;}
+.game-subtitle{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--ink3);text-transform:uppercase;text-align:center;}
+.card{background:linear-gradient(140deg,rgba(255,251,236,.98),rgba(247,234,198,.96));border:1px solid var(--border);border-radius:14px;padding:18px;width:100%;max-width:440px;box-shadow:0 3px 18px var(--shadow),inset 0 1px 0 rgba(255,255,255,.9);position:relative;overflow:hidden;margin:6px 0;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);}
+.card-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--gold3);text-transform:uppercase;margin-bottom:12px;text-align:center;}
+.btn{width:100%;padding:14px;border:none;border-radius:11px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .2s;text-transform:uppercase;margin:5px 0;position:relative;overflow:hidden;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(135deg,#6a4800,#d4a017,#6a4800);color:#fff8e7;box-shadow:0 3px 14px rgba(139,100,0,.32);}
+.btn-danger{background:linear-gradient(135deg,#6b0f0f,#c0392b,#6b0f0f);color:#ffe8e8;box-shadow:0 3px 12px rgba(139,26,26,.3);}
+.btn-success{background:linear-gradient(135deg,#0f3d1a,#27ae60,#0f3d1a);color:#d8ffe0;box-shadow:0 3px 12px rgba(39,174,96,.3);}
+.btn-ghost{background:rgba(184,134,11,.09);color:var(--ink2);border:1.5px solid var(--border);}
+.btn-purple{background:linear-gradient(135deg,#3a0f5c,#8e44ad,#3a0f5c);color:#f0d8ff;}
+.btn-night{background:rgba(80,40,140,.35);color:#e8d8ff;border:1.5px solid rgba(142,68,173,.5);width:100%;padding:14px;border-radius:11px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin:5px 0;}
+.btn-night:active{transform:scale(.97);background:rgba(80,40,140,.5);}
+.btn-sm{padding:9px 12px;font-size:10px;width:auto;margin:3px;}
+.input-field{width:100%;padding:12px 14px;background:rgba(255,252,240,.92);border:1.5px solid var(--border);border-radius:9px;color:var(--ink);font-family:'Crimson Text',serif;font-size:15px;outline:none;transition:border-color .2s;margin:4px 0;}
+.input-field:focus{border-color:var(--gold2);}
+.input-field::placeholder{color:var(--ink3);opacity:.6;}
+.player-item{display:flex;align-items:center;gap:10px;padding:11px 13px;background:rgba(255,252,235,.82);border-radius:10px;margin:5px 0;border:1px solid rgba(184,134,11,.18);}
+.player-num{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold3),var(--gold2));display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:#fff8e7;flex-shrink:0;}
+.player-name-text{flex:1;font-size:15px;}
+.player-dead{opacity:.4;text-decoration:line-through;}
+.role-card{border-radius:18px;padding:22px 18px;text-align:center;width:100%;max-width:300px;margin:0 auto;border:2px solid;}
+.role-card.knight{background:linear-gradient(160deg,#e8f4ff,#c5dff5);border-color:#2980b9;}
+.role-card.wizard{background:linear-gradient(160deg,#f0e8ff,#d5c5f5);border-color:#8e44ad;}
+.role-card.healer{background:linear-gradient(160deg,#e8fff0,#c5f0d5);border-color:#27ae60;}
+.role-card.civilian{background:linear-gradient(160deg,#fdf6e3,#f5e9c8);border-color:#b8860b;}
+.role-card.assassin{background:linear-gradient(160deg,#ffe8e8,#f5c5c5);border-color:#c0392b;}
+.role-card.thief{background:linear-gradient(160deg,#fff3e8,#f5d5c5);border-color:#e67e22;}
+.role-card.trickster{background:linear-gradient(160deg,#f0fff0,#c5f0e0);border-color:#16a085;}
+.role-icon{font-size:54px;margin:8px 0;filter:drop-shadow(0 2px 6px rgba(0,0,0,.12));}
+.role-name{font-family:'Cinzel Decorative',serif;font-size:17px;font-weight:700;margin:6px 0;}
+.role-team{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:.7;}
+.role-ability{font-size:13px;line-height:1.7;padding:9px;background:rgba(255,255,255,.5);border-radius:8px;margin:7px 0;font-style:italic;color:var(--ink2);}
+.role-win{font-size:12px;line-height:1.5;padding:8px;background:rgba(0,0,0,.05);border-radius:7px;margin-top:7px;}
+.win-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;opacity:.6;display:block;margin-bottom:3px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-family:'Cinzel',serif;letter-spacing:1px;}
+.tag-hero{background:rgba(41,128,185,.15);border:1px solid #2980b9;color:#1a3a6b;}
+.tag-villain{background:rgba(192,57,43,.15);border:1px solid #c0392b;color:#6b0f0f;}
+.tag-civ{background:rgba(184,134,11,.15);border:1px solid #b8860b;color:#5c3e00;}
+.tag-anti{background:rgba(22,160,133,.15);border:1px solid #16a085;color:#0a4a3a;}
+.mission-card{background:linear-gradient(135deg,#fff8e7,#fdf0cc);border:2px solid var(--gold2);border-radius:15px;padding:18px;text-align:center;margin:10px 0;}
+.mission-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.mission-badge.bible{background:rgba(41,128,185,.15);color:#1a3a6b;border:1px solid #2980b9;}
+.mission-badge.find{background:rgba(39,174,96,.15);color:#1a5c2a;border:1px solid #27ae60;}
+.mission-badge.verbal{background:rgba(142,68,173,.15);color:#4a1a6b;border:1px solid #8e44ad;}
+.mission-badge.physical{background:rgba(230,126,34,.15);color:#5c2500;border:1px solid #e67e22;}
+.mission-q{font-size:16px;line-height:1.75;color:var(--ink);margin:10px 0;font-weight:600;}
+.mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.mc-btn{padding:10px 8px;border-radius:8px;border:1.5px solid var(--border);background:rgba(255,252,235,.9);color:var(--ink2);font-family:'Crimson Text',serif;font-size:14px;cursor:pointer;transition:all .2s;text-align:left;width:100%;}
+.mc-btn.selected{border-color:var(--gold2);background:rgba(212,160,23,.18);color:var(--ink);font-weight:600;}
+.mc-btn.correct{border-color:var(--green2);background:rgba(39,174,96,.18);color:var(--green);}
+.mc-btn.wrong{border-color:var(--red2);background:rgba(192,57,43,.15);color:var(--red);}
+.nar-panel{background:linear-gradient(135deg,#261400,#442800);border-radius:15px;padding:18px;color:#fdf6e3;margin:8px 0;width:100%;max-width:440px;}
+.nar-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#d4a017;margin-bottom:8px;}
+.nar-text{font-size:15px;line-height:1.9;}
+.nar-sub{font-size:12px;color:#b8960b;font-style:italic;margin-top:8px;line-height:1.6;}
+.vote-btn{padding:14px;border-radius:10px;border:2px solid var(--border);background:rgba(255,252,235,.85);color:var(--ink);font-family:'Crimson Text',serif;font-size:15px;cursor:pointer;transition:all .2s;width:100%;margin:4px 0;display:flex;align-items:center;gap:10px;}
+.vote-btn.voted{border-color:var(--red2);background:rgba(192,57,43,.12);}
+.night-target-btn{padding:14px;border-radius:10px;border:2.5px solid rgba(142,68,173,.35);background:rgba(20,8,45,.6);color:#d8c8ff;font-family:'Crimson Text',serif;font-size:16px;cursor:pointer;transition:all .2s;width:100%;margin:5px 0;display:flex;align-items:center;gap:12px;}
+.night-target-btn:active{transform:scale(.97);}
+.night-target-btn.selected{border-color:#c07ffd !important;background:rgba(100,50,180,.5) !important;color:#fff !important;box-shadow:0 0 0 3px rgba(192,127,253,.35),0 0 20px rgba(142,68,173,.4) !important;}
+.night-target-btn .check-icon{width:24px;height:24px;border-radius:50%;border:2px solid rgba(192,127,253,.4);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .2s;}
+.night-target-btn.selected .check-icon{background:#c07ffd;border-color:#c07ffd;color:#2a0050;}
+.vote-bar{margin:7px 0;}
+.vote-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px;}
+.vote-bar-bg{background:rgba(0,0,0,.08);border-radius:4px;height:9px;overflow:hidden;}
+.vote-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--red),var(--red2));transition:width .8s ease;}
+.q-dot{width:34px;height:34px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(255,252,235,.7);transition:all .4s;}
+.q-dot.pass{border-color:var(--green2);background:rgba(39,174,96,.15);}
+.q-dot.fail{border-color:var(--red2);background:rgba(192,57,43,.15);}
+.q-dot.cur{border-color:var(--gold2);background:rgba(212,160,23,.15);animation:pdot 2s ease-in-out infinite;}
+@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(212,160,23,.4);}50%{box-shadow:0 0 0 8px rgba(212,160,23,0);}}
+.result-big{font-size:68px;text-align:center;animation:popIn .5s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes popIn{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+.timer-display{font-family:'Cinzel Decorative',serif;font-size:48px;text-align:center;color:var(--gold3);line-height:1;margin:8px 0;}
+.timer-display.urgent{color:var(--red2);animation:pulse .5s ease-in-out infinite alternate;}
+@keyframes pulse{from{transform:scale(1);}to{transform:scale(1.06);}}
+.team-sel-btn{padding:12px 14px;border-radius:10px;border:2px solid var(--border);background:rgba(255,252,235,.85);color:var(--ink);font-family:'Crimson Text',serif;font-size:15px;cursor:pointer;transition:all .2s;width:100%;margin:4px 0;display:flex;align-items:center;gap:10px;}
+.team-sel-btn.selected{border-color:var(--gold2);background:rgba(212,160,23,.18);color:var(--ink);font-weight:600;}
+.team-sel-btn.selected::before{content:'✓ ';}
+.cnt-btn{padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--ink3);font-family:'Cinzel',serif;font-size:12px;cursor:pointer;transition:all .2s;margin:3px;}
+.cnt-btn.sel{border-color:var(--gold2);color:var(--gold3);background:rgba(212,160,23,.12);}
+.divider{height:1px;background:rgba(184,134,11,.2);margin:12px 0;}
+.w100{width:100%;max-width:440px;}
+.flex-col{display:flex;flex-direction:column;align-items:center;}
+.mt8{margin-top:8px;}.mt14{margin-top:14px;}
+.priv-lock{font-size:36px;text-align:center;margin:8px 0;}
+.phase-banner{width:100%;padding:9px 14px;background:linear-gradient(90deg,transparent,rgba(184,134,11,.15),transparent);border-top:1px solid rgba(184,134,11,.25);border-bottom:1px solid rgba(184,134,11,.25);text-align:center;font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--gold3);text-transform:uppercase;margin:12px 0;}
+.notif{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);border:1px solid var(--gold2);border-radius:10px;padding:12px 18px;font-size:13px;color:#fdf6e3;z-index:1000;max-width:88vw;text-align:center;display:none;animation:slideUp .3s ease;}
+@keyframes slideUp{from{transform:translateX(-50%) translateY(16px);opacity:0;}to{transform:translateX(-50%) translateY(0);opacity:1;}}
+.overlay{position:fixed;inset:0;background:rgba(18,10,0,.93);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;animation:fadeUp .3s ease;}
+.overlay.active{display:flex;}
+/* Badge skill assassin */
+.assassin-skill-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;background:rgba(192,57,43,.2);border:1px solid var(--red2);color:var(--red);margin-top:6px;}
+</style>
+</head>
+<body>
+
+<!-- ██ WELCOME ██ -->
+<div class="screen active" id="sc-welcome">
+<div class="w100 flex-col" style="justify-content:center;min-height:90vh;">
+  <span style="font-size:54px;text-align:center;display:block;filter:drop-shadow(0 3px 10px rgba(139,100,0,.3))">⚔️</span>
+  <p class="game-subtitle mt8">— A Biblical Fantasy RPG —</p>
+  <h1 class="game-title">REALM OF LIGHT</h1>
+  <div style="display:flex;align-items:center;gap:10px;width:100%;max-width:340px;margin:12px auto;">
+    <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);"></div>
+    <span style="color:var(--gold2);font-size:13px;">✦</span>
+    <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);"></div>
+  </div>
+  <p style="text-align:center;font-size:14px;color:var(--ink3);line-height:1.85;max-width:300px;margin-bottom:22px;">Satu di antara kalian adalah pengkhianat. Jawab firman Tuhan, temukan benda tersembunyi, dan ungkap kebenaran!</p>
+  <button class="btn btn-primary w100" onclick="goSetup()">⚔️ MULAI PETUALANGAN</button>
+  <button class="btn btn-ghost w100" onclick="showScreen('sc-guide')">📖 PANDUAN BERMAIN</button>
+  <p style="font-size:10px;color:var(--ink3);text-align:center;margin-top:16px;letter-spacing:1px;">5–30 PEMAIN · 1 NARATOR · 1 PERANGKAT</p>
+</div>
+</div>
+
+<!-- ██ GUIDE ██ -->
+<div class="screen" id="sc-guide">
+<div class="w100">
+  <h1 class="game-title" style="font-size:20px;">PANDUAN BERMAIN</h1>
+  <div class="card"><div class="card-title">🎭 Tim & Peran</div>
+    <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
+      <b>⚔️ HERO</b> — Knight · Wizard · Healer (punya kemampuan khusus)<br>
+      <b>👤 CIVILIAN</b> — Warga tanpa kemampuan. Menang bersama Hero.<br>
+      <b>🗡️ VILLAIN</b> — Assassin · Thief (musuh tersembunyi)<br>
+      <b>🃏 TRICKSTER</b> — Solo. Menang jika semua Villain lolos!
+    </div>
+  </div>
+  <div class="card"><div class="card-title">📱 Alur Permainan</div>
+    <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
+      <b>1. Pembagian Peran</b> — HP digilir tiap pemain. Lihat peranmu secara pribadi.<br>
+      <b>2. Pilih Perwakilan Misi</b> — Narator/diskusi pilih 2-3 orang sebagai Tim Misi.<br>
+      <b>3. Misi Rahasia</b> — Tiap anggota tim dapat soal berbeda (tema sama). Gagal/skip = sabotase!<br>
+      <b>4. Malam Hari</b> — Narator pandu karakter gunakan skill lewat HP.<br>
+      <b>5. Pagi & Voting</b> — Hasil malam diumumkan. Diskusi → eliminasi 1 orang.
+    </div>
+  </div>
+  <div class="card"><div class="card-title">🏆 Kondisi Menang</div>
+    <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
+      <b>Hero + Civilian</b> → Semua Villain dieliminasi<br>
+      <b>Villain</b> → Jumlah Villain ≥ Hero + Civilian yang hidup<br>
+      <b>Trickster</b> → Semua Villain masih hidup saat game berakhir<br>
+      <b>Trickster KALAH</b> → Jika ada Villain yang tereliminasi
+    </div>
+  </div>
+  <div class="card"><div class="card-title">⚡ Kemampuan Karakter</div>
+    <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
+      <b>⚔️ Knight</b> — Lindungi 1 orang (1x). Kebal Assassin 1x.<br>
+      <b>🔮 Wizard</b> — Intip peran 1 pemain (1x). Jika dibunuh Assassin → Assassin ikut mati!<br>
+      <b>💚 Healer</b> — Bangkitkan 1 pemain mati (1x). Aktif saat sudah ada korban!<br>
+      <b>🗡️ Assassin</b> — Bunuh 1 orang di malam hari.<br>
+      &nbsp;&nbsp;&nbsp;• 5–6 pemain: 1x &nbsp;• 7–10 pemain: 2x 🔥 &nbsp;• 11+ pemain: 1x<br>
+      <b>🥷 Thief</b> — Curi kemampuan 1 pemain hidup (1x).
+    </div>
+  </div>
+  <button class="btn btn-primary w100 mt14" onclick="showScreen('sc-welcome')">← KEMBALI</button>
+</div>
+</div>
+
+<!-- ██ SETUP ██ -->
+<div class="screen" id="sc-setup">
+<div class="w100">
+  <h1 class="game-title" style="font-size:20px;">SETUP PERMAINAN</h1>
+  <div class="card"><div class="card-title">Nama Narator / Host</div>
+    <input class="input-field" id="narrator-name" placeholder="Nama Narator" autocomplete="off">
+    <p style="font-size:11px;color:var(--ink3);margin-top:4px;text-align:center;">HP selalu di tangan Narator, digilir hanya saat diperlukan.</p>
+  </div>
+  <div class="card"><div class="card-title">Jumlah Pemain (tidak termasuk Narator)</div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;" id="count-sel"></div>
+  </div>
+  <div class="card" id="names-card" style="display:none;">
+    <div class="card-title">Nama Pemain</div>
+    <div id="player-inputs-list"></div>
+    <button class="btn btn-ghost mt8" onclick="clearSaved()" style="font-size:10px;padding:8px;">🗑 Hapus Nama Tersimpan</button>
+  </div>
+  <div id="assassin-info-setup" style="display:none;" class="card">
+    <div class="card-title">🗡️ INFO ASSASSIN</div>
+    <div id="assassin-info-text" style="font-size:13px;text-align:center;color:var(--ink2);line-height:1.8;"></div>
+  </div>
+  <button class="btn btn-primary w100" id="start-btn" style="display:none;" onclick="startGame()">⚔️ MULAI PERMAINAN</button>
+  <button class="btn btn-ghost w100" onclick="showScreen('sc-welcome')">← Kembali</button>
+</div>
+</div>
+
+<!-- ██ ROLE REVEAL ██ -->
+<div class="screen" id="sc-reveal">
+<div class="w100 flex-col">
+  <h1 class="game-title" style="font-size:20px;">PEMBAGIAN PERAN</h1>
+  <p style="font-size:13px;color:var(--ink3);text-align:center;margin-bottom:14px;">Gilirkan HP ke setiap pemain secara diam-diam</p>
+  <div id="rv-waiting" style="width:100%;max-width:300px;text-align:center;">
+    <div class="priv-lock">🔒</div>
+    <div id="rv-pname" style="font-family:'Cinzel',serif;font-size:20px;color:var(--gold3);margin:8px 0;"></div>
+    <p style="font-size:13px;color:var(--ink3);margin-bottom:16px;">Pastikan hanya kamu yang melihat layar ini!</p>
+    <button class="btn btn-primary" onclick="doReveal()">👁️ LIHAT PERANKU</button>
+  </div>
+  <div id="rv-card" style="width:100%;max-width:310px;display:none;">
+    <div id="rv-html"></div>
+    <button class="btn btn-primary mt14" onclick="nextReveal()">✅ MENGERTI – GILIR KE PEMAIN BERIKUTNYA</button>
+  </div>
+</div>
+</div>
+
+<!-- ██ NARRATOR DASHBOARD ██ -->
+<div class="screen" id="sc-nar">
+<div class="w100">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <div><div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--ink3);">RONDE</div>
+      <div style="font-family:'Cinzel Decorative',serif;font-size:22px;color:var(--gold3);" id="nd-round">1</div></div>
+    <div style="text-align:center;">
+      <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--ink3);margin-bottom:4px;">MISI</div>
+      <div style="display:flex;gap:4px;justify-content:center;" id="nd-quests"></div>
+    </div>
+    <div style="text-align:right;"><div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--ink3);">HIDUP</div>
+      <div style="font-family:'Cinzel Decorative',serif;font-size:22px;color:var(--green2);" id="nd-alive">—</div></div>
+  </div>
+  <div class="nar-panel">
+    <div class="nar-label">📜 Instruksi Narator</div>
+    <div class="nar-text" id="nd-instr"></div>
+    <div class="nar-sub" id="nd-sub"></div>
+  </div>
+  <div id="nd-acts" class="mt8"></div>
+  <div class="card mt8"><div class="card-title">STATUS PEMAIN</div><div id="nd-players"></div></div>
+  <div class="card mt8"><div class="card-title">📜 JURNAL</div>
+    <div id="game-log" style="font-size:12px;color:var(--ink3);max-height:100px;overflow-y:auto;line-height:1.9;"></div></div>
+</div>
+</div>
+
+<!-- ██ TEAM SELECTION ██ -->
+<div class="screen" id="sc-team">
+<div class="w100">
+  <h1 class="game-title" style="font-size:20px;">🗺️ PILIH TIM MISI</h1>
+  <div class="nar-panel">
+    <div class="nar-label">📜 Instruksi Narator</div>
+    <div class="nar-text" id="ts-instr">Diskusikan dan pilih 2–3 pemain sebagai tim misi.</div>
+    <div class="nar-sub" id="ts-sub"></div>
+  </div>
+  <div class="card mt8">
+    <div class="card-title" id="ts-count-label">PILIH 2–3 ANGGOTA TIM</div>
+    <div id="ts-players"></div>
+  </div>
+  <button class="btn btn-primary w100" id="ts-confirm" disabled onclick="confirmTeam()">⚔️ KONFIRMASI TIM</button>
+  <button class="btn btn-ghost w100" onclick="goNarrator('mission_start')">← Kembali</button>
+</div>
+</div>
+
+<!-- ██ MISSION SCREEN ██ -->
+<div class="screen" id="sc-mission">
+<div class="w100 flex-col">
+  <div class="priv-lock">🔒</div>
+  <div id="ms-pname" style="font-family:'Cinzel',serif;font-size:20px;color:var(--gold3);text-align:center;margin:4px 0;"></div>
+  <p style="font-size:12px;color:var(--ink3);text-align:center;margin-bottom:14px;">Giliran kamu! Jangan tunjukkan ke orang lain.</p>
+  <div id="ms-waiting" style="width:100%;max-width:320px;text-align:center;">
+    <button class="btn btn-primary w100" onclick="showMission()">🗺️ BUKA MISIKU</button>
+  </div>
+  <div id="ms-active" style="width:100%;max-width:380px;display:none;">
+    <div id="ms-card"></div>
+    <div id="ms-timer-wrap" style="display:none;text-align:center;margin:8px 0;">
+      <div class="timer-display" id="ms-timer">30</div>
+      <div style="font-size:11px;color:var(--ink3);letter-spacing:2px;">DETIK TERSISA</div>
+    </div>
+    <div id="ms-acts"></div>
+  </div>
+</div>
+</div>
+
+<!-- ██ NIGHT PHASE ██ -->
+<div class="screen" id="sc-night">
+<div class="w100 flex-col" style="background:linear-gradient(160deg,#05030f,#0a0520);min-height:100vh;padding:20px 14px;">
+  <div style="font-size:40px;text-align:center;margin:8px 0;">🌙</div>
+  <h1 style="font-family:'Cinzel Decorative',serif;font-size:20px;color:#c07ffd;text-align:center;margin-bottom:4px;">MALAM TIBA</h1>
+  <p style="font-size:11px;color:#8060b0;text-align:center;letter-spacing:3px;margin-bottom:16px;">SEMUA PEMAIN TUTUP MATA</p>
+  <div style="background:rgba(20,5,50,.85);border:1px solid rgba(142,68,173,.4);border-radius:14px;padding:18px;width:100%;max-width:400px;color:#e8d8ff;margin-bottom:14px;">
+    <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:#c07ffd;margin-bottom:10px;">📜 INSTRUKSI NARATOR</div>
+    <div style="font-size:15px;line-height:1.9;" id="night-instr"></div>
+    <div style="font-size:12px;color:#8060b0;font-style:italic;margin-top:8px;" id="night-sub"></div>
+  </div>
+  <div id="night-acts" style="width:100%;max-width:400px;"></div>
+</div>
+</div>
+
+<!-- ██ NIGHT ACTION OVERLAY ██ -->
+<div class="overlay" id="ov-night" style="background:rgba(5,2,18,.97);">
+<div style="width:100%;max-width:360px;">
+  <div style="text-align:center;margin-bottom:14px;">
+    <div style="font-size:34px;" id="na-icon"></div>
+    <div style="font-family:'Cinzel',serif;font-size:16px;color:#c07ffd;margin:4px 0;" id="na-rname"></div>
+    <div style="font-size:13px;color:#8060b0;" id="na-pname"></div>
+  </div>
+  <div style="background:rgba(255,255,255,.06);border:1px solid rgba(142,68,173,.4);border-radius:12px;padding:14px;margin-bottom:12px;">
+    <div style="font-size:14px;color:#e8d8ff;line-height:1.75;" id="na-desc"></div>
+  </div>
+  <div id="na-targets"></div>
+  <div id="na-sel-indicator" style="display:none;margin:10px 0;padding:10px 14px;background:rgba(192,127,253,.15);border:1.5px solid #c07ffd;border-radius:10px;text-align:center;color:#e8d8ff;font-size:14px;"></div>
+  <button class="btn btn-purple mt8" id="na-confirm" disabled onclick="nightConfirm()">✅ KONFIRMASI PILIHAN</button>
+  <button class="btn" style="background:rgba(255,255,255,.05);color:#604880;margin-top:4px;" onclick="nightSkip()">⏩ SKIP — Tidak Pakai Kemampuan</button>
+</div>
+</div>
+
+<!-- ██ VOTING ██ -->
+<div class="screen" id="sc-voting">
+<div class="w100">
+  <h1 class="game-title" style="font-size:20px;">⚖️ SIDANG KERAJAAN</h1>
+  <div class="nar-panel">
+    <div class="nar-label">📜 Instruksi Narator</div>
+    <div class="nar-text" id="vt-instr">Semua pemain berdiskusi. Narator ketuk nama untuk menambah suara. Ketuk 2x untuk kurangi suara.</div>
+    <div class="nar-sub" id="vt-sub"></div>
+  </div>
+  <div class="card mt8">
+    <div class="card-title">⚖️ HITUNG SUARA</div>
+    <p style="font-size:12px;color:var(--ink3);text-align:center;margin-bottom:8px;">Ketuk nama = +1 suara &nbsp;|&nbsp; Ketuk 2x cepat = -1 suara</p>
+    <div id="vt-players"></div>
+  </div>
+  <div class="card mt8" id="vt-result-card" style="display:none;">
+    <div class="card-title">📊 HASIL VOTING</div>
+    <div id="vt-results"></div>
+  </div>
+  <button class="btn btn-primary w100 mt8" id="vt-tally-btn" onclick="tallyVotes()">📊 TAMPILKAN HASIL AKHIR</button>
+  <button class="btn btn-danger w100" id="vt-elim-btn" style="display:none;" onclick="doEliminate()">⚔️ EKSEKUSI</button>
+  <button class="btn btn-ghost w100" onclick="skipVoting()">⏩ Tidak Ada Eliminasi Ronde Ini</button>
+</div>
+</div>
+
+<!-- ██ GAME OVER ██ -->
+<div class="screen" id="sc-gameover">
+<div class="w100 flex-col" style="justify-content:center;min-height:80vh;text-align:center;">
+  <div class="result-big" id="go-emoji"></div>
+  <h1 style="font-family:'Cinzel Decorative',serif;font-size:24px;margin:14px 0;" id="go-title"></h1>
+  <p style="font-size:14px;color:var(--ink3);max-width:280px;line-height:1.7;margin-bottom:20px;" id="go-desc"></p>
+  <div class="card w100" id="go-reveals" style="margin-bottom:16px;"></div>
+  <button class="btn btn-primary w100" onclick="restartGame()">🔄 MAIN LAGI</button>
+  <button class="btn btn-ghost w100" onclick="showScreen('sc-welcome')">🏠 Menu Utama</button>
+</div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// GAME STATE
+// ═══════════════════════════════════════════════════════════════
+const G = {
+  players:[],narrator:'',round:1,missionResults:[],
+  phase:'',revealIdx:0,
+  usedQ:{bible:[],trivia:[],fillblank:[],verbal:[],find:[],physical:[]},
+  nightActions:{killed:-1,protected:-1,wizardPeek:-1,revived:-1},
+  nightQueue:[],nightQueueIdx:0,nightSelTarget:null,nightPlayerIdx:-1,
+  voteCounts:{},pendingEliminate:-1,
+  selectedTeam:[],
+  teamMissionIdx:0,
+  teamMissions:[],
+  missionAnswers:[],
+  timerInterval:null,tricksterDefeated:false,
+  setupCount:5,
+  assassinMaxSkill:1,   // ditentukan saat startGame()
+  assassinSkillUsed:0,  // hitung berapa kali skill Assassin sudah dipakai
+};
+
+// ═══════════════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════════════
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function showOverlay(id){document.getElementById(id).classList.add('active');}
+function hideOverlay(id){document.getElementById(id).classList.remove('active');}
+function showNotif(msg,dur=2800){const n=document.getElementById('notif');n.textContent=msg;n.style.display='block';clearTimeout(n._t);n._t=setTimeout(()=>n.style.display='none',dur);}
+function addLog(msg){const el=document.getElementById('game-log');if(!el)return;const d=document.createElement('div');d.textContent='• '+msg;el.appendChild(d);el.scrollTop=el.scrollHeight;}
+function alive(){return G.players.filter(p=>p.alive);}
+function aliveCount(){return G.players.filter(p=>p.alive).length;}
+function deadCount(){return G.players.filter(p=>!p.alive).length;}
+function villainAlive(){return G.players.filter(p=>p.alive&&(p.role==='assassin'||p.role==='thief')).length;}
+function heroAndCivilAlive(){return G.players.filter(p=>p.alive&&p.role!=='assassin'&&p.role!=='thief'&&p.role!=='trickster').length;}
+function rd(r){return ROLES[r]||ROLES.civilian;}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function randPick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+// ═══════════════════════════════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════════════════════════════
+function saveNames(n){try{localStorage.setItem('rol_names',JSON.stringify(n));}catch(e){}}
+function loadNames(){try{return JSON.parse(localStorage.getItem('rol_names')||'[]');}catch(e){return[];}}
+function saveNar(n){try{localStorage.setItem('rol_nar',n);}catch(e){}}
+function loadNar(){try{return localStorage.getItem('rol_nar')||'';}catch(e){return'';}}
+function clearSaved(){try{localStorage.removeItem('rol_names');}catch(e){}buildNameInputs(G.setupCount);showNotif('✅ Nama tersimpan dihapus');}
+
+// ═══════════════════════════════════════════════════════════════
+// SETUP
+// ═══════════════════════════════════════════════════════════════
+function buildCountSel(){
+  const c=document.getElementById('count-sel');c.innerHTML='';
+  for(let i=5;i<=30;i++){const b=document.createElement('button');b.className='cnt-btn';b.textContent=i;b.onclick=()=>setPC(i);c.appendChild(b);}
+}
+function goSetup(){buildCountSel();const sn=loadNar();if(sn)document.getElementById('narrator-name').value=sn;showScreen('sc-setup');}
+function setPC(n){
+  G.setupCount=n;
+  document.querySelectorAll('.cnt-btn').forEach((b,i)=>b.classList.toggle('sel',i+5===n));
+  document.getElementById('names-card').style.display='block';
+  document.getElementById('start-btn').style.display='block';
+  buildNameInputs(n);
+  // Tampilkan info assassin skill
+  const maxSkill = getAssassinMaxSkill(n);
+  const infoEl = document.getElementById('assassin-info-setup');
+  const txtEl = document.getElementById('assassin-info-text');
+  infoEl.style.display = 'block';
+  if(n >= 7 && n <= 10){
+    txtEl.innerHTML = `🔥 <b>BUFF AKTIF!</b><br>Dengan <b>${n} pemain</b>, Assassin bisa menggunakan skill <b>2x</b> malam hari!<br><span class="assassin-skill-badge">🗡️ ASSASSIN 2x SKILL</span>`;
+  } else if(n >= 11){
+    txtEl.innerHTML = `Dengan <b>${n} pemain</b>, Assassin menggunakan skill <b>1x</b> saja.<br><span class="assassin-skill-badge">🗡️ ASSASSIN 1x SKILL</span>`;
+  } else {
+    txtEl.innerHTML = `Dengan <b>${n} pemain</b> (5–6), Assassin menggunakan skill <b>1x</b>.<br><span class="assassin-skill-badge">🗡️ ASSASSIN 1x SKILL</span>`;
+  }
+}
+function buildNameInputs(n){
+  const saved=loadNames();const list=document.getElementById('player-inputs-list');list.innerHTML='';
+  for(let i=0;i<n;i++){
+    const row=document.createElement('div');row.className='player-item';
+    row.innerHTML=`<div class="player-num">${i+1}</div><input class="input-field" id="pn-${i}" placeholder="Nama Pemain ${i+1}" autocomplete="off" value="${saved[i]||''}">`;
+    list.appendChild(row);
+  }
+}
+function startGame(){
+  const n=G.setupCount;
+  const nar=document.getElementById('narrator-name').value.trim();
+  if(!nar){showNotif('⚠️ Nama Narator harus diisi!');return;}
+  const names=[];
+  for(let i=0;i<n;i++){const v=document.getElementById(`pn-${i}`).value.trim();if(!v){showNotif(`⚠️ Nama pemain ${i+1} kosong!`);return;}names.push(v);}
+  saveNames(names);saveNar(nar);
+  G.narrator=nar;
+  const roles=getRoles(n);
+  // Tentukan assassin max skill berdasarkan jumlah pemain
+  G.assassinMaxSkill = getAssassinMaxSkill(n);
+  G.assassinSkillUsed = 0;
+  G.players=names.map((nm,i)=>({name:nm,role:roles[i],alive:true,abilityUsed:false,protected:false,stolenAbility:null,stolenAbilityUsed:false}));
+  G.round=1;G.missionResults=[];G.revealIdx=0;
+  G.usedQ={bible:[],trivia:[],fillblank:[],verbal:[],find:[],physical:[]};
+  G.tricksterDefeated=false;G.nightActions={killed:-1,protected:-1,wizardPeek:-1,revived:-1};
+  showRoleReveal();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ROLE REVEAL
+// ═══════════════════════════════════════════════════════════════
+function showRoleReveal(){G.revealIdx=0;showRevealForPlayer();showScreen('sc-reveal');}
+function showRevealForPlayer(){
+  const p=G.players[G.revealIdx];
+  document.getElementById('rv-pname').textContent=`⚔️ ${p.name}`;
+  document.getElementById('rv-waiting').style.display='block';
+  document.getElementById('rv-card').style.display='none';
+}
+function doReveal(){
+  const p=G.players[G.revealIdx];const def=rd(p.role);
+  document.getElementById('rv-waiting').style.display='none';
+  document.getElementById('rv-card').style.display='block';
+
+  // Ability text khusus assassin (dinamis)
+  let abilityText = def.ability;
+  if(p.role==='assassin'){
+    abilityText = getAssassinAbility(G.players.length);
+  }
+
+  const extra=(p.role==='trickster')
+    ?`<div class="role-ability" style="color:#0a4a3a;">🎯 Jagalah agar Villain TIDAK tertangkap. Kamu bisa sabotase misi!</div>`
+    :(p.role==='assassin'||p.role==='thief')
+    ?`<div class="role-ability" style="color:var(--red2);">⚠️ Bertindaklah seperti pemain biasa. Jangan terbongkar!</div>`:'';
+
+  // Badge skill assassin
+  const assassinBadge = (p.role==='assassin')
+    ? `<div class="assassin-skill-badge">🗡️ SKILL ${G.assassinMaxSkill}x MALAM INI</div>`
+    : '';
+
+  document.getElementById('rv-html').innerHTML=`
+    <div class="role-card ${def.card}">
+      <div class="role-icon">${def.icon}</div>
+      <div class="role-name">${def.name}</div>
+      <div class="role-team"><span class="tag ${def.tag}">${def.label}</span></div>
+      <div class="role-ability">${abilityText}</div>${extra}${assassinBadge}
+      <div class="role-win"><span class="win-label">🏆 Kondisi Menang</span>${def.win}</div>
+    </div>`;
+}
+function nextReveal(){G.revealIdx++;if(G.revealIdx>=G.players.length)startMainGame();else showRevealForPlayer();}
+
+// ═══════════════════════════════════════════════════════════════
+// MAIN GAME
+// ═══════════════════════════════════════════════════════════════
+function startMainGame(){G.round=1;addLog(`🏰 Permainan dimulai! ${G.players.length} pemain, Narator: ${G.narrator}`);goNarrator('mission_start');}
+function goNarrator(phase){G.phase=phase;showScreen('sc-nar');renderNarrator();}
+
+function renderNarrator(){
+  document.getElementById('nd-round').textContent=G.round;
+  document.getElementById('nd-alive').textContent=aliveCount();
+  const qt=document.getElementById('nd-quests');qt.innerHTML='';
+  for(let i=0;i<5;i++){
+    let cls='',em='';
+    if(i<G.missionResults.length){cls=G.missionResults[i]?'pass':'fail';em=G.missionResults[i]?'✅':'❌';}
+    else if(i===G.missionResults.length){cls='cur';em='⚔️';}
+    qt.innerHTML+=`<div class="q-dot ${cls}">${em||(i+1)}</div>`;
+  }
+  renderNDPlayers();updateNDPhase();
+}
+function renderNDPlayers(){
+  const list=document.getElementById('nd-players');
+  list.innerHTML=G.players.map((p)=>{
+    const def=rd(p.role);
+    return `<div class="player-item ${!p.alive?'player-dead':''}">
+      <div class="player-num">${p.alive?def.icon:'☠️'}</div>
+      <div class="player-name-text">${p.name}${!p.alive?' <span style="color:var(--red2);font-size:11px;">(Gugur)</span>':''}
+        <span style="font-size:10px;color:${def.color};font-family:\'Cinzel\',serif;display:block;">${def.name} · ${def.label}</span>
+      </div>${p.protected?'<span style="color:var(--green2);">🛡️</span>':''}
+    </div>`;
+  }).join('');
+}
+function updateNDPhase(){
+  const instr=document.getElementById('nd-instr');
+  const sub=document.getElementById('nd-sub');
+  const acts=document.getElementById('nd-acts');
+  const mNum=G.missionResults.length+1;
+  const themeNames={bible:'📖 Alkitab',trivia:'🌍 Trivia Umum',fillblank:'📜 Lengkapi Firman',verbal:'🗣️ Verbal Challenge',find:'🔍 Cari Benda',physical:'💪 Tantangan Fisik'};
+  if(G.phase==='mission_start'){
+    const theme=MISSION_THEMES[(G.round-1)%MISSION_THEMES.length];
+    instr.innerHTML=`📜 <b>Ronde ${G.round} — Misi #${mNum}</b><br>Tema: <b>${themeNames[theme]}</b><br>Pilih 2–3 pemain sebagai Tim Misi, lalu gilirkan HP ke masing-masing.`;
+    sub.textContent=`Tiap anggota tim dapat soal BERBEDA dari tema yang sama. Gagal/skip = sabotase!`;
+    acts.innerHTML=`<button class="btn btn-primary w100" onclick="goTeamSelect()">👥 PILIH TIM MISI</button>`;
+  } else if(G.phase==='mission_review'){
+    const sab=G.missionAnswers.filter(a=>!a.pass).length;const pass=sab===0;
+    instr.innerHTML=`${pass?'✅':'❌'} <b>Misi #${G.missionResults.length} ${pass?'BERHASIL!':'GAGAL!'}</b><br>${sab} dari ${G.selectedTeam.length} anggota tim gagal/sabotase.`;
+    sub.textContent=pass?'Kerajaan aman... untuk sementara!':'Ada saboteur! Siapakah mereka?';
+    acts.innerHTML=`<button class="btn btn-primary w100" onclick="proceedToNight()">🌙 LANJUT KE MALAM HARI</button>`;
+  } else if(G.phase==='morning'){
+    instr.innerHTML=`☀️ <b>Pagi hari tiba!</b><br>Umumkan hasil malam ini kepada semua pemain.`;
+    sub.innerHTML=buildMorningReport();
+    acts.innerHTML=`<button class="btn btn-primary w100" onclick="goToVoting()">⚖️ MULAI SIDANG & VOTING</button>`;
+  }
+}
+function buildMorningReport(){
+  const na=G.nightActions;let r='';
+  if(na.revived>=0&&G.players[na.revived])r+=`• ✨ ${G.players[na.revived].name} dibangkitkan Healer!<br>`;
+  if(na.killed>=0&&G.players[na.killed]){
+    if(na.protected===na.killed)r+=`• 🛡️ Serangan malam diblokir Knight! Semua selamat.<br>`;
+    else r+=`• 💀 ${G.players[na.killed].name} ditemukan tidak bernyawa...<br>`;
+  }
+  if(!r)r='• Malam berlalu tenang. Tidak ada kejadian.';
+  return r;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TEAM SELECTION
+// ═══════════════════════════════════════════════════════════════
+function goTeamSelect(){
+  G.selectedTeam=[];
+  const minT=2,maxT=Math.min(3,aliveCount());
+  document.getElementById('ts-instr').textContent=`Diskusikan bersama dan pilih ${minT}–${maxT} pemain sebagai Tim Misi ronde ini.`;
+  document.getElementById('ts-sub').textContent=`Tiap anggota tim akan dapat soal berbeda bertema sama. Gagal/skip = sabotase!`;
+  document.getElementById('ts-count-label').textContent=`PILIH ${minT}–${maxT} ANGGOTA TIM`;
+  const pl=document.getElementById('ts-players');
+  pl.innerHTML=alive().map(p=>{
+    const pi=G.players.indexOf(p);
+    return `<button class="team-sel-btn" id="ts-${pi}" onclick="toggleTeamSel(${pi},${maxT})">${p.name}</button>`;
+  }).join('');
+  document.getElementById('ts-confirm').disabled=true;
+  showScreen('sc-team');
+}
+function toggleTeamSel(pi,maxT){
+  const pos=G.selectedTeam.indexOf(pi);
+  if(pos!==-1){G.selectedTeam.splice(pos,1);}
+  else{if(G.selectedTeam.length>=maxT){showNotif(`⚠️ Maksimal ${maxT} anggota!`);return;}G.selectedTeam.push(pi);}
+  document.querySelectorAll('[id^="ts-"]').forEach(b=>{
+    const idx=parseInt(b.id.split('-')[1]);b.classList.toggle('selected',G.selectedTeam.includes(idx));
+  });
+  const minT=2;document.getElementById('ts-confirm').disabled=G.selectedTeam.length<minT;
+  document.getElementById('ts-count-label').textContent=`PILIH 2–${maxT} ANGGOTA TIM (${G.selectedTeam.length} dipilih)`;
+}
+function confirmTeam(){
+  if(G.selectedTeam.length<2){showNotif('⚠️ Pilih minimal 2 orang!');return;}
+  const theme=MISSION_THEMES[(G.round-1)%MISSION_THEMES.length];
+  G.teamMissions=G.selectedTeam.map(()=>pickQuestion(theme));
+  G.teamMissionIdx=0;G.missionAnswers=[];
+  const names=G.selectedTeam.map(i=>G.players[i].name).join(', ');
+  addLog(`👥 Tim Misi dipilih: ${names}`);
+  showMissionForTeamMember();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// QUESTION PICKER
+// ═══════════════════════════════════════════════════════════════
+function pickQuestion(theme){
+  const pool=QB[theme];
+  const usedArr=G.usedQ[theme]||[];
+  let available=pool.filter((_,i)=>!usedArr.includes(i));
+  if(available.length===0){G.usedQ[theme]=[];available=[...pool];}
+  const idx=pool.indexOf(randPick(available));
+  G.usedQ[theme].push(idx);
+  return{...pool[idx],theme};
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MISSION EXECUTION
+// ═══════════════════════════════════════════════════════════════
+function showMissionForTeamMember(){
+  if(G.teamMissionIdx>=G.selectedTeam.length){finalizeMission();return;}
+  const pIdx=G.selectedTeam[G.teamMissionIdx];
+  const p=G.players[pIdx];
+  document.getElementById('ms-pname').textContent=`⚔️ ${p.name}`;
+  document.getElementById('ms-waiting').style.display='block';
+  document.getElementById('ms-active').style.display='none';
+  if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}
+  showScreen('sc-mission');
+}
+
+let _mSel=null;
+function showMission(){
+  const pIdx=G.selectedTeam[G.teamMissionIdx];
+  const p=G.players[pIdx];
+  const m=G.teamMissions[G.teamMissionIdx];
+  const def=rd(p.role);
+  const canSab=def.team==='villain'||p.role==='trickster';
+  _mSel=null;
+  document.getElementById('ms-waiting').style.display='none';
+  document.getElementById('ms-active').style.display='block';
+  const card=document.getElementById('ms-card');
+  const acts=document.getElementById('ms-acts');
+  acts.innerHTML='';
+  const isChoice=m.c&&m.a!==undefined;
+  const badges={bible:'📖 Soal Alkitab',trivia:'🌍 Trivia Umum',fillblank:'📜 Lengkapi Firman',verbal:'🗣️ Verbal Challenge',find:'🔍 Temukan Benda',physical:'💪 Tantangan Fisik'};
+  const badgeClass={bible:'bible',trivia:'bible',fillblank:'bible',verbal:'verbal',find:'find',physical:'physical'}[m.theme]||'bible';
+  if(isChoice){
+    card.innerHTML=`<div class="mission-card">
+      <span class="mission-badge ${badgeClass}">${badges[m.theme]||'Soal'}</span>
+      <div class="mission-q">${m.q}</div>
+      <div class="mc-grid">${m.c.map((ch,i)=>`<button class="mc-btn" id="mc-${i}" onclick="selBible(${i})">${ch}</button>`).join('')}</div>
+    </div>`;
+    document.getElementById('ms-timer-wrap').style.display='none';
+    setTimeout(()=>{
+      if(canSab){
+        acts.innerHTML=`<div style="padding:10px;border:1.5px dashed var(--border);border-radius:10px;text-align:center;margin-top:8px;">
+          <div style="font-size:10px;color:var(--ink3);margin-bottom:6px;font-family:'Cinzel',serif;letter-spacing:1px;">AKSI RAHASIA</div>
+          <button class="btn btn-danger btn-sm" onclick="mSabotage()">🗡️ Sengaja Salah / Skip</button></div>`;
+      } else {
+        acts.innerHTML=`<button class="btn btn-ghost" onclick="mSkip()">⏩ Tidak Tahu / Skip</button>`;
+      }
+    },600);
+  } else {
+    card.innerHTML=`<div class="mission-card">
+      <span class="mission-badge ${badgeClass}">${badges[m.theme]||'Tantangan'}</span>
+      <div class="mission-q">${m.q}</div>
+    </div>`;
+    let tl=m.time||30;
+    document.getElementById('ms-timer-wrap').style.display='block';
+    document.getElementById('ms-timer').textContent=tl;
+    document.getElementById('ms-timer').className='timer-display';
+    G.timerInterval=setInterval(()=>{
+      tl--;const el=document.getElementById('ms-timer');
+      if(el){el.textContent=tl;if(tl<=5)el.className='timer-display urgent';}
+      if(tl<=0){clearInterval(G.timerInterval);G.timerInterval=null;recordMission(false);mNext();}
+    },1000);
+    acts.innerHTML=`<button class="btn btn-success" onclick="timedDone(true)">✅ BERHASIL!</button>
+      <button class="btn btn-danger" onclick="timedDone(false)">❌ GAGAL / SKIP</button>`;
+  }
+}
+function selBible(idx){
+  _mSel=idx;
+  document.querySelectorAll('.mc-btn').forEach((b,i)=>b.classList.toggle('selected',i===idx));
+  const old=document.getElementById('bc');if(old)old.remove();
+  const b=document.createElement('button');b.id='bc';b.className='btn btn-primary mt8';b.textContent='✅ KONFIRMASI JAWABAN';b.onclick=confBible;
+  document.getElementById('ms-acts').appendChild(b);
+}
+function confBible(){
+  if(_mSel===null)return;
+  if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}
+  const m=G.teamMissions[G.teamMissionIdx];
+  const correct=_mSel===m.a;
+  document.querySelectorAll('.mc-btn').forEach((b,i)=>{if(i===m.a)b.classList.add('correct');else if(i===_mSel&&!correct)b.classList.add('wrong');});
+  recordMission(correct);setTimeout(mNext,1100);
+}
+function mSkip(){if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}recordMission(false);mNext();}
+function mSabotage(){if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}recordMission(false);mNext();}
+function timedDone(pass){if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}recordMission(pass);mNext();}
+function recordMission(pass){const pIdx=G.selectedTeam[G.teamMissionIdx];G.missionAnswers.push({playerIdx:pIdx,pass});}
+function mNext(){G.teamMissionIdx++;if(G.teamMissionIdx>=G.selectedTeam.length)finalizeMission();else showMissionForTeamMember();}
+function finalizeMission(){
+  const sab=G.missionAnswers.filter(a=>!a.pass).length;const pass=sab===0;
+  G.missionResults.push(pass);
+  addLog(`${pass?'✅':'❌'} Misi Ronde ${G.round}: ${pass?'BERHASIL':'GAGAL'} (${sab} sabotase dari ${G.selectedTeam.length} anggota)`);
+  G.phase='mission_review';goNarrator('mission_review');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NIGHT PHASE — ASSASSIN SKILL 2x LOGIC
+// ═══════════════════════════════════════════════════════════════
+function proceedToNight(){
+  G.nightActions={killed:-1,protected:-1,wizardPeek:-1,revived:-1};
+  G.nightQueue=[];
+  const hasDead=deadCount()>0;
+  G.players.forEach((p,i)=>{
+    if(!p.alive)return;
+    // Assassin: cek apakah masih bisa pakai skill
+    if(p.role==='assassin'){
+      if(G.assassinSkillUsed < G.assassinMaxSkill) G.nightQueue.push(i);
+      return; // jangan lanjut ke check abilityUsed default
+    }
+    if(p.abilityUsed)return;
+    if(p.role==='healer'&&!hasDead)return;
+    if(['knight','wizard','healer','thief'].includes(p.role))G.nightQueue.push(i);
+    if(p.stolenAbility&&!p.stolenAbilityUsed)G.nightQueue.push(i);
+  });
+  G.nightQueueIdx=0;
+  showScreen('sc-night');updateNightPhase();
+}
+function updateNightPhase(){
+  const ni=document.getElementById('night-instr');const ns=document.getElementById('night-sub');const na=document.getElementById('night-acts');
+  if(G.nightQueueIdx>=G.nightQueue.length){
+    ni.innerHTML='☀️ <b>Semua aksi malam selesai.</b><br>Saatnya mengumumkan hasil kepada semua pemain.';
+    ns.textContent='Ketuk tombol untuk resolusi malam dan lanjut ke pagi hari.';
+    na.innerHTML=`<button class="btn-night" onclick="resolveNight()">☀️ SELESAIKAN MALAM & LANJUT KE PAGI</button>`;
+    return;
+  }
+  const pIdx=G.nightQueue[G.nightQueueIdx];const p=G.players[pIdx];
+  // Label assassin skill sisa
+  const assLabel = p.role==='assassin'
+    ? ` (Skill ${G.assassinSkillUsed+1}/${G.assassinMaxSkill})`
+    : '';
+  const instrs={
+    knight:`Bangunkan <b>${p.name}</b> (Knight).\nSemua lain tutup mata!\nTanya: <em>"Knight, mau lindungi seseorang malam ini?"</em>`,
+    wizard:`Bangunkan <b>${p.name}</b> (Wizard).\nSemua lain tutup mata!\nTanya: <em>"Wizard, mau intip peran seseorang?"</em>`,
+    healer:`Bangunkan <b>${p.name}</b> (Healer).\nSemua lain tutup mata!\nTanya: <em>"Healer, mau bangkitkan seseorang yang sudah gugur?"</em>`,
+    assassin:`Bangunkan <b>${p.name}</b> (Assassin${assLabel}).\nSemua lain tutup mata!\nTanya: <em>"Assassin, mau eliminasi seseorang malam ini?"</em>`,
+    thief:`Bangunkan <b>${p.name}</b> (Thief).\nSemua lain tutup mata!\nTanya: <em>"Thief, mau curi kemampuan seseorang?"</em>`,
+  };
+  ni.innerHTML=(instrs[p.role]||`Bangunkan <b>${p.name}</b>.`).replace(/\n/g,'<br>');
+  ns.textContent='Gilirkan HP ke pemain ini secara diam-diam.';
+  na.innerHTML=`<button class="btn-night" onclick="openNightAction(${pIdx})">📱 GILIR HP KE ${p.name.toUpperCase()}</button>
+    <button class="btn" style="background:rgba(255,255,255,.05);color:#604880;width:100%;padding:12px;border-radius:10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-top:4px;" onclick="skipNightPlayer()">⏩ SKIP — Tidak Pakai Kemampuan</button>`;
+}
+function openNightAction(pIdx){
+  G.nightPlayerIdx=pIdx;G.nightSelTarget=null;
+  const p=G.players[pIdx];const def=rd(p.role);
+  document.getElementById('na-icon').textContent=def.icon;
+  document.getElementById('na-rname').textContent=def.name;
+  document.getElementById('na-pname').textContent=p.name;
+  document.getElementById('na-confirm').disabled=true;
+  document.getElementById('na-sel-indicator').style.display='none';
+  document.getElementById('na-sel-indicator').textContent='';
+  const assSkillInfo = p.role==='assassin' ? ` [Skill ${G.assassinSkillUsed+1}/${G.assassinMaxSkill}]` : '';
+  const descs={
+    knight:'Pilih satu pemain untuk dilindungi dari eliminasi malam ini. (Tidak bisa melindungi diri sendiri)',
+    wizard:'Pilih satu pemain untuk dilihat perannya secara rahasia di layar ini.',
+    healer:'Pilih satu pemain yang sudah gugur untuk dibangkitkan kembali!',
+    assassin:`Pilih target yang akan kamu eliminasi malam ini secara diam-diam.${assSkillInfo}`,
+    thief:'Pilih target untuk dicuri kemampuannya. Kemampuanmu sekarang!',
+  };
+  document.getElementById('na-desc').textContent=descs[p.role]||'Pilih targetmu.';
+  const isHealer=p.role==='healer';
+  const targets=G.players.filter((x,i)=>{
+    if(isHealer)return!x.alive;
+    return x.alive&&i!==pIdx;
+  });
+  const tEl=document.getElementById('na-targets');
+  if(targets.length===0){
+    tEl.innerHTML=`<div style="color:#604880;font-size:14px;text-align:center;padding:12px;background:rgba(255,255,255,.05);border-radius:10px;">Tidak ada target yang tersedia.</div>`;
+    document.getElementById('na-sel-indicator').style.display='block';
+    document.getElementById('na-sel-indicator').textContent='Tidak ada target — gunakan Skip.';
+  } else {
+    tEl.innerHTML=targets.map(x=>{
+      const xi=G.players.indexOf(x);
+      return `<button class="night-target-btn" id="nat-${xi}" onclick="selNightTarget(${xi})">
+        <div class="check-icon" id="chk-${xi}">✓</div>
+        <span>👤 ${x.name}${!x.alive?' ☠️ (Gugur)':''}</span>
+      </button>`;
+    }).join('');
+  }
+  showOverlay('ov-night');
+}
+function selNightTarget(tIdx){
+  G.nightSelTarget=tIdx;
+  document.querySelectorAll('.night-target-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('[id^="chk-"]').forEach(c=>c.textContent='');
+  const btn=document.getElementById(`nat-${tIdx}`);
+  const chk=document.getElementById(`chk-${tIdx}`);
+  if(btn)btn.classList.add('selected');
+  if(chk)chk.textContent='✓';
+  const targetName=G.players[tIdx]?.name||'?';
+  const indicator=document.getElementById('na-sel-indicator');
+  indicator.style.display='block';
+  indicator.innerHTML=`✅ Dipilih: <strong>${targetName}</strong>`;
+  document.getElementById('na-confirm').disabled=false;
+}
+function nightSkip(){hideOverlay('ov-night');skipNightPlayer();}
+function nightConfirm(){
+  if(G.nightSelTarget===null)return;
+  const p=G.players[G.nightPlayerIdx];const target=G.players[G.nightSelTarget];
+  if(p.role==='knight'){G.nightActions.protected=G.nightSelTarget;p.abilityUsed=true;addLog('🛡️ Knight menggunakan kemampuan.');}
+  else if(p.role==='wizard'){
+    G.nightActions.wizardPeek=G.nightSelTarget;p.abilityUsed=true;
+    const td=rd(target.role);
+    alert(`🔮 VISI WIZARD\n\n${target.name} adalah:\n${td.icon} ${td.name}\n(${td.label})\n\nIngat! Tutup layar setelah ini.`);
+    addLog('🔮 Wizard menggunakan visi.');
+  } else if(p.role==='healer'){G.nightActions.revived=G.nightSelTarget;p.abilityUsed=true;addLog('💚 Healer menggunakan kemampuan.');}
+  else if(p.role==='assassin'){
+    // Assassin: tracking jumlah pakai skill
+    G.nightActions.killed=G.nightSelTarget;
+    G.assassinSkillUsed++;
+    // Tandai abilityUsed hanya jika sudah mencapai max
+    if(G.assassinSkillUsed>=G.assassinMaxSkill) p.abilityUsed=true;
+    addLog(`🗡️ Assassin menggunakan kemampuan (${G.assassinSkillUsed}/${G.assassinMaxSkill}).`);
+  } else if(p.role==='thief'){
+    p.abilityUsed=true;const sr=target.role;p.stolenAbility=sr;target.abilityUsed=true;
+    const sd=rd(sr);
+    alert(`🥷 KEMAMPUAN DICURI!\n\nKamu mencuri kemampuan ${target.name}:\n${sd.icon} ${sd.name}\n\n${sd.ability}\n\nTutup layar setelah membaca!`);
+    addLog('🥷 Thief menggunakan kemampuan.');
+  }
+  hideOverlay('ov-night');G.nightQueueIdx++;updateNightPhase();
+}
+function skipNightPlayer(){G.nightQueueIdx++;updateNightPhase();}
+function resolveNight(){
+  const na=G.nightActions;
+  if(na.revived>=0&&G.players[na.revived]&&!G.players[na.revived].alive){G.players[na.revived].alive=true;addLog(`💚 ${G.players[na.revived].name} dibangkitkan!`);}
+  if(na.killed>=0&&G.players[na.killed]){
+    const t=G.players[na.killed];
+    if(na.protected===na.killed){addLog('🛡️ Serangan diblokir Knight!');}
+    else{
+      if(t.role==='wizard'){const ass=G.players.find(x=>x.role==='assassin'&&x.alive);if(ass){ass.alive=false;addLog('🔮 Wizard membawa Assassin bersamanya!');if(villainAlive()===0)G.tricksterDefeated=true;}}
+      t.alive=false;addLog(`🗡️ ${t.name} dieliminasi malam ini.`);
+      if(rd(t.role).team==='villain')G.tricksterDefeated=true;
+    }
+  }
+  // Reset killed untuk malam ini (Assassin 2x: killed akan diset ulang tiap malam)
+  G.nightActions.killed=-1;
+  const w=checkWin();if(w){endGame(w.winner,w.reason);return;}
+  G.phase='morning';goNarrator('morning');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// VOTING
+// ═══════════════════════════════════════════════════════════════
+function goToVoting(){
+  G.voteCounts={};G.pendingEliminate=-1;
+  showScreen('sc-voting');renderVoting();
+}
+let _lastTap={};
+function renderVoting(){
+  const pl=document.getElementById('vt-players');
+  const aliv=G.players.filter(p=>p.alive);
+  pl.innerHTML=aliv.map(p=>{
+    const pi=G.players.indexOf(p);
+    const cnt=G.voteCounts[pi]||0;
+    const prot=G.nightActions.protected===pi;
+    return `<button class="vote-btn ${cnt>0?'voted':''}" id="vbtn-${pi}" onclick="addVote(${pi})">
+      <span style="font-size:20px;">👤</span>
+      <span style="flex:1;">${p.name}${prot?' 🛡️':''}</span>
+      <span style="font-family:'Cinzel',serif;font-size:20px;min-width:28px;text-align:right;color:${cnt>0?'var(--red2)':'var(--ink3)'};">${cnt||''}</span>
+    </button>`;
+  }).join('');
+  document.getElementById('vt-result-card').style.display='none';
+  document.getElementById('vt-elim-btn').style.display='none';
+  document.getElementById('vt-tally-btn').style.display='block';
+}
+function addVote(pi){
+  const now=Date.now();
+  if(_lastTap[pi]&&now-_lastTap[pi]<400){
+    G.voteCounts[pi]=Math.max(0,(G.voteCounts[pi]||1)-1);
+    _lastTap[pi]=0;
+  } else {
+    G.voteCounts[pi]=(G.voteCounts[pi]||0)+1;
+    _lastTap[pi]=now;
+  }
+  renderVoting();
+}
+function tallyVotes(){
+  const total=Object.values(G.voteCounts).reduce((a,b)=>a+b,0);
+  if(total===0){showNotif('⚠️ Belum ada suara yang masuk!');return;}
+  const sorted=Object.entries(G.voteCounts).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  const topV=sorted[0][1];const topP=sorted.filter(([,v])=>v===topV);
+  const resEl=document.getElementById('vt-results');
+  resEl.innerHTML=sorted.map(([pi,v])=>{
+    const p=G.players[parseInt(pi)];const pct=Math.round((v/total)*100);
+    return `<div class="vote-bar"><div class="vote-bar-label"><span>${p.name}</span><span>${v} suara (${pct}%)</span></div>
+      <div class="vote-bar-bg"><div class="vote-bar-fill" style="width:${pct}%"></div></div></div>`;
+  }).join('');
+  document.getElementById('vt-result-card').style.display='block';
+  if(topP.length===1){
+    G.pendingEliminate=parseInt(topP[0][0]);
+    const p=G.players[G.pendingEliminate];
+    const prot=G.nightActions.protected===G.pendingEliminate;
+    document.getElementById('vt-sub').innerHTML=prot?`🛡️ <b>${p.name}</b> dilindungi Knight malam ini!`:`<b>${p.name}</b> mendapat suara terbanyak: ${topV} suara.`;
+    document.getElementById('vt-elim-btn').style.display='block';
+  } else {
+    const tn=topP.map(([pi])=>G.players[parseInt(pi)].name).join(' & ');
+    document.getElementById('vt-sub').innerHTML=`⚖️ <b>SERI!</b> ${tn} masing-masing ${topV} suara. Narator putuskan / voting ulang!`;
+  }
+  document.getElementById('vt-tally-btn').style.display='none';
+}
+function doEliminate(){
+  if(G.pendingEliminate<0)return;
+  const p=G.players[G.pendingEliminate];const def=rd(p.role);
+  if(G.nightActions.protected===G.pendingEliminate){
+    showNotif(`🛡️ ${p.name} dilindungi Knight! Eksekusi GAGAL.`);addLog(`🛡️ ${p.name} selamat berkat Knight!`);nextRound();return;
+  }
+  p.alive=false;addLog(`⚔️ ${p.name} (${def.name}) dieliminasi!`);
+  if(def.team==='villain'){G.tricksterDefeated=true;addLog('🃏 Trickster otomatis kalah — Villain tertangkap!');}
+  showNotif(`⚔️ ${p.name} adalah ${def.icon} ${def.name}!`,3500);
+  const w=checkWin();if(w){setTimeout(()=>endGame(w.winner,w.reason),1600);return;}
+  setTimeout(()=>nextRound(),1600);
+}
+function skipVoting(){addLog(`⚖️ Ronde ${G.round}: Tidak ada eliminasi.`);const w=checkWin();if(w){endGame(w.winner,w.reason);return;}nextRound();}
+
+// ═══════════════════════════════════════════════════════════════
+// ROUND & WIN
+// ═══════════════════════════════════════════════════════════════
+function nextRound(){
+  // Reset hanya killed untuk ronde berikutnya; assassinSkillUsed tetap akumulatif
+  G.nightActions={killed:-1,protected:-1,wizardPeek:-1,revived:-1};
+  G.round++;addLog(`--- Ronde ${G.round} dimulai ---`);goNarrator('mission_start');
+}
+function checkWin(){
+  const va=villainAlive();const hca=heroAndCivilAlive();
+  const fail=G.missionResults.filter(x=>!x).length;const pass=G.missionResults.filter(x=>x).length;
+  const trick=G.players.find(p=>p.role==='trickster'&&p.alive);
+  if(va===0&&G.players.some(p=>p.role==='assassin'||p.role==='thief')){
+    if(trick&&!G.tricksterDefeated)return{winner:'trickster',reason:'Villain mati semua... Trickster gagal melindungi mereka. Semua kalah!'};
+    return{winner:'hero',reason:'Semua agen kegelapan ditangkap! Kerajaan Eldoria aman!'};
+  }
+  if(pass>=3){
+    if(trick&&va>0&&!G.tricksterDefeated)return{winner:'trickster',reason:'3 misi sukses — tapi Trickster berhasil menjaga Villain tetap hidup! Trickster menang sendirian!'};
+    return{winner:'hero',reason:'3 misi berhasil diselesaikan! Eldoria selamat!'};
+  }
+  if(fail>=3){
+    if(trick&&va>0&&!G.tricksterDefeated)return{winner:'trickster',reason:'Chaos merajalela! Villain lolos — Trickster menang!'};
+    return{winner:'villain',reason:'3 misi berhasil digagalkan. Kegelapan menguasai Eldoria!'};
+  }
+  if(va>0&&va>=hca){
+    if(trick&&!G.tricksterDefeated)return{winner:'trickster',reason:'Keseimbangan goyah — Trickster menang dalam kekacauan!'};
+    return{winner:'villain',reason:'Villain menguasai kerajaan! Terlalu banyak pahlawan gugur.'};
+  }
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GAME OVER
+// ═══════════════════════════════════════════════════════════════
+function endGame(winner,reason){
+  const cfg={
+    hero:{emoji:'🏆',title:'CAHAYA MENANG!',color:'var(--gold3)'},
+    villain:{emoji:'💀',title:'KEGELAPAN MENANG!',color:'var(--red2)'},
+    trickster:{emoji:'🃏',title:'THE TRICKSTER MENANG!',color:'#16a085'}
+  }[winner]||{emoji:'⚔️',title:'GAME OVER',color:'var(--ink)'};
+  document.getElementById('go-emoji').textContent=cfg.emoji;
+  document.getElementById('go-title').textContent=cfg.title;
+  document.getElementById('go-title').style.color=cfg.color;
+  document.getElementById('go-desc').textContent=reason;
+  const rev=document.getElementById('go-reveals');
+  rev.innerHTML=`<div class="card-title">🔍 IDENTITAS TERUNGKAP</div>
+    ${G.players.map(p=>{
+      const def=rd(p.role);
+      const w=(winner==='hero'&&(def.team==='hero'||def.team==='civil')&&p.alive)||(winner==='villain'&&def.team==='villain'&&p.alive)||(winner==='trickster'&&p.role==='trickster');
+      return `<div class="player-item ${!p.alive?'player-dead':''}">
+        <div class="player-num" style="font-size:16px;">${def.icon}</div>
+        <div><div class="player-name-text">${p.name}${!p.alive?' ☠️':''} ${w?'🏆':''}</div>
+          <div style="font-size:10px;font-family:'Cinzel',serif;color:${def.color};letter-spacing:1px;">${def.name} · ${def.label}</div></div>
+      </div>`;
+    }).join('')}
+    <div class="divider"></div>
+    <div style="text-align:center;font-size:13px;color:var(--ink3);line-height:1.9;">
+      ✅ Misi Berhasil: ${G.missionResults.filter(Boolean).length} &nbsp;
+      ❌ Misi Gagal: ${G.missionResults.filter(x=>!x).length} &nbsp;
+      ⚔️ Total Ronde: ${G.round}
+    </div>`;
+  showScreen('sc-gameover');
+}
+function restartGame(){
+  G.players=[];G.round=1;G.missionResults=[];
+  G.tricksterDefeated=false;G.nightActions={};
+  G.assassinSkillUsed=0;
+  showScreen('sc-setup');
+}
+
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('touchstart',()=>{},{passive:true});
+buildCountSel();
+</script>
+</body>
+</html>
