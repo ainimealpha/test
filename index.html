@@ -183,7 +183,7 @@ body{
 .role-passive{font-size:11.5px;line-height:1.6;padding:8px 10px;background:rgba(255,255,255,.06);border-radius:8px;margin:5px 0;color:var(--tx2);border-left:2px solid rgba(192,132,252,.4);}
 .role-icon{font-size:54px;margin:8px 0;filter:drop-shadow(0 2px 14px rgba(0,0,0,.4));}
 .role-name{font-family:'Cinzel Decorative',serif;font-size:17px;font-weight:700;margin:6px 0;color:var(--tx);}
-.role-team{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:1;color:var(--tx2);}/* 🔥 BUG FIX: Brightened from opacity .7 to 1 for readability */
+.role-team{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:1;color:var(--tx2);}
 .role-ability{font-size:12.5px;line-height:1.7;padding:9px 10px;background:rgba(255,255,255,.05);border-radius:8px;margin:7px 0;font-style:italic;color:var(--tx2);border-left:2px solid rgba(56,189,248,.4);}
 .role-win{font-size:12px;line-height:1.5;padding:8px 10px;background:rgba(0,0,0,.25);border-radius:8px;margin-top:7px;color:var(--tx2);}
 .win-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;opacity:.5;display:block;margin-bottom:3px;color:var(--amber);}
@@ -364,50 +364,12 @@ body{
   border-radius:12px;text-align:center;color:#e8d8ff;font-size:14px;
   box-shadow:0 0 20px rgba(192,132,252,.1);
 }
-/* Night targets - IMPROVED STYLING */
-#na-targets {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin: 15px 0;
-  width: 100%;
-}
-.night-target-btn{
-  background:linear-gradient(135deg,rgba(50,30,80,.9),rgba(30,15,60,.95)) !important;
-  border:2px solid rgba(192,132,252,.25) !important;
-  color:#e8d8ff !important;
-  border-radius:14px !important;
-  padding:14px 14px !important;
-  font-size:15px !important;
-  font-weight:500 !important;
-  transition:all .3s ease !important;
-  box-shadow:0 4px 12px rgba(0,0,0,.3) !important;
-}
-.night-target-btn:hover{
-  background:linear-gradient(135deg,rgba(70,50,120,.95),rgba(50,30,80,.98)) !important;
-  border-color:rgba(192,132,252,.4) !important;
-}
-.night-target-btn.selected{
-  border-color:var(--lilac) !important;
-  background:linear-gradient(135deg,rgba(124,58,237,.5),rgba(100,40,180,.6)) !important;
-  color:#fff !important;
-  box-shadow:0 0 0 3px rgba(192,132,252,.25),0 0 30px rgba(168,85,247,.35) !important;
-  transform:scale(1.02);
-}
-.check-icon{
-  width:28px;height:28px;border-radius:50%;
-  border:2.5px solid rgba(192,132,252,.3);
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:700;
-  flex-shrink:0;transition:all .3s ease;
-  background:rgba(255,255,255,.02);
-}
-.night-target-btn.selected .check-icon{
-  background:var(--lilac2);
-  border-color:var(--lilac2);
-  color:#fff;
-  box-shadow:0 0 12px rgba(168,85,247,.4);
-}
+#na-targets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:15px 0;width:100%;}
+.night-target-btn{background:linear-gradient(135deg,rgba(50,30,80,.9),rgba(30,15,60,.95)) !important;border:2px solid rgba(192,132,252,.25) !important;color:#e8d8ff !important;border-radius:14px !important;padding:14px 14px !important;font-size:15px !important;font-weight:500 !important;transition:all .3s ease !important;box-shadow:0 4px 12px rgba(0,0,0,.3) !important;}
+.night-target-btn:hover{background:linear-gradient(135deg,rgba(70,50,120,.95),rgba(50,30,80,.98)) !important;border-color:rgba(192,132,252,.4) !important;}
+.night-target-btn.selected{border-color:var(--lilac) !important;background:linear-gradient(135deg,rgba(124,58,237,.5),rgba(100,40,180,.6)) !important;color:#fff !important;box-shadow:0 0 0 3px rgba(192,132,252,.25),0 0 30px rgba(168,85,247,.35) !important;transform:scale(1.02);}
+.check-icon{width:28px;height:28px;border-radius:50%;border:2.5px solid rgba(192,132,252,.3);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;transition:all .3s ease;background:rgba(255,255,255,.02);}
+.night-target-btn.selected .check-icon{background:var(--lilac2);border-color:var(--lilac2);color:#fff;box-shadow:0 0 12px rgba(168,85,247,.4);}
 
 /* ── GLOWS FOR SCREEN SECTIONS ────────────────── */
 #sc-welcome .game-title{font-size:clamp(24px,7vw,42px);}
@@ -862,7 +824,6 @@ function updateNDPhase(){
     instr.innerHTML=`📜 <b>Ronde ${G.round} — Misi #${mNum}</b><br>Tema: <b>${tn[theme]}</b><br>Pilih <b>${tsStr}</b> pemain sebagai Tim Misi.`;
     sub.innerHTML='Tiap anggota dapat soal berbeda bertema sama. Gagal/skip = sabotase! ⚠️ Ada Villain tersembunyi (🗡️ Assassin, 🥷 Thief, 💣 Bomber) dalam permainan!';
     acts.innerHTML=`<button class="btn btn-primary w100" onclick="goTeamSelect()">👥 PILIH TIM MISI</button>`;
-  }
   } else if(G.phase==='mission_review'){
     const sab=G.missionAnswers.filter(a=>!a.pass).length,pass=sab===0;
     instr.innerHTML=`${pass?'✅':'❌'} <b>Misi #${G.missionResults.length} ${pass?'BERHASIL!':'GAGAL!'}</b><br>${sab} dari ${G.selectedTeam.length} anggota gagal/sabotase.`;
@@ -1077,7 +1038,6 @@ function openNightAction(pIdx,type){
     document.getElementById('na-sel-indicator').style.display='block';
     document.getElementById('na-sel-indicator').textContent='Tidak ada target — gunakan Skip.';
   } else {
-    // 🔥 BUG FIX: Hapus role icon agar pemain tidak bisa lihat role target saat skill activation
     tEl.innerHTML=targets.map(x=>{const xi=G.players.indexOf(x);return `<button class="night-target-btn" id="nat-${xi}" onclick="selNightTarget(${xi})"><div class="check-icon" id="chk-${xi}"></div><span>👤 ${x.name}${!x.alive?' ☠️':''}</span></button>`;}).join('');
   }
   showOverlay('ov-night');
@@ -1098,14 +1058,7 @@ function skipNightEntry(){G.nightQueueIdx++;updateNightPhase();}
 function nightConfirm(){
   if(G.nightSelTarget===null)return;
   const p=G.players[G.nightPlayerIdx],target=G.players[G.nightSelTarget],type=G.nightActionType;
-  
-  // 🔥 CRITICAL BUG FIX: Check if player sendiri di-block oleh Archer!
-  if(p.blockedThisNight){
-    alert(`⚠️ SKILL GAGAL!\n\n${p.name} kemampuannya di-blokir malam ini!\nTidak bisa menggunakan skill.`);
-    addLog(`⚠️ ${p.name} (${rd(p.role).name}) skill gagal — di-blokir oleh Archer!`);
-    hideOverlay('ov-night');G.nightQueueIdx++;updateNightPhase();return;
-  }
-  
+  if(p.blockedThisNight){alert(`⚠️ SKILL GAGAL!\n\n${p.name} kemampuannya di-blokir!`);addLog(`⚠️ ${p.name} skill gagal — di-blokir!`);hideOverlay('ov-night');G.nightQueueIdx++;updateNightPhase();return;}
   if(type==='guardian'){
     G.nightActions.protected=G.nightSelTarget;target.protected=true;p.skillUsesLeft--;
     addLog('🛡️ Guardian menggunakan kemampuan.');
@@ -1278,7 +1231,7 @@ let _lastTap={};
 function renderVoting(){
   const pl=document.getElementById('vt-players');
   const alivePlayers=G.players.filter(p=>p.alive);
-  const maxVotes=alivePlayers.length;// 🔥 VOTING LIMIT: Total suara tidak boleh melebihi jumlah pemain hidup
+  const maxVotes=alivePlayers.length;
   pl.innerHTML=alivePlayers.map(p=>{
     const pi=G.players.indexOf(p);const cnt=G.voteCounts[pi]||0;
     return `<button class="vote-btn ${cnt>0?'voted':''}" onclick="addVote(${pi})">
@@ -1293,14 +1246,10 @@ function renderVoting(){
 }
 function addVote(pi){
   const now=Date.now();
-  const maxVotes=G.players.filter(p=>p.alive).length;// 🔥 BUG FIX: Voting limit
+  const maxVotes=G.players.filter(p=>p.alive).length;
   const totalVotes=Object.values(G.voteCounts).reduce((a,b)=>a+b,0);
   if(_lastTap[pi]&&now-_lastTap[pi]<400){G.voteCounts[pi]=Math.max(0,(G.voteCounts[pi]||1)-1);_lastTap[pi]=0;}
-  else{
-    // 🔥 FIX: Check apakah menambah 1 voting akan melebihi limit
-    if(totalVotes>=maxVotes){showNotif(`⚠️ Max voting: ${maxVotes} (jumlah pemain hidup). Kurangi voting di pemain lain dulu!`);return;}
-    G.voteCounts[pi]=(G.voteCounts[pi]||0)+1;_lastTap[pi]=now;
-  }
+  else{if(totalVotes>=maxVotes){showNotif(`⚠️ Max voting: ${maxVotes}`);return;}G.voteCounts[pi]=(G.voteCounts[pi]||0)+1;_lastTap[pi]=now;}
   renderVoting();
 }
 function tallyVotes(){
@@ -1351,7 +1300,6 @@ function openBomberDeath(bomberIdx){
   const tgts=G.players.filter((p,i)=>p.alive&&isHeroCivil(p)&&i!==bomberIdx);
   const tEl=document.getElementById('bomber-targets');
   if(tgts.length===0){tEl.innerHTML=`<div style="color:#ff9a3c;font-size:14px;text-align:center;padding:12px;">Tidak ada target Civilian/Hero tersisa.</div>`;}
-  // 🔥 BUG FIX: Hapus role icon dari bomber target selection
   else{tEl.innerHTML=tgts.map(x=>{const xi=G.players.indexOf(x);return `<button class="night-target-btn" id="bmt-${xi}" onclick="selBomberTarget(${xi})" style="border-color:rgba(255,140,0,.5)!important;"><div class="check-icon" id="bmchk-${xi}"></div><span>👤 ${x.name}</span></button>`;}).join('');}
   showOverlay('ov-bomber-death');
 }
