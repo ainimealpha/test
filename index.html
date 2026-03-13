@@ -49,13 +49,22 @@ body{font-family:'Crimson Text',Georgia,serif;background:var(--parch);color:var(
 .player-name-text{flex:1;font-size:15px;}
 .player-dead{opacity:.4;text-decoration:line-through;}
 .role-card{border-radius:18px;padding:22px 18px;text-align:center;width:100%;max-width:300px;margin:0 auto;border:2px solid;}
-.role-card.knight{background:linear-gradient(160deg,#e8f4ff,#c5dff5);border-color:#2980b9;}
-.role-card.wizard{background:linear-gradient(160deg,#f0e8ff,#d5c5f5);border-color:#8e44ad;}
+/* HERO */
+.role-card.guardian{background:linear-gradient(160deg,#e8f4ff,#c5dff5);border-color:#2980b9;}
+.role-card.visioner{background:linear-gradient(160deg,#f0e8ff,#d5c5f5);border-color:#8e44ad;}
 .role-card.healer{background:linear-gradient(160deg,#e8fff0,#c5f0d5);border-color:#27ae60;}
+.role-card.archer{background:linear-gradient(160deg,#fff8e8,#f5e0c0);border-color:#c8860b;}
+/* CIVILIAN */
 .role-card.civilian{background:linear-gradient(160deg,#fdf6e3,#f5e9c8);border-color:#b8860b;}
+/* VILLAIN */
 .role-card.assassin{background:linear-gradient(160deg,#ffe8e8,#f5c5c5);border-color:#c0392b;}
 .role-card.thief{background:linear-gradient(160deg,#fff3e8,#f5d5c5);border-color:#e67e22;}
+.role-card.bomber{background:linear-gradient(160deg,#fff0e0,#f5cca0);border-color:#d35400;}
+/* ANTI-HERO */
 .role-card.trickster{background:linear-gradient(160deg,#f0fff0,#c5f0e0);border-color:#16a085;}
+.role-card.dummy{background:linear-gradient(160deg,#f8e8ff,#e0c0f5);border-color:#8e44ad;}
+/* Passive box in role card */
+.role-passive{font-size:11.5px;line-height:1.6;padding:8px;background:rgba(0,0,0,.06);border-radius:7px;margin:5px 0;color:var(--ink2);}
 .role-icon{font-size:54px;margin:8px 0;filter:drop-shadow(0 2px 6px rgba(0,0,0,.12));}
 .role-name{font-family:'Cinzel Decorative',serif;font-size:17px;font-weight:700;margin:6px 0;}
 .role-team{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:.7;}
@@ -246,7 +255,7 @@ body{font-family:'Crimson Text',Georgia,serif;background:var(--parch);color:var(
   <p style="text-align:center;font-size:14px;color:var(--ink3);line-height:1.85;max-width:300px;margin-bottom:22px;">Satu di antara kalian adalah pengkhianat. Jawab firman Tuhan, temukan benda tersembunyi, dan ungkap kebenaran!</p>
   <button class="btn btn-primary w100" onclick="goSetup()">⚔️ MULAI PETUALANGAN</button>
   <button class="btn btn-ghost w100" onclick="showScreen('sc-guide')">📖 PANDUAN BERMAIN</button>
-  <p style="font-size:10px;color:var(--ink3);text-align:center;margin-top:16px;letter-spacing:1px;">5–30 PEMAIN · 1 NARATOR · 1 PERANGKAT</p>
+  <p style="font-size:10px;color:var(--ink3);text-align:center;margin-top:16px;letter-spacing:1px;">5–20 PEMAIN · 1 NARATOR · 1 PERANGKAT</p>
 </div>
 </div>
 
@@ -256,37 +265,48 @@ body{font-family:'Crimson Text',Georgia,serif;background:var(--parch);color:var(
   <h1 class="game-title" style="font-size:20px;">PANDUAN BERMAIN</h1>
   <div class="card"><div class="card-title">🎭 Tim & Peran</div>
     <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
-      <b>⚔️ HERO</b> — Knight · Wizard · Healer (punya kemampuan khusus)<br>
-      <b>👤 CIVILIAN</b> — Warga tanpa kemampuan. Menang bersama Hero.<br>
-      <b>🗡️ VILLAIN</b> — Assassin · Thief (musuh tersembunyi)<br>
-      <b>🃏 TRICKSTER</b> — Solo. Menang jika semua Villain lolos!
+      <b>⚔️ HERO</b> — Guardian · Visioner · Healer · Archer (punya skill & pasif)<br>
+      <b>👤 CIVILIAN</b> — Terbanyak. Tanpa skill. Kekuatan di voting.<br>
+      <b>💣 VILLAIN</b> — Assassin · Thief · Bomber (musuh tersembunyi)<br>
+      <b>🃏 ANTI-HERO</b> — Trickster · Dummy (menang jika Villain menang)
     </div>
   </div>
   <div class="card"><div class="card-title">📱 Alur Permainan</div>
     <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
       <b>1. Pembagian Peran</b> — HP digilir tiap pemain. Lihat peranmu secara pribadi.<br>
-      <b>2. Pilih Perwakilan Misi</b> — Narator/diskusi pilih 2-3 orang sebagai Tim Misi.<br>
-      <b>3. Misi Rahasia</b> — Tiap anggota tim dapat soal berbeda (tema sama). Gagal/skip = sabotase!<br>
-      <b>4. Malam Hari</b> — Narator pandu karakter gunakan skill lewat HP.<br>
+      <b>2. Pilih Tim Misi</b> — Diskusi pilih anggota sesuai jumlah pemain.<br>
+      <b>3. Misi Rahasia</b> — Tiap anggota dapat soal berbeda. Gagal/skip = sabotase!<br>
+      <b>4. Malam Hari</b> — Karakter gunakan skill lewat HP secara rahasia.<br>
       <b>5. Pagi & Voting</b> — Hasil malam diumumkan. Diskusi → eliminasi 1 orang.
     </div>
   </div>
   <div class="card"><div class="card-title">🏆 Kondisi Menang</div>
     <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
-      <b>Hero + Civilian</b> → Semua Villain dieliminasi<br>
-      <b>Villain</b> → Jumlah Villain ≥ Hero + Civilian yang hidup<br>
-      <b>Trickster</b> → Semua Villain masih hidup saat game berakhir<br>
-      <b>Trickster KALAH</b> → Jika ada Villain yang tereliminasi
+      <b>Hero + Civilian</b> → Semua Villain (Assassin+Thief+Bomber) tereliminasi<br>
+      <b>Villain</b> → Villain ≥ Hero+Civilian hidup, ATAU 3 misi gagal<br>
+      <b>Anti-Hero</b> → Jika kondisi Villain menang tercapai + Anti-Hero hidup → Anti-Hero menang (override Villain!)<br>
+      <b>Dummy spesial</b> → Divoting keluar setelah malam ke-2 + min. 5 pemain hidup → Anti-Hero menang!
     </div>
   </div>
-  <div class="card"><div class="card-title">⚡ Kemampuan Karakter</div>
+  <div class="card"><div class="card-title">⚡ HERO — Skill & Pasif</div>
     <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
-      <b>⚔️ Knight</b> — Lindungi 1 orang (1x). Kebal Assassin 1x.<br>
-      <b>🔮 Wizard</b> — Intip peran 1 pemain (1x). Jika dibunuh Assassin → Assassin ikut mati!<br>
-      <b>💚 Healer</b> — Bangkitkan 1 pemain mati (1x). Aktif saat sudah ada korban!<br>
-      <b>🗡️ Assassin</b> — Bunuh 1 orang di malam hari.<br>
-      &nbsp;&nbsp;&nbsp;• 5–6 pemain: 1x &nbsp;• 7–10 pemain: 2x 🔥 &nbsp;• 11+ pemain: 1x<br>
-      <b>🥷 Thief</b> — Curi kemampuan 1 pemain hidup (1x).
+      <b>⚔️ Guardian</b> — Lindungi 1 orang dari serangan malam (bukan diri sendiri). <em>Pasif: Jika berhasil melindungi Civ/Hero yang diserang → dapat 1 use lagi (maks 2x).</em><br>
+      <b>🔮 Visioner</b> — Lihat role 1 pemain (1x). <em>Pasif: Jika skill belum dipakai + diserang Villain → Villain mati, Visioner selamat. Setelah pasif aktif, skill terkunci.</em><br>
+      <b>💚 Healer</b> — Bangkitkan 1 Civ/Hero (mulai malam ke-2). Hero dibangkitkan = jadi Civilian. <em>Pasif: Jika gugur sebelum pakai skill → malam berikutnya bisa bangkitkan 1 orang (Hero = skill saja).</em><br>
+      <b>🏹 Archer</b> — Blokir skill 1 pemain selama 1 malam. <em>Pasif: Jika target Villain → dapat 1 use lagi ke target beda (maks 2x).</em>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">💀 VILLAIN — Skill & Pasif</div>
+    <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
+      <b>🗡️ Assassin</b> — Eliminasi 1 orang di malam hari (1x). <em>Pasif: Jika Hero+Civilian awal ≥9 → dapat 2x skill selama game.</em><br>
+      <b>🥷 Thief</b> — Curi skill + pasif 1 pemain (1x, target kehilangan segalanya). <em>Pasif: Jika target Civilian → gagal & hangus. Jika target sudah pakai skill → target ikut mati.</em><br>
+      <b>💣 Bomber</b> — Jika Visioner intip Bomber → Visioner yang mati! <em>Pasif: Jika divoting keluar → pilih 1 Civ/Hero untuk ikut gugur.</em>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">🃏 ANTI-HERO — Pasif</div>
+    <div style="font-size:13px;line-height:1.95;color:var(--ink2);">
+      <b>🃏 Trickster</b> — P1: Dilihat Visioner = tampil sebagai Civilian (1x). P2: Ditarget Assassin = Assassin buang 1 skill use (1x).<br>
+      <b>🎭 Dummy</b> — P1: Kebal 1x dari semua skill Hero/Villain. P2: Divoting keluar (malam ke-2+, ≥5 hidup) = Anti-Hero menang!
     </div>
   </div>
   <button class="btn btn-primary w100 mt14" onclick="showScreen('sc-welcome')">← KEMBALI</button>
@@ -472,61 +492,76 @@ body{font-family:'Crimson Text',Georgia,serif;background:var(--parch);color:var(
 </div>
 </div>
 
+<!-- ██ BOMBER DEATH OVERLAY ██ -->
+<div class="overlay overlay-night" id="ov-bomber-death">
+<div class="night-overlay-inner">
+  <div style="text-align:center;margin-bottom:16px;">
+    <div style="font-size:52px;filter:drop-shadow(0 0 14px rgba(255,140,0,.7));">💣</div>
+    <div style="font-family:'Cinzel',serif;font-size:20px;color:#ff9a3c;margin:8px 0;text-shadow:0 0 20px rgba(255,140,0,.5);">BOMBER GUGUR!</div>
+    <div style="font-size:13px;color:rgba(255,200,130,.65);">Gilirkan HP ke Bomber secara diam-diam</div>
+  </div>
+  <div class="night-desc-box">
+    <div class="night-desc-text" style="color:#ffe0b0;">Bomber memilih 1 Civilian atau Hero untuk ikut tereliminasi bersamanya sebagai serangan terakhir.</div>
+  </div>
+  <div id="bomber-targets" style="margin-top:12px;"></div>
+  <div id="bomber-sel-indicator" class="night-sel-indicator" style="display:none;"></div>
+  <button class="btn btn-danger mt8" id="bomber-confirm" disabled onclick="bomberDeathConfirm()">💣 KONFIRMASI KORBAN TERAKHIR</button>
+  <button class="btn-skip-night" onclick="bomberDeathSkip()">⏩ SKIP — Tidak Memilih Korban</button>
+</div>
+</div>
+
 <div class="notif" id="notif"></div>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// GAME STATE
+// REALM OF LIGHT v2.0 — GAME ENGINE
 // ═══════════════════════════════════════════════════════════════
-const G = {
-  players:[],narrator:'',round:1,missionResults:[],
-  phase:'',revealIdx:0,
+const G={
+  players:[],narrator:'',round:1,nightNum:0,
+  missionResults:[],phase:'',revealIdx:0,
   usedQ:{bible:[],trivia:[],fillblank:[],verbal:[],find:[],physical:[]},
-  nightActions:{killed:-1,protected:-1,wizardPeek:-1,revived:-1},
-  nightQueue:[],nightQueueIdx:0,nightSelTarget:null,nightPlayerIdx:-1,
+  nightActions:{killed:-1,protected:-1,visionerPeek:-1,revived:-1,archerBlocked:-1},
+  nightQueue:[],nightQueueIdx:0,nightSelTarget:null,
+  nightPlayerIdx:-1,nightActionType:'',
   voteCounts:{},pendingEliminate:-1,
-  selectedTeam:[],
-  teamMissionIdx:0,
-  teamMissions:[],
-  missionAnswers:[],
-  timerInterval:null,tricksterDefeated:false,
-  setupCount:5,
-  assassinMaxSkill:1,   // ditentukan saat startGame()
-  assassinSkillUsed:0,  // hitung berapa kali skill Assassin sudah dipakai
+  selectedTeam:[],teamMissionIdx:0,teamMissions:[],missionAnswers:[],
+  timerInterval:null,setupCount:5,
+  assassinMaxSkill:1,assassinSkillUsed:0,
+  healerPostAvailable:false,healerPostIdx:-1,
+  _tsMin:3,_tsMax:3,_bomberIdx:-1,_bomberSelTarget:null,
 };
 
-// ═══════════════════════════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════════════════════════
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-function showOverlay(id){document.getElementById(id).classList.add('active');}
-function hideOverlay(id){document.getElementById(id).classList.remove('active');}
+// ── UTILS ──────────────────────────────────────────────────────
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');window.scrollTo(0,0);}
+function showOverlay(id){const el=document.getElementById(id);if(el)el.classList.add('active');}
+function hideOverlay(id){const el=document.getElementById(id);if(el)el.classList.remove('active');}
 function showNotif(msg,dur=2800){const n=document.getElementById('notif');n.textContent=msg;n.style.display='block';clearTimeout(n._t);n._t=setTimeout(()=>n.style.display='none',dur);}
 function addLog(msg){const el=document.getElementById('game-log');if(!el)return;const d=document.createElement('div');d.textContent='• '+msg;el.appendChild(d);el.scrollTop=el.scrollHeight;}
 function alive(){return G.players.filter(p=>p.alive);}
 function aliveCount(){return G.players.filter(p=>p.alive).length;}
 function deadCount(){return G.players.filter(p=>!p.alive).length;}
-function villainAlive(){return G.players.filter(p=>p.alive&&(p.role==='assassin'||p.role==='thief')).length;}
-function heroAndCivilAlive(){return G.players.filter(p=>p.alive&&p.role!=='assassin'&&p.role!=='thief'&&p.role!=='trickster').length;}
+function isVillain(p){return['assassin','thief','bomber'].includes(p.role);}
+function isAntiHero(p){return p.role==='trickster'||p.role==='dummy';}
+function isHeroCivil(p){return!isVillain(p)&&!isAntiHero(p);}
+function villainAlive(){return G.players.filter(p=>p.alive&&isVillain(p)).length;}
+function heroCivilAlive(){return G.players.filter(p=>p.alive&&isHeroCivil(p)).length;}
+function antiHeroAlive(){return G.players.filter(p=>p.alive&&isAntiHero(p)).length;}
 function rd(r){return ROLES[r]||ROLES.civilian;}
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function randPick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function hasHeroCivilDead(){return G.players.some(p=>!p.alive&&isHeroCivil(p));}
 
-// ═══════════════════════════════════════════════════════════════
-// STORAGE
-// ═══════════════════════════════════════════════════════════════
+// ── STORAGE ────────────────────────────────────────────────────
 function saveNames(n){try{localStorage.setItem('rol_names',JSON.stringify(n));}catch(e){}}
 function loadNames(){try{return JSON.parse(localStorage.getItem('rol_names')||'[]');}catch(e){return[];}}
 function saveNar(n){try{localStorage.setItem('rol_nar',n);}catch(e){}}
 function loadNar(){try{return localStorage.getItem('rol_nar')||'';}catch(e){return'';}}
 function clearSaved(){try{localStorage.removeItem('rol_names');}catch(e){}buildNameInputs(G.setupCount);showNotif('✅ Nama tersimpan dihapus');}
 
-// ═══════════════════════════════════════════════════════════════
-// SETUP
-// ═══════════════════════════════════════════════════════════════
+// ── SETUP ──────────────────────────────────────────────────────
 function buildCountSel(){
   const c=document.getElementById('count-sel');c.innerHTML='';
-  for(let i=5;i<=30;i++){const b=document.createElement('button');b.className='cnt-btn';b.textContent=i;b.onclick=()=>setPC(i);c.appendChild(b);}
+  for(let i=5;i<=20;i++){const b=document.createElement('button');b.className='cnt-btn';b.textContent=i;b.onclick=()=>setPC(i);c.appendChild(b);}
 }
 function goSetup(){buildCountSel();const sn=loadNar();if(sn)document.getElementById('narrator-name').value=sn;showScreen('sc-setup');}
 function setPC(n){
@@ -535,26 +570,23 @@ function setPC(n){
   document.getElementById('names-card').style.display='block';
   document.getElementById('start-btn').style.display='block';
   buildNameInputs(n);
-  // Tampilkan info assassin skill
-  const maxSkill = getAssassinMaxSkill(n);
-  const infoEl = document.getElementById('assassin-info-setup');
-  const txtEl = document.getElementById('assassin-info-text');
-  infoEl.style.display = 'block';
-  if(n >= 7 && n <= 10){
-    txtEl.innerHTML = `🔥 <b>BUFF AKTIF!</b><br>Dengan <b>${n} pemain</b>, Assassin bisa menggunakan skill <b>2x</b> malam hari!<br><span class="assassin-skill-badge">🗡️ ASSASSIN 2x SKILL</span>`;
-  } else if(n >= 11){
-    txtEl.innerHTML = `Dengan <b>${n} pemain</b>, Assassin menggunakan skill <b>1x</b> saja.<br><span class="assassin-skill-badge">🗡️ ASSASSIN 1x SKILL</span>`;
+  const dist=ROLE_TABLE[Math.min(Math.max(n,5),20)];
+  const hcCount=dist.h+dist.c;
+  const maxSkill=getAssassinMaxSkill(hcCount);
+  const infoEl=document.getElementById('assassin-info-setup');
+  const txtEl=document.getElementById('assassin-info-text');
+  infoEl.style.display='block';
+  const antis=dist.a>0?` · ${dist.a} Anti-Hero`:'';
+  if(maxSkill===2){
+    txtEl.innerHTML=`🔥 <b>BUFF AKTIF!</b> Hero+Civilian awal <b>${hcCount}</b> (≥9) → Assassin skill <b>2x</b>!<br><span class="assassin-skill-badge">🗡️ ASSASSIN 2x</span>`;
   } else {
-    txtEl.innerHTML = `Dengan <b>${n} pemain</b> (5–6), Assassin menggunakan skill <b>1x</b>.<br><span class="assassin-skill-badge">🗡️ ASSASSIN 1x SKILL</span>`;
+    txtEl.innerHTML=`Hero+Civilian awal <b>${hcCount}</b> (<9) → Assassin skill <b>1x</b>.<br><span class="assassin-skill-badge">🗡️ ASSASSIN 1x</span>`;
   }
+  showNotif(`📊 ${dist.h} Hero · ${dist.c} Civilian · ${dist.v} Villain${antis}`);
 }
 function buildNameInputs(n){
   const saved=loadNames();const list=document.getElementById('player-inputs-list');list.innerHTML='';
-  for(let i=0;i<n;i++){
-    const row=document.createElement('div');row.className='player-item';
-    row.innerHTML=`<div class="player-num">${i+1}</div><input class="input-field" id="pn-${i}" placeholder="Nama Pemain ${i+1}" autocomplete="off" value="${saved[i]||''}">`;
-    list.appendChild(row);
-  }
+  for(let i=0;i<n;i++){const row=document.createElement('div');row.className='player-item';row.innerHTML=`<div class="player-num">${i+1}</div><input class="input-field" id="pn-${i}" placeholder="Nama Pemain ${i+1}" autocomplete="off" value="${saved[i]||''}">`;list.appendChild(row);}
 }
 function startGame(){
   const n=G.setupCount;
@@ -565,19 +597,29 @@ function startGame(){
   saveNames(names);saveNar(nar);
   G.narrator=nar;
   const roles=getRoles(n);
-  // Tentukan assassin max skill berdasarkan jumlah pemain
-  G.assassinMaxSkill = getAssassinMaxSkill(n);
-  G.assassinSkillUsed = 0;
-  G.players=names.map((nm,i)=>({name:nm,role:roles[i],alive:true,abilityUsed:false,protected:false,stolenAbility:null,stolenAbilityUsed:false}));
-  G.round=1;G.missionResults=[];G.revealIdx=0;
+  const dist=ROLE_TABLE[Math.min(Math.max(n,5),20)];
+  G.assassinMaxSkill=getAssassinMaxSkill(dist.h+dist.c);
+  G.assassinSkillUsed=0;
+  G.players=names.map((nm,i)=>{
+    const role=roles[i];
+    let skillUsesLeft=0;
+    if(role==='assassin') skillUsesLeft=G.assassinMaxSkill;
+    else if(['guardian','visioner','healer','archer','thief'].includes(role)) skillUsesLeft=1;
+    return{name:nm,role:role,alive:true,skillUsesLeft:skillUsesLeft,
+      passive1Used:false,passive2Used:false,bonusGranted:false,
+      protected:false,blockedThisNight:false,
+      downgraded:false,downgradedPartial:false,
+      stolenAbility:null,stolenSkillUsed:false,
+      archerHitVillain:false,_thiefKill:false};
+  });
+  G.round=1;G.nightNum=0;G.missionResults=[];G.revealIdx=0;
   G.usedQ={bible:[],trivia:[],fillblank:[],verbal:[],find:[],physical:[]};
-  G.tricksterDefeated=false;G.nightActions={killed:-1,protected:-1,wizardPeek:-1,revived:-1};
+  G.nightActions={killed:-1,protected:-1,visionerPeek:-1,revived:-1,archerBlocked:-1};
+  G.healerPostAvailable=false;G.healerPostIdx=-1;
   showRoleReveal();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// ROLE REVEAL
-// ═══════════════════════════════════════════════════════════════
+// ── ROLE REVEAL ────────────────────────────────────────────────
 function showRoleReveal(){G.revealIdx=0;showRevealForPlayer();showScreen('sc-reveal');}
 function showRevealForPlayer(){
   const p=G.players[G.revealIdx];
@@ -589,78 +631,62 @@ function doReveal(){
   const p=G.players[G.revealIdx];const def=rd(p.role);
   document.getElementById('rv-waiting').style.display='none';
   document.getElementById('rv-card').style.display='block';
-
-  // Ability text khusus assassin (dinamis)
-  let abilityText = def.ability;
-  if(p.role==='assassin'){
-    abilityText = getAssassinAbility(G.players.length);
-  }
-
-  const extra=(p.role==='trickster')
-    ?`<div class="role-ability" style="color:#0a4a3a;">🎯 Jagalah agar Villain TIDAK tertangkap. Kamu bisa sabotase misi!</div>`
-    :(p.role==='assassin'||p.role==='thief')
-    ?`<div class="role-ability" style="color:var(--red2);">⚠️ Bertindaklah seperti pemain biasa. Jangan terbongkar!</div>`:'';
-
-  // Badge skill assassin
-  const assassinBadge = (p.role==='assassin')
-    ? `<div class="assassin-skill-badge">🗡️ SKILL ${G.assassinMaxSkill}x MALAM INI</div>`
-    : '';
-
+  let extra='';
+  if(p.role==='assassin') extra+=`<div class="assassin-skill-badge" style="margin-top:8px;">🗡️ SKILL ${G.assassinMaxSkill}x SELAMA GAME</div>`;
+  if(isAntiHero(p)) extra+=`<div class="role-ability" style="color:#0a4a3a;font-size:12px;margin-top:6px;">⚠️ Tetap tenang, andalkan pasifmu!</div>`;
+  else if(isVillain(p)) extra+=`<div class="role-ability" style="color:var(--red2);font-size:12px;margin-top:6px;">⚠️ Bertindaklah seperti warga biasa. Jangan terbongkar!</div>`;
   document.getElementById('rv-html').innerHTML=`
     <div class="role-card ${def.card}">
       <div class="role-icon">${def.icon}</div>
       <div class="role-name">${def.name}</div>
       <div class="role-team"><span class="tag ${def.tag}">${def.label}</span></div>
-      <div class="role-ability">${abilityText}</div>${extra}${assassinBadge}
+      <div class="role-ability"><b>🎯 SKILL:</b> ${def.ability}</div>
+      <div class="role-passive"><b>✦ PASIF:</b> ${def.passive}</div>
+      ${extra}
       <div class="role-win"><span class="win-label">🏆 Kondisi Menang</span>${def.win}</div>
     </div>`;
 }
 function nextReveal(){G.revealIdx++;if(G.revealIdx>=G.players.length)startMainGame();else showRevealForPlayer();}
 
-// ═══════════════════════════════════════════════════════════════
-// MAIN GAME
-// ═══════════════════════════════════════════════════════════════
-function startMainGame(){G.round=1;addLog(`🏰 Permainan dimulai! ${G.players.length} pemain, Narator: ${G.narrator}`);goNarrator('mission_start');}
+// ── MAIN GAME ──────────────────────────────────────────────────
+function startMainGame(){G.round=1;addLog(`🏰 Permainan dimulai! ${G.players.length} pemain · Narator: ${G.narrator}`);goNarrator('mission_start');}
 function goNarrator(phase){G.phase=phase;showScreen('sc-nar');renderNarrator();}
-
 function renderNarrator(){
   document.getElementById('nd-round').textContent=G.round;
   document.getElementById('nd-alive').textContent=aliveCount();
   const qt=document.getElementById('nd-quests');qt.innerHTML='';
-  for(let i=0;i<5;i++){
-    let cls='',em='';
-    if(i<G.missionResults.length){cls=G.missionResults[i]?'pass':'fail';em=G.missionResults[i]?'✅':'❌';}
-    else if(i===G.missionResults.length){cls='cur';em='⚔️';}
-    qt.innerHTML+=`<div class="q-dot ${cls}">${em||(i+1)}</div>`;
-  }
+  for(let i=0;i<5;i++){let cls='',em='';if(i<G.missionResults.length){cls=G.missionResults[i]?'pass':'fail';em=G.missionResults[i]?'✅':'❌';}else if(i===G.missionResults.length){cls='cur';em='⚔️';}qt.innerHTML+=`<div class="q-dot ${cls}">${em||(i+1)}</div>`;}
   renderNDPlayers();updateNDPhase();
 }
 function renderNDPlayers(){
   const list=document.getElementById('nd-players');
-  list.innerHTML=G.players.map((p)=>{
+  list.innerHTML=G.players.map(p=>{
     const def=rd(p.role);
+    let badges='';
+    if(p.protected) badges+='🛡️';if(p.blockedThisNight) badges+='🚫';
     return `<div class="player-item ${!p.alive?'player-dead':''}">
       <div class="player-num">${p.alive?def.icon:'☠️'}</div>
       <div class="player-name-text">${p.name}${!p.alive?' <span style="color:var(--red2);font-size:11px;">(Gugur)</span>':''}
-        <span style="font-size:10px;color:${def.color};font-family:\'Cinzel\',serif;display:block;">${def.name} · ${def.label}</span>
-      </div>${p.protected?'<span style="color:var(--green2);">🛡️</span>':''}
+        <span style="font-size:10px;color:${def.color};font-family:\'Cinzel\',serif;display:block;">${def.name} · ${def.label}${p.downgraded?' → Civilian':''}</span>
+      </div>${badges?`<span>${badges}</span>`:''}
     </div>`;
   }).join('');
 }
 function updateNDPhase(){
-  const instr=document.getElementById('nd-instr');
-  const sub=document.getElementById('nd-sub');
-  const acts=document.getElementById('nd-acts');
+  const instr=document.getElementById('nd-instr'),sub=document.getElementById('nd-sub'),acts=document.getElementById('nd-acts');
   const mNum=G.missionResults.length+1;
-  const themeNames={bible:'📖 Alkitab',trivia:'🌍 Trivia Umum',fillblank:'📜 Lengkapi Firman',verbal:'🗣️ Verbal Challenge',find:'🔍 Cari Benda',physical:'💪 Tantangan Fisik'};
+  const tn={bible:'📖 Alkitab',trivia:'🌍 Trivia Umum',fillblank:'📜 Lengkapi Firman',verbal:'🗣️ Verbal Challenge',find:'🔍 Cari Benda',physical:'💪 Tantangan Fisik'};
   if(G.phase==='mission_start'){
+    const ts=getMissionTeamSize(aliveCount());
+    G._tsMin=ts.min;G._tsMax=ts.max;
+    const tsStr=ts.min===ts.max?`${ts.min}`:`${ts.min}–${ts.max}`;
     const theme=MISSION_THEMES[(G.round-1)%MISSION_THEMES.length];
-    instr.innerHTML=`📜 <b>Ronde ${G.round} — Misi #${mNum}</b><br>Tema: <b>${themeNames[theme]}</b><br>Pilih 2–3 pemain sebagai Tim Misi, lalu gilirkan HP ke masing-masing.`;
-    sub.textContent=`Tiap anggota tim dapat soal BERBEDA dari tema yang sama. Gagal/skip = sabotase!`;
+    instr.innerHTML=`📜 <b>Ronde ${G.round} — Misi #${mNum}</b><br>Tema: <b>${tn[theme]}</b><br>Pilih <b>${tsStr}</b> pemain sebagai Tim Misi.`;
+    sub.textContent='Tiap anggota dapat soal berbeda bertema sama. Gagal/skip = sabotase!';
     acts.innerHTML=`<button class="btn btn-primary w100" onclick="goTeamSelect()">👥 PILIH TIM MISI</button>`;
   } else if(G.phase==='mission_review'){
-    const sab=G.missionAnswers.filter(a=>!a.pass).length;const pass=sab===0;
-    instr.innerHTML=`${pass?'✅':'❌'} <b>Misi #${G.missionResults.length} ${pass?'BERHASIL!':'GAGAL!'}</b><br>${sab} dari ${G.selectedTeam.length} anggota tim gagal/sabotase.`;
+    const sab=G.missionAnswers.filter(a=>!a.pass).length,pass=sab===0;
+    instr.innerHTML=`${pass?'✅':'❌'} <b>Misi #${G.missionResults.length} ${pass?'BERHASIL!':'GAGAL!'}</b><br>${sab} dari ${G.selectedTeam.length} anggota gagal/sabotase.`;
     sub.textContent=pass?'Kerajaan aman... untuk sementara!':'Ada saboteur! Siapakah mereka?';
     acts.innerHTML=`<button class="btn btn-primary w100" onclick="proceedToNight()">🌙 LANJUT KE MALAM HARI</button>`;
   } else if(G.phase==='morning'){
@@ -671,58 +697,52 @@ function updateNDPhase(){
 }
 function buildMorningReport(){
   const na=G.nightActions;let r='';
-  if(na.revived>=0&&G.players[na.revived])r+=`• ✨ ${G.players[na.revived].name} dibangkitkan Healer!<br>`;
+  if(na.revived>=0&&G.players[na.revived]) r+=`• ✨ Seseorang dibangkitkan kembali!<br>`;
+  if(na.archerBlocked>=0) r+=`• 🏹 Archer memblokir skill seseorang semalam.<br>`;
   if(na.killed>=0&&G.players[na.killed]){
-    if(na.protected===na.killed)r+=`• 🛡️ Serangan malam diblokir Knight! Semua selamat.<br>`;
+    if(na.protected===na.killed) r+=`• 🛡️ Serangan malam diblokir Guardian! Semua selamat.<br>`;
     else r+=`• 💀 ${G.players[na.killed].name} ditemukan tidak bernyawa...<br>`;
-  }
-  if(!r)r='• Malam berlalu tenang. Tidak ada kejadian.';
+  } else if(na.killed<0&&G.nightNum>0) r+='';
+  G.players.filter(p=>p._deadThisNight).forEach(p=>{r+=`• 💀 ${p.name} gugur malam ini.<br>`;delete p._deadThisNight;});
+  if(!r) r='• Malam berlalu tenang. Tidak ada kejadian.';
   return r;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// TEAM SELECTION
-// ═══════════════════════════════════════════════════════════════
+// ── TEAM SELECTION ─────────────────────────────────────────────
 function goTeamSelect(){
   G.selectedTeam=[];
-  const minT=2,maxT=Math.min(3,aliveCount());
-  document.getElementById('ts-instr').textContent=`Diskusikan bersama dan pilih ${minT}–${maxT} pemain sebagai Tim Misi ronde ini.`;
-  document.getElementById('ts-sub').textContent=`Tiap anggota tim akan dapat soal berbeda bertema sama. Gagal/skip = sabotase!`;
-  document.getElementById('ts-count-label').textContent=`PILIH ${minT}–${maxT} ANGGOTA TIM`;
+  const ts=getMissionTeamSize(aliveCount());
+  G._tsMin=ts.min;G._tsMax=ts.max;
+  const tsStr=ts.min===ts.max?`${ts.min}`:`${ts.min}–${ts.max}`;
+  document.getElementById('ts-instr').textContent=`Diskusikan dan pilih ${tsStr} pemain sebagai Tim Misi.`;
+  document.getElementById('ts-count-label').textContent=`PILIH ${tsStr} ANGGOTA TIM`;
+  document.getElementById('ts-sub').textContent='Tiap anggota dapat soal berbeda. Gagal/skip = sabotase!';
   const pl=document.getElementById('ts-players');
-  pl.innerHTML=alive().map(p=>{
-    const pi=G.players.indexOf(p);
-    return `<button class="team-sel-btn" id="ts-${pi}" onclick="toggleTeamSel(${pi},${maxT})">${p.name}</button>`;
-  }).join('');
+  pl.innerHTML=alive().map(p=>{const pi=G.players.indexOf(p);return `<button class="team-sel-btn" id="ts-${pi}" onclick="toggleTeamSel(${pi})">${rd(p.role).icon} ${p.name}</button>`;}).join('');
   document.getElementById('ts-confirm').disabled=true;
   showScreen('sc-team');
 }
-function toggleTeamSel(pi,maxT){
+function toggleTeamSel(pi){
   const pos=G.selectedTeam.indexOf(pi);
   if(pos!==-1){G.selectedTeam.splice(pos,1);}
-  else{if(G.selectedTeam.length>=maxT){showNotif(`⚠️ Maksimal ${maxT} anggota!`);return;}G.selectedTeam.push(pi);}
-  document.querySelectorAll('[id^="ts-"]').forEach(b=>{
-    const idx=parseInt(b.id.split('-')[1]);b.classList.toggle('selected',G.selectedTeam.includes(idx));
-  });
-  const minT=2;document.getElementById('ts-confirm').disabled=G.selectedTeam.length<minT;
-  document.getElementById('ts-count-label').textContent=`PILIH 2–${maxT} ANGGOTA TIM (${G.selectedTeam.length} dipilih)`;
+  else{if(G.selectedTeam.length>=G._tsMax){showNotif(`⚠️ Maksimal ${G._tsMax} anggota!`);return;}G.selectedTeam.push(pi);}
+  document.querySelectorAll('[id^="ts-"]').forEach(b=>{const idx=parseInt(b.id.split('-')[1]);b.classList.toggle('selected',G.selectedTeam.includes(idx));});
+  document.getElementById('ts-confirm').disabled=G.selectedTeam.length<G._tsMin;
+  const tsStr=G._tsMin===G._tsMax?G._tsMin:`${G._tsMin}–${G._tsMax}`;
+  document.getElementById('ts-count-label').textContent=`PILIH ${tsStr} ANGGOTA (${G.selectedTeam.length} dipilih)`;
 }
 function confirmTeam(){
-  if(G.selectedTeam.length<2){showNotif('⚠️ Pilih minimal 2 orang!');return;}
+  if(G.selectedTeam.length<G._tsMin){showNotif(`⚠️ Minimal ${G._tsMin} anggota!`);return;}
   const theme=MISSION_THEMES[(G.round-1)%MISSION_THEMES.length];
   G.teamMissions=G.selectedTeam.map(()=>pickQuestion(theme));
   G.teamMissionIdx=0;G.missionAnswers=[];
-  const names=G.selectedTeam.map(i=>G.players[i].name).join(', ');
-  addLog(`👥 Tim Misi dipilih: ${names}`);
+  addLog(`👥 Tim Misi: ${G.selectedTeam.map(i=>G.players[i].name).join(', ')}`);
   showMissionForTeamMember();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// QUESTION PICKER
-// ═══════════════════════════════════════════════════════════════
+// ── QUESTION PICKER ────────────────────────────────────────────
 function pickQuestion(theme){
-  const pool=QB[theme];
-  const usedArr=G.usedQ[theme]||[];
+  const pool=QB[theme];const usedArr=G.usedQ[theme]||[];
   let available=pool.filter((_,i)=>!usedArr.includes(i));
   if(available.length===0){G.usedQ[theme]=[];available=[...pool];}
   const idx=pool.indexOf(randPick(available));
@@ -730,180 +750,155 @@ function pickQuestion(theme){
   return{...pool[idx],theme};
 }
 
-// ═══════════════════════════════════════════════════════════════
-// MISSION EXECUTION
-// ═══════════════════════════════════════════════════════════════
+// ── MISSION EXECUTION ──────────────────────────────────────────
 function showMissionForTeamMember(){
   if(G.teamMissionIdx>=G.selectedTeam.length){finalizeMission();return;}
-  const pIdx=G.selectedTeam[G.teamMissionIdx];
-  const p=G.players[pIdx];
+  const pIdx=G.selectedTeam[G.teamMissionIdx];const p=G.players[pIdx];
   document.getElementById('ms-pname').textContent=`⚔️ ${p.name}`;
   document.getElementById('ms-waiting').style.display='block';
   document.getElementById('ms-active').style.display='none';
   if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}
   showScreen('sc-mission');
 }
-
 let _mSel=null;
 function showMission(){
-  const pIdx=G.selectedTeam[G.teamMissionIdx];
-  const p=G.players[pIdx];
-  const m=G.teamMissions[G.teamMissionIdx];
-  const def=rd(p.role);
-  const canSab=def.team==='villain'||p.role==='trickster';
+  const pIdx=G.selectedTeam[G.teamMissionIdx];const p=G.players[pIdx];const m=G.teamMissions[G.teamMissionIdx];
+  const canSab=isVillain(p)||p.role==='trickster';
   _mSel=null;
   document.getElementById('ms-waiting').style.display='none';
   document.getElementById('ms-active').style.display='block';
-  const card=document.getElementById('ms-card');
-  const acts=document.getElementById('ms-acts');
-  acts.innerHTML='';
+  const card=document.getElementById('ms-card'),acts=document.getElementById('ms-acts');acts.innerHTML='';
   const isChoice=m.c&&m.a!==undefined;
   const badges={bible:'📖 Soal Alkitab',trivia:'🌍 Trivia Umum',fillblank:'📜 Lengkapi Firman',verbal:'🗣️ Verbal Challenge',find:'🔍 Temukan Benda',physical:'💪 Tantangan Fisik'};
-  const badgeClass={bible:'bible',trivia:'bible',fillblank:'bible',verbal:'verbal',find:'find',physical:'physical'}[m.theme]||'bible';
+  const bClass={bible:'bible',trivia:'bible',fillblank:'bible',verbal:'verbal',find:'find',physical:'physical'}[m.theme]||'bible';
   if(isChoice){
-    card.innerHTML=`<div class="mission-card">
-      <span class="mission-badge ${badgeClass}">${badges[m.theme]||'Soal'}</span>
-      <div class="mission-q">${m.q}</div>
-      <div class="mc-grid">${m.c.map((ch,i)=>`<button class="mc-btn" id="mc-${i}" onclick="selBible(${i})">${ch}</button>`).join('')}</div>
-    </div>`;
+    card.innerHTML=`<div class="mission-card"><span class="mission-badge ${bClass}">${badges[m.theme]}</span><div class="mission-q">${m.q}</div><div class="mc-grid">${m.c.map((ch,i)=>`<button class="mc-btn" id="mc-${i}" onclick="selBible(${i})">${ch}</button>`).join('')}</div></div>`;
     document.getElementById('ms-timer-wrap').style.display='none';
-    setTimeout(()=>{
-      if(canSab){
-        acts.innerHTML=`<div style="padding:10px;border:1.5px dashed var(--border);border-radius:10px;text-align:center;margin-top:8px;">
-          <div style="font-size:10px;color:var(--ink3);margin-bottom:6px;font-family:'Cinzel',serif;letter-spacing:1px;">AKSI RAHASIA</div>
-          <button class="btn btn-danger btn-sm" onclick="mSabotage()">🗡️ Sengaja Salah / Skip</button></div>`;
-      } else {
-        acts.innerHTML=`<button class="btn btn-ghost" onclick="mSkip()">⏩ Tidak Tahu / Skip</button>`;
-      }
-    },600);
+    setTimeout(()=>{if(canSab)acts.innerHTML=`<div style="padding:10px;border:1.5px dashed var(--border);border-radius:10px;text-align:center;margin-top:8px;"><div style="font-size:10px;color:var(--ink3);margin-bottom:6px;font-family:'Cinzel',serif;letter-spacing:1px;">AKSI RAHASIA</div><button class="btn btn-danger btn-sm" onclick="mSabotage()">🗡️ Sengaja Salah / Skip</button></div>`;else acts.innerHTML=`<button class="btn btn-ghost" onclick="mSkip()">⏩ Tidak Tahu / Skip</button>`;},600);
   } else {
-    card.innerHTML=`<div class="mission-card">
-      <span class="mission-badge ${badgeClass}">${badges[m.theme]||'Tantangan'}</span>
-      <div class="mission-q">${m.q}</div>
-    </div>`;
+    card.innerHTML=`<div class="mission-card"><span class="mission-badge ${bClass}">${badges[m.theme]||'Tantangan'}</span><div class="mission-q">${m.q}</div></div>`;
     let tl=m.time||30;
     document.getElementById('ms-timer-wrap').style.display='block';
-    document.getElementById('ms-timer').textContent=tl;
-    document.getElementById('ms-timer').className='timer-display';
-    G.timerInterval=setInterval(()=>{
-      tl--;const el=document.getElementById('ms-timer');
-      if(el){el.textContent=tl;if(tl<=5)el.className='timer-display urgent';}
-      if(tl<=0){clearInterval(G.timerInterval);G.timerInterval=null;recordMission(false);mNext();}
-    },1000);
-    acts.innerHTML=`<button class="btn btn-success" onclick="timedDone(true)">✅ BERHASIL!</button>
-      <button class="btn btn-danger" onclick="timedDone(false)">❌ GAGAL / SKIP</button>`;
+    document.getElementById('ms-timer').textContent=tl;document.getElementById('ms-timer').className='timer-display';
+    G.timerInterval=setInterval(()=>{tl--;const el=document.getElementById('ms-timer');if(el){el.textContent=tl;if(tl<=5)el.className='timer-display urgent';}if(tl<=0){clearInterval(G.timerInterval);G.timerInterval=null;recordMission(false);mNext();}},1000);
+    acts.innerHTML=`<button class="btn btn-success" onclick="timedDone(true)">✅ BERHASIL!</button><button class="btn btn-danger" onclick="timedDone(false)">❌ GAGAL / SKIP</button>`;
   }
 }
-function selBible(idx){
-  _mSel=idx;
-  document.querySelectorAll('.mc-btn').forEach((b,i)=>b.classList.toggle('selected',i===idx));
-  const old=document.getElementById('bc');if(old)old.remove();
-  const b=document.createElement('button');b.id='bc';b.className='btn btn-primary mt8';b.textContent='✅ KONFIRMASI JAWABAN';b.onclick=confBible;
-  document.getElementById('ms-acts').appendChild(b);
-}
-function confBible(){
-  if(_mSel===null)return;
-  if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}
-  const m=G.teamMissions[G.teamMissionIdx];
-  const correct=_mSel===m.a;
-  document.querySelectorAll('.mc-btn').forEach((b,i)=>{if(i===m.a)b.classList.add('correct');else if(i===_mSel&&!correct)b.classList.add('wrong');});
-  recordMission(correct);setTimeout(mNext,1100);
-}
+function selBible(idx){_mSel=idx;document.querySelectorAll('.mc-btn').forEach((b,i)=>b.classList.toggle('selected',i===idx));const old=document.getElementById('bc');if(old)old.remove();const b=document.createElement('button');b.id='bc';b.className='btn btn-primary mt8';b.textContent='✅ KONFIRMASI JAWABAN';b.onclick=confBible;document.getElementById('ms-acts').appendChild(b);}
+function confBible(){if(_mSel===null)return;if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}const m=G.teamMissions[G.teamMissionIdx];const correct=_mSel===m.a;document.querySelectorAll('.mc-btn').forEach((b,i)=>{if(i===m.a)b.classList.add('correct');else if(i===_mSel&&!correct)b.classList.add('wrong');});recordMission(correct);setTimeout(mNext,1100);}
 function mSkip(){if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}recordMission(false);mNext();}
 function mSabotage(){if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}recordMission(false);mNext();}
 function timedDone(pass){if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}recordMission(pass);mNext();}
-function recordMission(pass){const pIdx=G.selectedTeam[G.teamMissionIdx];G.missionAnswers.push({playerIdx:pIdx,pass});}
+function recordMission(pass){G.missionAnswers.push({playerIdx:G.selectedTeam[G.teamMissionIdx],pass});}
 function mNext(){G.teamMissionIdx++;if(G.teamMissionIdx>=G.selectedTeam.length)finalizeMission();else showMissionForTeamMember();}
 function finalizeMission(){
-  const sab=G.missionAnswers.filter(a=>!a.pass).length;const pass=sab===0;
+  const sab=G.missionAnswers.filter(a=>!a.pass).length,pass=sab===0;
   G.missionResults.push(pass);
-  addLog(`${pass?'✅':'❌'} Misi Ronde ${G.round}: ${pass?'BERHASIL':'GAGAL'} (${sab} sabotase dari ${G.selectedTeam.length} anggota)`);
+  addLog(`${pass?'✅':'❌'} Misi Ronde ${G.round}: ${pass?'BERHASIL':'GAGAL'} (${sab} sabotase dari ${G.selectedTeam.length})`);
   G.phase='mission_review';goNarrator('mission_review');
 }
 
-// ═══════════════════════════════════════════════════════════════
-// NIGHT PHASE — ASSASSIN SKILL 2x LOGIC
-// ═══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// NIGHT PHASE v2.0
+// Urutan: Guardian → Visioner → Healer → Archer → Assassin → Thief → Healer(anumerta)
+// ══════════════════════════════════════════════════════════════
 function proceedToNight(){
-  G.nightActions={killed:-1,protected:-1,wizardPeek:-1,revived:-1};
-  G.nightQueue=[];
-  const hasDead=deadCount()>0;
-  G.players.forEach((p,i)=>{
-    if(!p.alive)return;
-    // Assassin: cek apakah masih bisa pakai skill
-    if(p.role==='assassin'){
-      if(G.assassinSkillUsed < G.assassinMaxSkill) G.nightQueue.push(i);
-      return; // jangan lanjut ke check abilityUsed default
-    }
-    if(p.abilityUsed)return;
-    if(p.role==='healer'&&!hasDead)return;
-    if(['knight','wizard','healer','thief'].includes(p.role))G.nightQueue.push(i);
-    if(p.stolenAbility&&!p.stolenAbilityUsed)G.nightQueue.push(i);
-  });
+  G.nightNum++;
+  G.nightActions={killed:-1,protected:-1,visionerPeek:-1,revived:-1,archerBlocked:-1};
+  G.players.forEach(p=>{p.protected=false;p.blockedThisNight=false;});
+  G.nightQueue=buildNightQueue();
   G.nightQueueIdx=0;
   showScreen('sc-night');updateNightPhase();
 }
+
+function buildNightQueue(){
+  const q=[];const hcDead=hasHeroCivilDead();
+  G.players.forEach((p,i)=>{
+    if(!p.alive) return;
+    // Guardian: skill usesLeft > 0 dan tidak didowngrade
+    if(p.role==='guardian'&&p.skillUsesLeft>0) q.push({pIdx:i,type:'guardian'});
+    // Visioner: skill belum dipakai DAN pasif belum aktif (passive1Used = false = pasif AKTIF, skill BISA pakai)
+    if(p.role==='visioner'&&p.skillUsesLeft>0&&!p.passive1Used) q.push({pIdx:i,type:'visioner'});
+    // Healer: mulai malam ke-2, ada HC yang mati, skill belum dipakai
+    if(p.role==='healer'&&p.skillUsesLeft>0&&G.nightNum>=2&&hcDead) q.push({pIdx:i,type:'healer'});
+    // Archer: skill usesLeft > 0
+    if(p.role==='archer'&&p.skillUsesLeft>0) q.push({pIdx:i,type:'archer'});
+    // Assassin
+    if(p.role==='assassin'&&G.assassinSkillUsed<G.assassinMaxSkill) q.push({pIdx:i,type:'assassin'});
+    // Thief: own skill
+    if(p.role==='thief'&&p.skillUsesLeft>0) q.push({pIdx:i,type:'thief'});
+    // Thief: stolen ability
+    if(p.role==='thief'&&p.stolenAbility&&!p.stolenSkillUsed){
+      const sa=p.stolenAbility;
+      if(sa==='healer'&&(G.nightNum<2||!hcDead)) return;
+      q.push({pIdx:i,type:'thief_stolen'});
+    }
+  });
+  // Healer anumerta (passive posthumous)
+  if(G.healerPostAvailable&&G.healerPostIdx>=0&&hcDead) q.push({pIdx:G.healerPostIdx,type:'healer_post'});
+  return q;
+}
+
+const NIGHT_INSTRS={
+  guardian:p=>`Bangunkan <b>${p.name}</b> (Guardian ⚔️). Semua lain tutup mata!<br><em>"Guardian, mau lindungi seseorang malam ini?"</em>`,
+  visioner:p=>`Bangunkan <b>${p.name}</b> (Visioner 🔮). Semua lain tutup mata!<br><em>"Visioner, mau intip role seseorang?"</em><br><span style="font-size:12px;color:#c8a0ff;">⚠️ Pasif counter akan terkunci setelah skill dipakai!</span>`,
+  healer:p=>`Bangunkan <b>${p.name}</b> (Healer 💚). Semua lain tutup mata!<br><em>"Healer, mau bangkitkan seseorang yang gugur?"</em>`,
+  healer_post:p=>`Bangunkan <b>${p.name}</b> (Healer 💚 — PASIF ANUMERTA). Semua lain tutup mata!<br><em>"Healer telah gugur, tapi sebagai warisan — siapa yang ingin dibangkitkan?"</em>`,
+  archer:p=>`Bangunkan <b>${p.name}</b> (Archer 🏹). Semua lain tutup mata!<br><em>"Archer, mau blokir skill seseorang malam ini?"</em>`,
+  assassin:p=>`Bangunkan <b>${p.name}</b> (Assassin 🗡️). Semua lain tutup mata!<br><em>"Assassin, mau eliminasi seseorang? (${G.assassinSkillUsed+1}/${G.assassinMaxSkill})"</em>`,
+  thief:p=>`Bangunkan <b>${p.name}</b> (Thief 🥷). Semua lain tutup mata!<br><em>"Thief, mau curi skill seseorang?"</em>`,
+  thief_stolen:p=>`Bangunkan <b>${p.name}</b> (Thief 🥷 — skill curian: ${rd(p.stolenAbility).icon} ${rd(p.stolenAbility).name}). Semua lain tutup mata!`,
+};
+
 function updateNightPhase(){
-  const ni=document.getElementById('night-instr');const ns=document.getElementById('night-sub');const na=document.getElementById('night-acts');
+  const ni=document.getElementById('night-instr'),ns=document.getElementById('night-sub'),na=document.getElementById('night-acts');
   if(G.nightQueueIdx>=G.nightQueue.length){
     ni.innerHTML='☀️ <b>Semua aksi malam selesai.</b><br>Saatnya mengumumkan hasil kepada semua pemain.';
     ns.textContent='Ketuk tombol untuk resolusi malam dan lanjut ke pagi hari.';
-    na.innerHTML=`<button class="btn-night" onclick="resolveNight()">☀️ SELESAIKAN MALAM & LANJUT KE PAGI</button>`;
+    na.innerHTML=`<button class="btn-night" onclick="resolveNight()">☀️ SELESAIKAN MALAM & LANJUT PAGI</button>`;
     return;
   }
-  const pIdx=G.nightQueue[G.nightQueueIdx];const p=G.players[pIdx];
-  // Label assassin skill sisa
-  const assLabel = p.role==='assassin'
-    ? ` (Skill ${G.assassinSkillUsed+1}/${G.assassinMaxSkill})`
-    : '';
-  const instrs={
-    knight:`Bangunkan <b>${p.name}</b> (Knight).\nSemua lain tutup mata!\nTanya: <em>"Knight, mau lindungi seseorang malam ini?"</em>`,
-    wizard:`Bangunkan <b>${p.name}</b> (Wizard).\nSemua lain tutup mata!\nTanya: <em>"Wizard, mau intip peran seseorang?"</em>`,
-    healer:`Bangunkan <b>${p.name}</b> (Healer).\nSemua lain tutup mata!\nTanya: <em>"Healer, mau bangkitkan seseorang yang sudah gugur?"</em>`,
-    assassin:`Bangunkan <b>${p.name}</b> (Assassin${assLabel}).\nSemua lain tutup mata!\nTanya: <em>"Assassin, mau eliminasi seseorang malam ini?"</em>`,
-    thief:`Bangunkan <b>${p.name}</b> (Thief).\nSemua lain tutup mata!\nTanya: <em>"Thief, mau curi kemampuan seseorang?"</em>`,
-  };
-  ni.innerHTML=(instrs[p.role]||`Bangunkan <b>${p.name}</b>.`).replace(/\n/g,'<br>');
+  const entry=G.nightQueue[G.nightQueueIdx];const p=G.players[entry.pIdx];
+  ni.innerHTML=(NIGHT_INSTRS[entry.type]||((p)=>`Bangunkan <b>${p.name}</b>.`))(p);
   ns.textContent='Gilirkan HP ke pemain ini secara diam-diam.';
-  na.innerHTML=`<button class="btn-night" onclick="openNightAction(${pIdx})">📱 GILIR HP KE ${p.name.toUpperCase()}</button>
-    <button class="btn" style="background:rgba(255,255,255,.05);color:#604880;width:100%;padding:12px;border-radius:10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-top:4px;" onclick="skipNightPlayer()">⏩ SKIP — Tidak Pakai Kemampuan</button>`;
+  na.innerHTML=`<button class="btn-night" onclick="openNightAction(${entry.pIdx},'${entry.type}')">📱 GILIR HP KE ${p.name.toUpperCase()}</button>
+    <button style="background:rgba(255,255,255,.05);color:#604880;width:100%;padding:12px;border-radius:10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin:5px 0;border:none;" onclick="skipNightEntry()">⏩ SKIP — Tidak Pakai Kemampuan</button>`;
 }
-function openNightAction(pIdx){
-  G.nightPlayerIdx=pIdx;G.nightSelTarget=null;
-  const p=G.players[pIdx];const def=rd(p.role);
+
+function openNightAction(pIdx,type){
+  G.nightPlayerIdx=pIdx;G.nightActionType=type;G.nightSelTarget=null;
+  const p=G.players[pIdx];
+  const dispRole=(type==='thief_stolen'&&p.stolenAbility)?p.stolenAbility:p.role;
+  const def=rd(dispRole);
   document.getElementById('na-icon').textContent=def.icon;
-  document.getElementById('na-rname').textContent=def.name;
+  document.getElementById('na-rname').textContent=type.includes('post')?`${def.name} (Anumerta)`:def.name;
   document.getElementById('na-pname').textContent=p.name;
   document.getElementById('na-confirm').disabled=true;
   document.getElementById('na-sel-indicator').style.display='none';
-  document.getElementById('na-sel-indicator').textContent='';
-  const assSkillInfo = p.role==='assassin' ? ` [Skill ${G.assassinSkillUsed+1}/${G.assassinMaxSkill}]` : '';
-  const descs={
-    knight:'Pilih satu pemain untuk dilindungi dari eliminasi malam ini. (Tidak bisa melindungi diri sendiri)',
-    wizard:'Pilih satu pemain untuk dilihat perannya secara rahasia di layar ini.',
-    healer:'Pilih satu pemain yang sudah gugur untuk dibangkitkan kembali!',
-    assassin:`Pilih target yang akan kamu eliminasi malam ini secara diam-diam.${assSkillInfo}`,
-    thief:'Pilih target untuk dicuri kemampuannya. Kemampuanmu sekarang!',
+  const DESCS={
+    guardian:'Pilih 1 pemain untuk dilindungi dari serangan malam. (Tidak bisa melindungi diri sendiri)',
+    visioner:'Pilih 1 pemain untuk dilihat rolenya. ⚠️ Setelah ini, pasif counter-kill terkunci!',
+    healer:'Pilih 1 Civilian/Hero yang gugur untuk dibangkitkan. Hero dibangkitkan → jadi Civilian.',
+    healer_post:'[PASIF ANUMERTA] Pilih 1 Civilian/Hero gugur untuk dibangkitkan. Hero → hanya bisa gunakan skill.',
+    archer:'Pilih 1 pemain untuk diblokir skillnya selama malam ini.',
+    assassin:`Pilih target eliminasi secara diam-diam. [Skill ${G.assassinSkillUsed+1}/${G.assassinMaxSkill}]`,
+    thief:'Pilih target untuk dicuri skill & pasifnya.',
+    thief_stolen:`Gunakan skill curian (${rd(p.stolenAbility||'civilian').name}). Pilih target.`,
   };
-  document.getElementById('na-desc').textContent=descs[p.role]||'Pilih targetmu.';
-  const isHealer=p.role==='healer';
+  document.getElementById('na-desc').textContent=DESCS[type]||'Pilih targetmu.';
+  const isHealerType=type==='healer'||type==='healer_post';
   const targets=G.players.filter((x,i)=>{
-    if(isHealer)return!x.alive;
+    if(isHealerType) return!x.alive&&isHeroCivil(x);
+    if(type==='guardian') return x.alive&&i!==pIdx;
     return x.alive&&i!==pIdx;
   });
   const tEl=document.getElementById('na-targets');
   if(targets.length===0){
-    tEl.innerHTML=`<div style="color:#604880;font-size:14px;text-align:center;padding:12px;background:rgba(255,255,255,.05);border-radius:10px;">Tidak ada target yang tersedia.</div>`;
+    tEl.innerHTML=`<div style="color:#604880;font-size:14px;text-align:center;padding:12px;background:rgba(255,255,255,.05);border-radius:10px;">Tidak ada target tersedia. Gunakan Skip.</div>`;
     document.getElementById('na-sel-indicator').style.display='block';
     document.getElementById('na-sel-indicator').textContent='Tidak ada target — gunakan Skip.';
   } else {
-    tEl.innerHTML=targets.map(x=>{
-      const xi=G.players.indexOf(x);
-      return `<button class="night-target-btn" id="nat-${xi}" onclick="selNightTarget(${xi})">
-        <div class="check-icon" id="chk-${xi}">✓</div>
-        <span>👤 ${x.name}${!x.alive?' ☠️ (Gugur)':''}</span>
-      </button>`;
-    }).join('');
+    tEl.innerHTML=targets.map(x=>{const xi=G.players.indexOf(x);return `<button class="night-target-btn" id="nat-${xi}" onclick="selNightTarget(${xi})"><div class="check-icon" id="chk-${xi}"></div><span>${rd(x.role).icon} ${x.name}${!x.alive?' ☠️':''}</span></button>`;}).join('');
   }
   showOverlay('ov-night');
 }
@@ -911,188 +906,332 @@ function selNightTarget(tIdx){
   G.nightSelTarget=tIdx;
   document.querySelectorAll('.night-target-btn').forEach(b=>b.classList.remove('selected'));
   document.querySelectorAll('[id^="chk-"]').forEach(c=>c.textContent='');
-  const btn=document.getElementById(`nat-${tIdx}`);
-  const chk=document.getElementById(`chk-${tIdx}`);
-  if(btn)btn.classList.add('selected');
-  if(chk)chk.textContent='✓';
-  const targetName=G.players[tIdx]?.name||'?';
-  const indicator=document.getElementById('na-sel-indicator');
-  indicator.style.display='block';
-  indicator.innerHTML=`✅ Dipilih: <strong>${targetName}</strong>`;
+  const btn=document.getElementById(`nat-${tIdx}`),chk=document.getElementById(`chk-${tIdx}`);
+  if(btn)btn.classList.add('selected');if(chk)chk.textContent='✓';
+  const ind=document.getElementById('na-sel-indicator');
+  ind.style.display='block';ind.innerHTML=`✅ Dipilih: <strong>${G.players[tIdx]?.name||'?'}</strong>`;
   document.getElementById('na-confirm').disabled=false;
 }
-function nightSkip(){hideOverlay('ov-night');skipNightPlayer();}
+function nightSkip(){hideOverlay('ov-night');skipNightEntry();}
+function skipNightEntry(){G.nightQueueIdx++;updateNightPhase();}
+
 function nightConfirm(){
   if(G.nightSelTarget===null)return;
-  const p=G.players[G.nightPlayerIdx];const target=G.players[G.nightSelTarget];
-  if(p.role==='knight'){G.nightActions.protected=G.nightSelTarget;p.abilityUsed=true;addLog('🛡️ Knight menggunakan kemampuan.');}
-  else if(p.role==='wizard'){
-    G.nightActions.wizardPeek=G.nightSelTarget;p.abilityUsed=true;
-    const td=rd(target.role);
-    alert(`🔮 VISI WIZARD\n\n${target.name} adalah:\n${td.icon} ${td.name}\n(${td.label})\n\nIngat! Tutup layar setelah ini.`);
-    addLog('🔮 Wizard menggunakan visi.');
-  } else if(p.role==='healer'){G.nightActions.revived=G.nightSelTarget;p.abilityUsed=true;addLog('💚 Healer menggunakan kemampuan.');}
-  else if(p.role==='assassin'){
-    // Assassin: tracking jumlah pakai skill
-    G.nightActions.killed=G.nightSelTarget;
-    G.assassinSkillUsed++;
-    // Tandai abilityUsed hanya jika sudah mencapai max
-    if(G.assassinSkillUsed>=G.assassinMaxSkill) p.abilityUsed=true;
-    addLog(`🗡️ Assassin menggunakan kemampuan (${G.assassinSkillUsed}/${G.assassinMaxSkill}).`);
-  } else if(p.role==='thief'){
-    p.abilityUsed=true;const sr=target.role;p.stolenAbility=sr;target.abilityUsed=true;
-    const sd=rd(sr);
-    alert(`🥷 KEMAMPUAN DICURI!\n\nKamu mencuri kemampuan ${target.name}:\n${sd.icon} ${sd.name}\n\n${sd.ability}\n\nTutup layar setelah membaca!`);
-    addLog('🥷 Thief menggunakan kemampuan.');
+  const p=G.players[G.nightPlayerIdx],target=G.players[G.nightSelTarget],type=G.nightActionType;
+  if(type==='guardian'){
+    G.nightActions.protected=G.nightSelTarget;target.protected=true;p.skillUsesLeft--;
+    addLog('🛡️ Guardian menggunakan kemampuan.');
+  }
+  else if(type==='visioner'){
+    // Check Bomber trap
+    if(target.role==='bomber'&&!target.blockedThisNight){
+      p.alive=false;p.skillUsesLeft=0;p.passive1Used=true;
+      alert(`💣 BOMBER TRAP!\n\n${p.name} (Visioner) melihat ke arah yang salah.\nBomber telah menjebak — ${p.name} GUGUR!\n\nTutup layar setelah membaca.`);
+      addLog(`💣 Bomber trap! Visioner ${p.name} gugur.`);
+      hideOverlay('ov-night');G.nightQueueIdx++;
+      const w=checkWin();if(w){setTimeout(()=>endGame(w.winner,w.reason),600);return;}
+      updateNightPhase();return;
+    }
+    p.skillUsesLeft=0;p.passive1Used=true;
+    let shownRole=target.role;
+    // Trickster P1: appear as Civilian to Visioner (1x)
+    if(target.role==='trickster'&&!target.passive1Used){target.passive1Used=true;shownRole='civilian';addLog('🃏 Trickster P1 aktif — tampil sebagai Civilian.');}
+    const sd=rd(shownRole);
+    alert(`🔮 VISI VISIONER\n\n${target.name} adalah:\n${sd.icon} ${sd.name} (${sd.label})\n\n⚠️ Pasif counter-kill sekarang terkunci.\nTutup layar setelah membaca.`);
+    addLog('🔮 Visioner menggunakan skill. Pasif counter terkunci.');
+  }
+  else if(type==='healer'){
+    target.alive=true;p.skillUsesLeft=0;
+    G.nightActions.revived=G.nightSelTarget;
+    if(rd(target.role).team==='hero'&&!target.downgraded){
+      target.downgraded=true;target.skillUsesLeft=0;target.passive1Used=true;target.passive2Used=true;
+      addLog(`💚 Healer membangkitkan ${target.name} (${rd(target.role).name}) → kini Civilian (tanpa skill & pasif).`);
+    } else {addLog(`💚 Healer membangkitkan ${target.name}.`);}
+    G.healerPostAvailable=false;
+  }
+  else if(type==='healer_post'){
+    target.alive=true;G.nightActions.revived=G.nightSelTarget;G.healerPostAvailable=false;
+    if(rd(target.role).team==='hero'&&!target.downgraded){
+      target.downgradedPartial=true;target.passive1Used=true;target.passive2Used=true;
+      if(target.skillUsesLeft<1) target.skillUsesLeft=1;
+      addLog(`💚 Healer (anumerta) membangkitkan ${target.name} → skill aktif, pasif terkunci.`);
+    } else {addLog(`💚 Healer (anumerta) membangkitkan ${target.name}.`);}
+  }
+  else if(type==='archer'){
+    if(!target.blockedThisNight){target.blockedThisNight=true;G.nightActions.archerBlocked=G.nightSelTarget;}
+    p.skillUsesLeft--;
+    addLog(`🏹 Archer memblokir skill ${target.name} malam ini.`);
+  }
+  else if(type==='assassin'){
+    G.nightActions.killed=G.nightSelTarget;G.assassinSkillUsed++;
+    if(G.assassinSkillUsed>=G.assassinMaxSkill){const ap=G.players[G.nightPlayerIdx];ap.skillUsesLeft=0;}
+    addLog(`🗡️ Assassin memilih target (${G.assassinSkillUsed}/${G.assassinMaxSkill}).`);
+  }
+  else if(type==='thief'){
+    const tRole=target.role;
+    const targetIsEffectivelyCivilian=(tRole==='civilian')||target.downgraded;
+    if(targetIsEffectivelyCivilian){
+      p.skillUsesLeft=0;
+      alert(`🥷 SKILL GAGAL\n\nTarget adalah Civilian.\nSkill Thief hangus — tidak ada yang terjadi.\n\nTutup layar setelah membaca.`);
+      addLog('🥷 Thief mencuri Civilian — skill GAGAL & hangus.');
+    } else if(target.skillUsesLeft<=0){
+      p.skillUsesLeft=0;p.stolenAbility=tRole;
+      target.passive1Used=true;target.passive2Used=true;
+      target._thiefKill=true;
+      const sd=rd(tRole);
+      alert(`🥷 KEMAMPUAN DICURI!\n\nKamu mencuri kemampuan ${target.name}:\n${sd.icon} ${sd.name}\n\n${sd.ability}\n\n⚠️ ${target.name} sudah pakai skillnya → mereka GUGUR!\nTutup layar setelah membaca.`);
+      addLog(`🥷 Thief mencuri ${target.name} (skill habis) → ${target.name} ikut gugur!`);
+    } else {
+      p.skillUsesLeft=0;p.stolenAbility=tRole;
+      target.skillUsesLeft=0;target.passive1Used=true;target.passive2Used=true;
+      const sd=rd(tRole);
+      alert(`🥷 KEMAMPUAN DICURI!\n\nKamu mencuri kemampuan ${target.name}:\n${sd.icon} ${sd.name}\n\n${sd.ability}\n\n${target.name} kehilangan skill & pasif sepenuhnya.\nTutup layar setelah membaca.`);
+      addLog(`🥷 Thief mencuri kemampuan ${target.name} (${sd.name}).`);
+    }
+  }
+  else if(type==='thief_stolen'){
+    const sa=p.stolenAbility;
+    if(sa==='visioner'){
+      if(target.role==='bomber'&&!target.blockedThisNight){
+        p.alive=false;p.stolenSkillUsed=true;
+        alert(`💣 BOMBER TRAP!\n\n${p.name} (Thief — visi curian) terkena jebakan Bomber!\n${p.name} GUGUR!\n\nTutup layar.`);
+        addLog(`💣 Thief (visi curian) kena Bomber trap! ${p.name} gugur.`);
+        hideOverlay('ov-night');G.nightQueueIdx++;updateNightPhase();return;
+      }
+      let shownRole=target.role;
+      if(target.role==='trickster'&&!target.passive1Used){target.passive1Used=true;shownRole='civilian';}
+      const sd=rd(shownRole);
+      alert(`🔮 VISI CURIAN\n\n${target.name} adalah:\n${sd.icon} ${sd.name} (${sd.label})\n\nTutup layar.`);
+      p.stolenSkillUsed=true;addLog('🥷 Thief menggunakan visi curian.');
+    } else if(sa==='guardian'){
+      if(!target.blockedThisNight){G.nightActions.protected=G.nightSelTarget;target.protected=true;}
+      p.stolenSkillUsed=true;addLog(`🥷 Thief (Guardian curian) melindungi ${target.name}.`);
+    } else if(sa==='healer'){
+      target.alive=true;G.nightActions.revived=G.nightSelTarget;
+      if(rd(target.role).team==='hero'){target.downgraded=true;target.skillUsesLeft=0;target.passive1Used=true;target.passive2Used=true;}
+      p.stolenSkillUsed=true;addLog(`🥷 Thief (Healer curian) membangkitkan ${target.name}.`);
+    } else if(sa==='archer'){
+      if(!target.blockedThisNight){target.blockedThisNight=true;G.nightActions.archerBlocked=G.nightSelTarget;}
+      p.stolenSkillUsed=true;addLog(`🥷 Thief (Archer curian) memblokir ${target.name}.`);
+    } else {p.stolenSkillUsed=true;}
   }
   hideOverlay('ov-night');G.nightQueueIdx++;updateNightPhase();
 }
-function skipNightPlayer(){G.nightQueueIdx++;updateNightPhase();}
+
+// ── NIGHT RESOLUTION ───────────────────────────────────────────
 function resolveNight(){
   const na=G.nightActions;
-  if(na.revived>=0&&G.players[na.revived]&&!G.players[na.revived].alive){G.players[na.revived].alive=true;addLog(`💚 ${G.players[na.revived].name} dibangkitkan!`);}
-  if(na.killed>=0&&G.players[na.killed]){
-    const t=G.players[na.killed];
-    if(na.protected===na.killed){addLog('🛡️ Serangan diblokir Knight!');}
-    else{
-      if(t.role==='wizard'){const ass=G.players.find(x=>x.role==='assassin'&&x.alive);if(ass){ass.alive=false;addLog('🔮 Wizard membawa Assassin bersamanya!');if(villainAlive()===0)G.tricksterDefeated=true;}}
-      t.alive=false;addLog(`🗡️ ${t.name} dieliminasi malam ini.`);
-      if(rd(t.role).team==='villain')G.tricksterDefeated=true;
+  // 1. Archer bonus: if blocked target is Villain → Guardian gets +1 use
+  if(na.archerBlocked>=0){
+    const blocked=G.players[na.archerBlocked];
+    const archerP=G.players.find(p=>p.alive&&p.role==='archer');
+    if(archerP&&isVillain(blocked)&&!archerP.bonusGranted&&!archerP.archerHitVillain){
+      archerP.skillUsesLeft++;archerP.archerHitVillain=true;archerP.bonusGranted=true;
+      addLog('🏹 Archer kena Villain — bonus 1 use skill!');
     }
   }
-  // Reset killed untuk malam ini (Assassin 2x: killed akan diset ulang tiap malam)
-  G.nightActions.killed=-1;
+  // 2. Assassin kill resolution
+  if(na.killed>=0){
+    const killTarget=G.players[na.killed];
+    if(killTarget&&killTarget.alive){
+      let blocked=false;
+      // Archer blocked the Assassin?
+      if(!blocked&&na.archerBlocked>=0){
+        const assIdx=G.players.findIndex(p=>p.alive&&p.role==='assassin');
+        if(assIdx>=0&&na.archerBlocked===assIdx){blocked=true;addLog('🏹 Assassin diblokir Archer — serangan gagal!');}
+      }
+      // Guardian protection
+      if(!blocked&&na.protected===na.killed){
+        blocked=true;addLog('🛡️ Serangan Assassin diblokir Guardian!');
+        // Guardian bonus: if protected a Hero/Civilian and that person was actually attacked
+        const guardP=G.players.find(p=>p.alive&&p.role==='guardian'&&!p.bonusGranted&&p.skillUsesLeft===0);
+        if(guardP&&isHeroCivil(killTarget)){guardP.skillUsesLeft++;guardP.bonusGranted=true;addLog('🛡️ Guardian bonus: +1 skill use!');}
+      }
+      // Dummy P1: immune 1x to first attack
+      if(!blocked&&killTarget.role==='dummy'&&!killTarget.passive1Used){
+        killTarget.passive1Used=true;blocked=true;addLog(`🎭 Dummy P1 aktif — kebal dari serangan pertama!`);
+      }
+      // Trickster P2: Assassin loses 1 use (1x)
+      if(!blocked&&killTarget.role==='trickster'&&!killTarget.passive2Used){
+        killTarget.passive2Used=true;
+        if(G.assassinSkillUsed>0){G.assassinSkillUsed--;const ap=G.players.find(p=>p.alive&&p.role==='assassin');if(ap)ap.skillUsesLeft=Math.min(ap.skillUsesLeft+1,G.assassinMaxSkill);}
+        blocked=true;addLog(`🃏 Trickster P2 aktif — Assassin kehilangan 1 skill use!`);
+      }
+      // Visioner counter-passive: skill intact + passive not yet triggered
+      if(!blocked&&killTarget.role==='visioner'&&killTarget.skillUsesLeft>0&&!killTarget.passive1Used){
+        const assP=G.players.find(p=>p.alive&&p.role==='assassin');
+        if(assP){assP.alive=false;addLog(`🔮 Visioner pasif: Assassin ${assP.name} ikut gugur!`);markHealerPost(assP);}
+        killTarget.passive1Used=true;killTarget.skillUsesLeft=0;blocked=true;
+        addLog(`🔮 Visioner selamat dari serangan! Pasif counter aktif.`);
+      }
+      if(!blocked){
+        killTarget.alive=false;addLog(`🗡️ ${killTarget.name} (${rd(killTarget.role).name}) gugur malam ini.`);
+        markHealerPost(killTarget);
+      }
+    }
+  }
+  // 3. Thief kill (target had no skill left)
+  G.players.forEach(p=>{if(p._thiefKill&&p.alive){p.alive=false;p._thiefKill=false;addLog(`🥷 ${p.name} gugur — skill habis saat dicuri Thief.`);markHealerPost(p);}else if(p._thiefKill)p._thiefKill=false;});
   const w=checkWin();if(w){endGame(w.winner,w.reason);return;}
   G.phase='morning';goNarrator('morning');
 }
-
-// ═══════════════════════════════════════════════════════════════
-// VOTING
-// ═══════════════════════════════════════════════════════════════
-function goToVoting(){
-  G.voteCounts={};G.pendingEliminate=-1;
-  showScreen('sc-voting');renderVoting();
+function markHealerPost(deadPlayer){
+  if(deadPlayer.role==='healer'&&deadPlayer.skillUsesLeft>0&&!G.healerPostAvailable){
+    G.healerPostAvailable=true;G.healerPostIdx=G.players.indexOf(deadPlayer);
+    addLog('💚 Healer gugur dengan skill tersisa — pasif anumerta aktif malam berikutnya!');
+  }
 }
+
+// ══════════════════════════════════════════════════════════════
+// VOTING
+// ══════════════════════════════════════════════════════════════
+function goToVoting(){G.voteCounts={};G.pendingEliminate=-1;showScreen('sc-voting');renderVoting();}
 let _lastTap={};
 function renderVoting(){
   const pl=document.getElementById('vt-players');
-  const aliv=G.players.filter(p=>p.alive);
-  pl.innerHTML=aliv.map(p=>{
-    const pi=G.players.indexOf(p);
-    const cnt=G.voteCounts[pi]||0;
-    const prot=G.nightActions.protected===pi;
-    return `<button class="vote-btn ${cnt>0?'voted':''}" id="vbtn-${pi}" onclick="addVote(${pi})">
-      <span style="font-size:20px;">👤</span>
-      <span style="flex:1;">${p.name}${prot?' 🛡️':''}</span>
+  pl.innerHTML=G.players.filter(p=>p.alive).map(p=>{
+    const pi=G.players.indexOf(p);const cnt=G.voteCounts[pi]||0;
+    return `<button class="vote-btn ${cnt>0?'voted':''}" onclick="addVote(${pi})">
+      <span style="font-size:20px;">${rd(p.role).icon}</span>
+      <span style="flex:1;">${p.name}${p.protected?' 🛡️':''}</span>
       <span style="font-family:'Cinzel',serif;font-size:20px;min-width:28px;text-align:right;color:${cnt>0?'var(--red2)':'var(--ink3)'};">${cnt||''}</span>
     </button>`;
   }).join('');
   document.getElementById('vt-result-card').style.display='none';
   document.getElementById('vt-elim-btn').style.display='none';
   document.getElementById('vt-tally-btn').style.display='block';
+  document.getElementById('vt-sub').innerHTML='';
 }
 function addVote(pi){
   const now=Date.now();
-  if(_lastTap[pi]&&now-_lastTap[pi]<400){
-    G.voteCounts[pi]=Math.max(0,(G.voteCounts[pi]||1)-1);
-    _lastTap[pi]=0;
-  } else {
-    G.voteCounts[pi]=(G.voteCounts[pi]||0)+1;
-    _lastTap[pi]=now;
-  }
+  if(_lastTap[pi]&&now-_lastTap[pi]<400){G.voteCounts[pi]=Math.max(0,(G.voteCounts[pi]||1)-1);_lastTap[pi]=0;}
+  else{G.voteCounts[pi]=(G.voteCounts[pi]||0)+1;_lastTap[pi]=now;}
   renderVoting();
 }
 function tallyVotes(){
   const total=Object.values(G.voteCounts).reduce((a,b)=>a+b,0);
-  if(total===0){showNotif('⚠️ Belum ada suara yang masuk!');return;}
+  if(total===0){showNotif('⚠️ Belum ada suara!');return;}
   const sorted=Object.entries(G.voteCounts).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
   const topV=sorted[0][1];const topP=sorted.filter(([,v])=>v===topV);
-  const resEl=document.getElementById('vt-results');
-  resEl.innerHTML=sorted.map(([pi,v])=>{
+  document.getElementById('vt-results').innerHTML=sorted.map(([pi,v])=>{
     const p=G.players[parseInt(pi)];const pct=Math.round((v/total)*100);
-    return `<div class="vote-bar"><div class="vote-bar-label"><span>${p.name}</span><span>${v} suara (${pct}%)</span></div>
-      <div class="vote-bar-bg"><div class="vote-bar-fill" style="width:${pct}%"></div></div></div>`;
+    return `<div class="vote-bar"><div class="vote-bar-label"><span>${p.name}</span><span>${v} suara (${pct}%)</span></div><div class="vote-bar-bg"><div class="vote-bar-fill" style="width:${pct}%"></div></div></div>`;
   }).join('');
   document.getElementById('vt-result-card').style.display='block';
   if(topP.length===1){
-    G.pendingEliminate=parseInt(topP[0][0]);
-    const p=G.players[G.pendingEliminate];
-    const prot=G.nightActions.protected===G.pendingEliminate;
-    document.getElementById('vt-sub').innerHTML=prot?`🛡️ <b>${p.name}</b> dilindungi Knight malam ini!`:`<b>${p.name}</b> mendapat suara terbanyak: ${topV} suara.`;
+    G.pendingEliminate=parseInt(topP[0][0]);const p=G.players[G.pendingEliminate];
+    document.getElementById('vt-sub').innerHTML=`<b>${p.name}</b> mendapat suara terbanyak: ${topV} suara.`;
     document.getElementById('vt-elim-btn').style.display='block';
   } else {
     const tn=topP.map(([pi])=>G.players[parseInt(pi)].name).join(' & ');
-    document.getElementById('vt-sub').innerHTML=`⚖️ <b>SERI!</b> ${tn} masing-masing ${topV} suara. Narator putuskan / voting ulang!`;
+    document.getElementById('vt-sub').innerHTML=`⚖️ <b>SERI!</b> ${tn} masing-masing ${topV} suara. Voting ulang / Narator putuskan!`;
   }
   document.getElementById('vt-tally-btn').style.display='none';
 }
 function doEliminate(){
   if(G.pendingEliminate<0)return;
   const p=G.players[G.pendingEliminate];const def=rd(p.role);
-  if(G.nightActions.protected===G.pendingEliminate){
-    showNotif(`🛡️ ${p.name} dilindungi Knight! Eksekusi GAGAL.`);addLog(`🛡️ ${p.name} selamat berkat Knight!`);nextRound();return;
+  // Dummy P2: jika divoting keluar, nightNum >= 2, ≥5 pemain hidup → Anti-Hero menang
+  if(p.role==='dummy'&&!p.passive2Used&&G.nightNum>=2&&aliveCount()>=5){
+    p.alive=false;addLog(`🎭 Dummy divoting keluar — Pasif P2 aktif! Anti-Hero MENANG!`);
+    showNotif(`🎭 ${p.name} adalah Dummy — Anti-Hero MENANG!`,4000);
+    setTimeout(()=>endGame('antihero',`${p.name} (Dummy) berhasil divoting keluar! Pasif P2 aktif — Anti-Hero menang!`),1200);
+    return;
   }
-  p.alive=false;addLog(`⚔️ ${p.name} (${def.name}) dieliminasi!`);
-  if(def.team==='villain'){G.tricksterDefeated=true;addLog('🃏 Trickster otomatis kalah — Villain tertangkap!');}
+  p.alive=false;addLog(`⚔️ ${p.name} (${def.name}) dieliminasi oleh voting!`);
   showNotif(`⚔️ ${p.name} adalah ${def.icon} ${def.name}!`,3500);
+  // Bomber passive: bawa 1 korban
+  if(p.role==='bomber'){markHealerPost(p);openBomberDeath(G.pendingEliminate);return;}
+  markHealerPost(p);
   const w=checkWin();if(w){setTimeout(()=>endGame(w.winner,w.reason),1600);return;}
   setTimeout(()=>nextRound(),1600);
 }
 function skipVoting(){addLog(`⚖️ Ronde ${G.round}: Tidak ada eliminasi.`);const w=checkWin();if(w){endGame(w.winner,w.reason);return;}nextRound();}
 
-// ═══════════════════════════════════════════════════════════════
-// ROUND & WIN
-// ═══════════════════════════════════════════════════════════════
-function nextRound(){
-  // Reset hanya killed untuk ronde berikutnya; assassinSkillUsed tetap akumulatif
-  G.nightActions={killed:-1,protected:-1,wizardPeek:-1,revived:-1};
-  G.round++;addLog(`--- Ronde ${G.round} dimulai ---`);goNarrator('mission_start');
+// ── BOMBER PASSIVE ─────────────────────────────────────────────
+function openBomberDeath(bomberIdx){
+  G._bomberIdx=bomberIdx;G._bomberSelTarget=null;
+  document.getElementById('bomber-confirm').disabled=true;
+  document.getElementById('bomber-sel-indicator').style.display='none';
+  const tgts=G.players.filter((p,i)=>p.alive&&isHeroCivil(p)&&i!==bomberIdx);
+  const tEl=document.getElementById('bomber-targets');
+  if(tgts.length===0){tEl.innerHTML=`<div style="color:#ff9a3c;font-size:14px;text-align:center;padding:12px;">Tidak ada target Civilian/Hero tersisa.</div>`;}
+  else{tEl.innerHTML=tgts.map(x=>{const xi=G.players.indexOf(x);return `<button class="night-target-btn" id="bmt-${xi}" onclick="selBomberTarget(${xi})" style="border-color:rgba(255,140,0,.5)!important;"><div class="check-icon" id="bmchk-${xi}"></div><span>${rd(x.role).icon} ${x.name}</span></button>`;}).join('');}
+  showOverlay('ov-bomber-death');
 }
-function checkWin(){
-  const va=villainAlive();const hca=heroAndCivilAlive();
-  const fail=G.missionResults.filter(x=>!x).length;const pass=G.missionResults.filter(x=>x).length;
-  const trick=G.players.find(p=>p.role==='trickster'&&p.alive);
-  if(va===0&&G.players.some(p=>p.role==='assassin'||p.role==='thief')){
-    if(trick&&!G.tricksterDefeated)return{winner:'trickster',reason:'Villain mati semua... Trickster gagal melindungi mereka. Semua kalah!'};
-    return{winner:'hero',reason:'Semua agen kegelapan ditangkap! Kerajaan Eldoria aman!'};
+function selBomberTarget(idx){
+  G._bomberSelTarget=idx;
+  document.querySelectorAll('[id^="bmt-"]').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('[id^="bmchk-"]').forEach(c=>c.textContent='');
+  const btn=document.getElementById(`bmt-${idx}`),chk=document.getElementById(`bmchk-${idx}`);
+  if(btn)btn.classList.add('selected');if(chk)chk.textContent='✓';
+  const ind=document.getElementById('bomber-sel-indicator');
+  ind.style.display='block';ind.innerHTML=`💣 Korban: <strong>${G.players[idx]?.name}</strong>`;
+  document.getElementById('bomber-confirm').disabled=false;
+}
+function bomberDeathConfirm(){
+  hideOverlay('ov-bomber-death');
+  if(G._bomberSelTarget!==null&&G._bomberSelTarget>=0){
+    const victim=G.players[G._bomberSelTarget];
+    victim.alive=false;addLog(`💣 Bomber: ${victim.name} ikut gugur sebagai korban terakhir!`);
+    showNotif(`💣 ${victim.name} dibawa Bomber!`,3000);markHealerPost(victim);
   }
+  const w=checkWin();if(w){setTimeout(()=>endGame(w.winner,w.reason),1000);return;}
+  setTimeout(()=>nextRound(),1000);
+}
+function bomberDeathSkip(){hideOverlay('ov-bomber-death');addLog('💣 Bomber tidak mengambil korban.');const w=checkWin();if(w){endGame(w.winner,w.reason);return;}nextRound();}
+
+// ══════════════════════════════════════════════════════════════
+// WIN CHECK
+// ══════════════════════════════════════════════════════════════
+function checkWin(){
+  const va=villainAlive(),hca=heroCivilAlive(),aha=antiHeroAlive();
+  const fail=G.missionResults.filter(x=>!x).length;
+  const pass=G.missionResults.filter(x=>x).length;
+  // Semua Villain mati → Hero/Civ menang, KECUALI ada Anti-Hero hidup → Anti-Hero menang
+  if(va===0&&G.players.some(p=>isVillain(p))){
+    if(aha>0) return{winner:'antihero',reason:'Semua Villain tertangkap — Anti-Hero memanfaatkan kemenangan ini! Anti-Hero menang!'};
+    return{winner:'hero',reason:'Semua Villain (Assassin, Thief, Bomber) berhasil dieliminasi! Kerajaan Eldoria aman!'};
+  }
+  // 3 misi berhasil
   if(pass>=3){
-    if(trick&&va>0&&!G.tricksterDefeated)return{winner:'trickster',reason:'3 misi sukses — tapi Trickster berhasil menjaga Villain tetap hidup! Trickster menang sendirian!'};
+    if(aha>0&&va>0) return{winner:'antihero',reason:'3 misi berhasil diselesaikan — tapi Anti-Hero masih tersembunyi & Villain masih ada! Anti-Hero menang!'};
     return{winner:'hero',reason:'3 misi berhasil diselesaikan! Eldoria selamat!'};
   }
+  // 3 misi gagal
   if(fail>=3){
-    if(trick&&va>0&&!G.tricksterDefeated)return{winner:'trickster',reason:'Chaos merajalela! Villain lolos — Trickster menang!'};
+    if(aha>0&&va>0) return{winner:'antihero',reason:'3 misi gagal — Villain hampir menang, tapi Anti-Hero mengambil alih kemenangan!'};
     return{winner:'villain',reason:'3 misi berhasil digagalkan. Kegelapan menguasai Eldoria!'};
   }
+  // Villain numerik menang
   if(va>0&&va>=hca){
-    if(trick&&!G.tricksterDefeated)return{winner:'trickster',reason:'Keseimbangan goyah — Trickster menang dalam kekacauan!'};
-    return{winner:'villain',reason:'Villain menguasai kerajaan! Terlalu banyak pahlawan gugur.'};
+    if(aha>0) return{winner:'antihero',reason:`Villain (${va}) ≥ Hero+Civilian (${hca}) — tapi Anti-Hero hidup dan mengambil kemenangan!`};
+    return{winner:'villain',reason:`Villain menguasai kerajaan! Villain (${va}) ≥ Hero+Civilian (${hca}).`};
   }
   return null;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // GAME OVER
-// ═══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 function endGame(winner,reason){
   const cfg={
     hero:{emoji:'🏆',title:'CAHAYA MENANG!',color:'var(--gold3)'},
     villain:{emoji:'💀',title:'KEGELAPAN MENANG!',color:'var(--red2)'},
-    trickster:{emoji:'🃏',title:'THE TRICKSTER MENANG!',color:'#16a085'}
+    antihero:{emoji:'🎭',title:'ANTI-HERO MENANG!',color:'#8e44ad'},
   }[winner]||{emoji:'⚔️',title:'GAME OVER',color:'var(--ink)'};
   document.getElementById('go-emoji').textContent=cfg.emoji;
   document.getElementById('go-title').textContent=cfg.title;
   document.getElementById('go-title').style.color=cfg.color;
   document.getElementById('go-desc').textContent=reason;
-  const rev=document.getElementById('go-reveals');
-  rev.innerHTML=`<div class="card-title">🔍 IDENTITAS TERUNGKAP</div>
+  document.getElementById('go-reveals').innerHTML=`<div class="card-title">🔍 IDENTITAS TERUNGKAP</div>
     ${G.players.map(p=>{
       const def=rd(p.role);
-      const w=(winner==='hero'&&(def.team==='hero'||def.team==='civil')&&p.alive)||(winner==='villain'&&def.team==='villain'&&p.alive)||(winner==='trickster'&&p.role==='trickster');
+      const won=(winner==='hero'&&isHeroCivil(p)&&p.alive)||(winner==='villain'&&isVillain(p)&&p.alive)||(winner==='antihero'&&isAntiHero(p)&&p.alive);
       return `<div class="player-item ${!p.alive?'player-dead':''}">
         <div class="player-num" style="font-size:16px;">${def.icon}</div>
-        <div><div class="player-name-text">${p.name}${!p.alive?' ☠️':''} ${w?'🏆':''}</div>
-          <div style="font-size:10px;font-family:'Cinzel',serif;color:${def.color};letter-spacing:1px;">${def.name} · ${def.label}</div></div>
+        <div><div class="player-name-text">${p.name}${!p.alive?' ☠️':''} ${won?'🏆':''}</div>
+          <div style="font-size:10px;font-family:'Cinzel',serif;color:${def.color};letter-spacing:1px;">${def.name} · ${def.label}${p.downgraded?' (→Civilian)':''}</div></div>
       </div>`;
     }).join('')}
     <div class="divider"></div>
@@ -1103,10 +1242,16 @@ function endGame(winner,reason){
     </div>`;
   showScreen('sc-gameover');
 }
+
+// ── ROUND ──────────────────────────────────────────────────────
+function nextRound(){
+  G.nightActions={killed:-1,protected:-1,visionerPeek:-1,revived:-1,archerBlocked:-1};
+  G.round++;addLog(`--- Ronde ${G.round} dimulai ---`);goNarrator('mission_start');
+}
 function restartGame(){
-  G.players=[];G.round=1;G.missionResults=[];
-  G.tricksterDefeated=false;G.nightActions={};
-  G.assassinSkillUsed=0;
+  G.players=[];G.round=1;G.nightNum=0;G.missionResults=[];
+  G.nightActions={};G.assassinSkillUsed=0;
+  G.healerPostAvailable=false;G.healerPostIdx=-1;
   showScreen('sc-setup');
 }
 
