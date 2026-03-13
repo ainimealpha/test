@@ -183,7 +183,7 @@ body{
 .role-passive{font-size:11.5px;line-height:1.6;padding:8px 10px;background:rgba(255,255,255,.06);border-radius:8px;margin:5px 0;color:var(--tx2);border-left:2px solid rgba(192,132,252,.4);}
 .role-icon{font-size:54px;margin:8px 0;filter:drop-shadow(0 2px 14px rgba(0,0,0,.4));}
 .role-name{font-family:'Cinzel Decorative',serif;font-size:17px;font-weight:700;margin:6px 0;color:var(--tx);}
-.role-team{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:1;color:var(--tx2);}
+.role-team{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:1;color:var(--lilac);font-weight:600;letter-spacing:2px;}
 .role-ability{font-size:12.5px;line-height:1.7;padding:9px 10px;background:rgba(255,255,255,.05);border-radius:8px;margin:7px 0;font-style:italic;color:var(--tx2);border-left:2px solid rgba(56,189,248,.4);}
 .role-win{font-size:12px;line-height:1.5;padding:8px 10px;background:rgba(0,0,0,.25);border-radius:8px;margin-top:7px;color:var(--tx2);}
 .win-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;opacity:.5;display:block;margin-bottom:3px;color:var(--amber);}
@@ -364,12 +364,15 @@ body{
   border-radius:12px;text-align:center;color:#e8d8ff;font-size:14px;
   box-shadow:0 0 20px rgba(192,132,252,.1);
 }
+
 #na-targets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:15px 0;width:100%;}
-.night-target-btn{background:linear-gradient(135deg,rgba(50,30,80,.9),rgba(30,15,60,.95)) !important;border:2px solid rgba(192,132,252,.25) !important;color:#e8d8ff !important;border-radius:14px !important;padding:14px 14px !important;font-size:15px !important;font-weight:500 !important;transition:all .3s ease !important;box-shadow:0 4px 12px rgba(0,0,0,.3) !important;}
+.night-target-btn{background:linear-gradient(135deg,rgba(50,30,80,.9),rgba(30,15,60,.95)) !important;border:2px solid rgba(192,132,252,.25) !important;color:#e8d8ff !important;border-radius:14px !important;padding:16px 12px !important;font-size:15px !important;font-weight:500 !important;transition:all .3s ease !important;box-shadow:0 4px 12px rgba(0,0,0,.3) !important;position:relative;}
 .night-target-btn:hover{background:linear-gradient(135deg,rgba(70,50,120,.95),rgba(50,30,80,.98)) !important;border-color:rgba(192,132,252,.4) !important;}
 .night-target-btn.selected{border-color:var(--lilac) !important;background:linear-gradient(135deg,rgba(124,58,237,.5),rgba(100,40,180,.6)) !important;color:#fff !important;box-shadow:0 0 0 3px rgba(192,132,252,.25),0 0 30px rgba(168,85,247,.35) !important;transform:scale(1.02);}
-.check-icon{width:28px;height:28px;border-radius:50%;border:2.5px solid rgba(192,132,252,.3);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;transition:all .3s ease;background:rgba(255,255,255,.02);}
-.night-target-btn.selected .check-icon{background:var(--lilac2);border-color:var(--lilac2);color:#fff;box-shadow:0 0 12px rgba(168,85,247,.4);}
+.check-mark{position:absolute;top:8px;right:8px;width:20px;height:20px;border:2px solid rgba(192,132,252,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;}
+.night-target-btn.selected .check-mark{background:var(--lilac2);border-color:var(--lilac2);color:#fff;box-shadow:0 0 12px rgba(168,85,247,.4);}
+.target-name{display:block;word-break:break-word;}
+
 
 /* ── GLOWS FOR SCREEN SECTIONS ────────────────── */
 #sc-welcome .game-title{font-size:clamp(24px,7vw,42px);}
@@ -377,6 +380,26 @@ body{
 .villain-color{color:var(--rose);}
 .antihero-color{color:var(--lilac);}
 .civ-color{color:var(--amber);}
+
+/* VOTING MODAL */
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;}
+.modal-content{background:linear-gradient(135deg,rgba(30,15,60,.95),rgba(15,8,40,.98));border:2px solid rgba(192,132,252,.3);border-radius:20px;max-width:90%;max-height:85vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 0 60px rgba(168,85,247,.3);}
+.modal-header{padding:20px;border-bottom:1px solid rgba(192,132,252,.2);display:flex;justify-content:space-between;align-items:center;}
+.modal-header h2{margin:0;color:#e8d8ff;font-size:18px;}
+.modal-close{background:none;border:none;color:#e8d8ff;font-size:24px;cursor:pointer;opacity:.7;transition:.2s;}
+.modal-close:hover{opacity:1;}
+.voting-modal{width:90%;max-height:80vh;}
+.voting-players-list{overflow-y:auto;padding:15px;flex:1;}
+.vote-row{display:flex;align-items:center;gap:12px;padding:12px;margin:8px 0;background:rgba(50,30,80,.6);border:1px solid rgba(192,132,252,.2);border-radius:12px;transition:.2s;}
+.vote-row:hover{background:rgba(70,50,120,.7);border-color:rgba(192,132,252,.4);}
+.vote-minus{width:40px;height:40px;background:rgba(255,80,80,.2);border:1px solid rgba(255,100,100,.3);border-radius:8px;color:#ff6b6b;font-size:20px;cursor:pointer;transition:.2s;font-weight:bold;}
+.vote-minus:hover{background:rgba(255,80,80,.4);}
+.vote-plus{width:40px;height:40px;background:rgba(120,200,120,.2);border:1px solid rgba(150,220,150,.3);border-radius:8px;color:#7dd87d;font-size:20px;cursor:pointer;transition:.2s;font-weight:bold;}
+.vote-plus:hover{background:rgba(120,200,120,.4);}
+.vote-name{flex:1;color:#e8d8ff;font-weight:500;}
+.vote-count{width:30px;text-align:center;font-family:'Cinzel',serif;font-size:16px;color:var(--lilac2);}
+.modal-footer{padding:15px;border-top:1px solid rgba(192,132,252,.2);display:flex;gap:10px;}
+
 </style>
 </head>
 <body>
@@ -1038,7 +1061,7 @@ function openNightAction(pIdx,type){
     document.getElementById('na-sel-indicator').style.display='block';
     document.getElementById('na-sel-indicator').textContent='Tidak ada target — gunakan Skip.';
   } else {
-    tEl.innerHTML=targets.map(x=>{const xi=G.players.indexOf(x);return `<button class="night-target-btn" id="nat-${xi}" onclick="selNightTarget(${xi})"><div class="check-icon" id="chk-${xi}"></div><span>👤 ${x.name}${!x.alive?' ☠️':''}</span></button>`;}).join('');
+    tEl.innerHTML=targets.map(x=>{const xi=G.players.indexOf(x);return `<button class="night-target-btn" id="nat-${xi}" onclick="selNightTarget(${xi})"><span class="check-mark" id="chk-${xi}"></span><span class="target-name">${x.name}${!x.alive?' ☠️':''}</span></button>`;}).join('');
   }
   showOverlay('ov-night');
 }
@@ -1226,32 +1249,27 @@ function markHealerPost(deadPlayer){
 // ══════════════════════════════════════════════════════════════
 // VOTING
 // ══════════════════════════════════════════════════════════════
-function goToVoting(){G.voteCounts={};G.pendingEliminate=-1;showScreen('sc-voting');renderVoting();}
+function goToVoting(){G.voteCounts={};G.pendingEliminate=-1;showScreen('sc-voting');showVotingModal();}
 let _lastTap={};
 function renderVoting(){
-  const pl=document.getElementById('vt-players');
+  const pl=document.getElementById('vt-modal-players');
   const alivePlayers=G.players.filter(p=>p.alive);
   const maxVotes=alivePlayers.length;
   pl.innerHTML=alivePlayers.map(p=>{
     const pi=G.players.indexOf(p);const cnt=G.voteCounts[pi]||0;
-    return `<button class="vote-btn ${cnt>0?'voted':''}" onclick="addVote(${pi})">
-      <span style="flex:1;">${p.name}${p.protected?' 🛡️':''}</span>
-      <span style="font-family:'Cinzel',serif;font-size:20px;min-width:28px;text-align:right;color:${cnt>0?'var(--red2)':'var(--ink3)'};">${cnt||''}</span>
-    </button>`;
+    return `<div class="vote-row">
+      <button class="vote-minus" onclick="decVote(${pi})">−</button>
+      <span class="vote-name">${p.name}${p.protected?' 🛡️':''}</span>
+      <span class="vote-count">${cnt||'0'}</span>
+      <button class="vote-plus" onclick="incVote(${pi})">+</button>
+    </div>`;
   }).join('');
   document.getElementById('vt-result-card').style.display='none';
-  document.getElementById('vt-elim-btn').style.display='none';
   document.getElementById('vt-tally-btn').style.display='block';
-  document.getElementById('vt-sub').innerHTML='';
 }
-function addVote(pi){
-  const now=Date.now();
-  const maxVotes=G.players.filter(p=>p.alive).length;
-  const totalVotes=Object.values(G.voteCounts).reduce((a,b)=>a+b,0);
-  if(_lastTap[pi]&&now-_lastTap[pi]<400){G.voteCounts[pi]=Math.max(0,(G.voteCounts[pi]||1)-1);_lastTap[pi]=0;}
-  else{if(totalVotes>=maxVotes){showNotif(`⚠️ Max voting: ${maxVotes}`);return;}G.voteCounts[pi]=(G.voteCounts[pi]||0)+1;_lastTap[pi]=now;}
-  renderVoting();
-}
+function incVote(pi){const maxVotes=G.players.filter(p=>p.alive).length;const totalVotes=Object.values(G.voteCounts).reduce((a,b)=>a+b,0);if(totalVotes>=maxVotes){showNotif(`⚠️ Max: ${maxVotes}`);return;}G.voteCounts[pi]=(G.voteCounts[pi]||0)+1;renderVoting();}
+function decVote(pi){G.voteCounts[pi]=Math.max(0,(G.voteCounts[pi]||0)-1);renderVoting();}
+function addVote(pi){incVote(pi);}
 function tallyVotes(){
   const total=Object.values(G.voteCounts).reduce((a,b)=>a+b,0);
   if(total===0){showNotif('⚠️ Belum ada suara!');return;}
@@ -1272,6 +1290,10 @@ function tallyVotes(){
   }
   document.getElementById('vt-tally-btn').style.display='none';
 }
+
+function showVotingModal(){document.getElementById('vt-modal').style.display='flex';renderVoting();}
+function hideVotingModal(){document.getElementById('vt-modal').style.display='none';}
+
 function doEliminate(){
   if(G.pendingEliminate<0)return;
   const p=G.players[G.pendingEliminate];const def=rd(p.role);
@@ -1403,5 +1425,21 @@ document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('touchstart',()=>{},{passive:true});
 buildCountSel();
 </script>
+
+<!-- VOTING MODAL -->
+<div id="vt-modal" class="modal" style="display:none;">
+  <div class="modal-content voting-modal">
+    <div class="modal-header">
+      <h2>🗳️ VOTING SUARA</h2>
+      <button class="modal-close" onclick="hideVotingModal()">✕</button>
+    </div>
+    <div id="vt-modal-players" class="voting-players-list"></div>
+    <div class="modal-footer">
+      <button id="vt-tally-btn" class="btn-primary" onclick="tallyVotes()" style="display:none;">HITUNG SUARA</button>
+    </div>
+  </div>
+</div>
+<!-- VOTING MODAL END -->
+
 </body>
 </html>
