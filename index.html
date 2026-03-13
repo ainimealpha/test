@@ -183,7 +183,7 @@ body{
 .role-passive{font-size:11.5px;line-height:1.6;padding:8px 10px;background:rgba(255,255,255,.06);border-radius:8px;margin:5px 0;color:var(--tx2);border-left:2px solid rgba(192,132,252,.4);}
 .role-icon{font-size:54px;margin:8px 0;filter:drop-shadow(0 2px 14px rgba(0,0,0,.4));}
 .role-name{font-family:'Cinzel Decorative',serif;font-size:17px;font-weight:700;margin:6px 0;color:var(--tx);}
-.role-team{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:.7;}
+.role-team{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:1;color:var(--tx2);}/* 🔥 BUG FIX: Brightened from opacity .7 to 1 for readability */
 .role-ability{font-size:12.5px;line-height:1.7;padding:9px 10px;background:rgba(255,255,255,.05);border-radius:8px;margin:7px 0;font-style:italic;color:var(--tx2);border-left:2px solid rgba(56,189,248,.4);}
 .role-win{font-size:12px;line-height:1.5;padding:8px 10px;background:rgba(0,0,0,.25);border-radius:8px;margin-top:7px;color:var(--tx2);}
 .win-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;opacity:.5;display:block;margin-bottom:3px;color:var(--amber);}
@@ -365,6 +365,13 @@ body{
   box-shadow:0 0 20px rgba(192,132,252,.1);
 }
 /* Night targets - IMPROVED STYLING */
+#na-targets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 15px 0;
+  width: 100%;
+}
 .night-target-btn{
   background:linear-gradient(135deg,rgba(50,30,80,.9),rgba(30,15,60,.95)) !important;
   border:2px solid rgba(192,132,252,.25) !important;
@@ -853,8 +860,9 @@ function updateNDPhase(){
     const tsStr=ts.min===ts.max?`${ts.min}`:`${ts.min}–${ts.max}`;
     const theme=MISSION_THEMES[(G.round-1)%MISSION_THEMES.length];
     instr.innerHTML=`📜 <b>Ronde ${G.round} — Misi #${mNum}</b><br>Tema: <b>${tn[theme]}</b><br>Pilih <b>${tsStr}</b> pemain sebagai Tim Misi.`;
-    sub.textContent='Tiap anggota dapat soal berbeda bertema sama. Gagal/skip = sabotase!';
+    sub.innerHTML='Tiap anggota dapat soal berbeda bertema sama. Gagal/skip = sabotase! ⚠️ Ada Villain tersembunyi (🗡️ Assassin, 🥷 Thief, 💣 Bomber) dalam permainan!';
     acts.innerHTML=`<button class="btn btn-primary w100" onclick="goTeamSelect()">👥 PILIH TIM MISI</button>`;
+  }
   } else if(G.phase==='mission_review'){
     const sab=G.missionAnswers.filter(a=>!a.pass).length,pass=sab===0;
     instr.innerHTML=`${pass?'✅':'❌'} <b>Misi #${G.missionResults.length} ${pass?'BERHASIL!':'GAGAL!'}</b><br>${sab} dari ${G.selectedTeam.length} anggota gagal/sabotase.`;
@@ -1051,7 +1059,7 @@ function openNightAction(pIdx,type){
     visioner:'Pilih 1 pemain untuk dilihat rolenya. ⚠️ Setelah ini, pasif counter-kill terkunci!',
     healer:'Pilih 1 Civilian/Hero yang gugur untuk dibangkitkan. Hero dibangkitkan → jadi Civilian.',
     healer_post:'[PASIF ANUMERTA] Pilih 1 Civilian/Hero gugur untuk dibangkitkan. Hero → hanya bisa gunakan skill.',
-    archer:'Pilih 1 pemain untuk diblokir skillnya selama malam ini.',
+    archer:'Pilih 1 pemain untuk diblokir skillnya selama malam ini. ✨ BONUS: Jika target VILLAIN → dapat 1x pakai skill lagi!',
     assassin:`Pilih target eliminasi secara diam-diam. [Skill ${G.assassinSkillUsed+1}/${G.assassinMaxSkill}]`,
     thief:'Pilih target untuk dicuri skill & pasifnya.',
     thief_stolen:`Gunakan skill curian (${rd(p.stolenAbility||'civilian').name}). Pilih target.`,
@@ -1090,6 +1098,14 @@ function skipNightEntry(){G.nightQueueIdx++;updateNightPhase();}
 function nightConfirm(){
   if(G.nightSelTarget===null)return;
   const p=G.players[G.nightPlayerIdx],target=G.players[G.nightSelTarget],type=G.nightActionType;
+  
+  // 🔥 CRITICAL BUG FIX: Check if player sendiri di-block oleh Archer!
+  if(p.blockedThisNight){
+    alert(`⚠️ SKILL GAGAL!\n\n${p.name} kemampuannya di-blokir malam ini!\nTidak bisa menggunakan skill.`);
+    addLog(`⚠️ ${p.name} (${rd(p.role).name}) skill gagal — di-blokir oleh Archer!`);
+    hideOverlay('ov-night');G.nightQueueIdx++;updateNightPhase();return;
+  }
+  
   if(type==='guardian'){
     G.nightActions.protected=G.nightSelTarget;target.protected=true;p.skillUsesLeft--;
     addLog('🛡️ Guardian menggunakan kemampuan.');

@@ -189,13 +189,36 @@ const ROLE_TABLE = {
 function getRoles(n) {
   const dist = ROLE_TABLE[Math.min(Math.max(n, 5), 20)];
   const heroPool = shuffle(['guardian', 'visioner', 'healer', 'archer']);
-  const vilPool  = shuffle(['assassin', 'thief', 'bomber']);
   const antiPool = shuffle(['trickster', 'dummy']);
   const roles = [];
-  for (let i = 0; i < dist.h; i++) roles.push(heroPool[i % heroPool.length]);
-  for (let i = 0; i < dist.c; i++) roles.push('civilian');
-  for (let i = 0; i < dist.v; i++) roles.push(vilPool[i % vilPool.length]);
-  for (let i = 0; i < dist.a; i++) roles.push(antiPool[i % antiPool.length]);
+  
+  // 🔥 CRITICAL BUG FIX: GUARANTEE Assassin is ALWAYS present!
+  // Assassin is the primary villain role that drives core game mechanics
+  if (dist.v >= 1) {
+    roles.push('assassin');  // ✅ ASSASSIN GUARANTEED
+  }
+  
+  // Add remaining villains (Thief/Bomber) randomized
+  const remainingVillains = shuffle(['thief', 'bomber']);
+  for (let i = 1; i < dist.v; i++) {
+    roles.push(remainingVillains[(i - 1) % remainingVillains.length]);
+  }
+  
+  // Add heroes (randomized)
+  for (let i = 0; i < dist.h; i++) {
+    roles.push(heroPool[i % heroPool.length]);
+  }
+  
+  // Add civilians
+  for (let i = 0; i < dist.c; i++) {
+    roles.push('civilian');
+  }
+  
+  // Add anti-heroes (randomized)
+  for (let i = 0; i < dist.a; i++) {
+    roles.push(antiPool[i % antiPool.length]);
+  }
+  
   return shuffle(roles);
 }
 
