@@ -202,15 +202,28 @@ function getRoles(n) {
 
 // ─── ASSASSIN MAX SKILL ─────────────────────────────────────────
 // Dicek 1x di awal game dari Hero+Civilian count awal.
-function getAssassinMaxSkill(heroCivilCount) {
-  return heroCivilCount >= 9 ? 2 : 1;
+function getAssassinMaxSkill(totalPlayers, assassinCount) {
+  // Complex Assassin buff system based on player and assassin count
+  if (totalPlayers < 8) {
+    // < 8 players: 1x skill base + 1x bonus if kill hero = 2x max
+    return 1;
+  }
+  if (assassinCount === 1) {
+    // 1 Assassin: 3x skill base + 1x bonus if kill hero = 4x max
+    return 3;
+  } else {
+    // 2+ Assassins: 2x skill base + 1x bonus if kill hero = 3x max
+    return 2;
+  }
 }
 
 // ─── UKURAN TIM MISI ────────────────────────────────────────────
 // Jika total pemain < 8 → wajib 3 orang. Maks absolut = 8.
 function getMissionTeamSize(totalPlayers) {
-  if (totalPlayers < 8)  return { min: 3, max: 3 };
-  if (totalPlayers < 12) return { min: 3, max: 4 };
-  if (totalPlayers < 16) return { min: 3, max: 5 };
-  return { min: 4, max: Math.min(8, totalPlayers) };
+  // Fixed mission team sizes based on player count
+  if (totalPlayers < 8)  return { min: 3, max: 3 };  // 7 players → 3
+  if (totalPlayers < 12) return { min: 3, max: 3 };  // 8-11 players → 3
+  if (totalPlayers < 16) return { min: 4, max: 4 };  // 12-15 players → 4
+  if (totalPlayers < 20) return { min: 6, max: 6 };  // 16-19 players → 6
+  return { min: 8, max: 8 };                         // 20+ players → 8
 }
