@@ -144,23 +144,46 @@ const ROLES = {
 // h = Hero, c = Civilian, v = Villain, a = Anti-Hero
 // Civilian selalu dominan. Anti-Hero muncul mulai 8 pemain.
 // Villain maks 3 (semua tipe hadir di 12+).
+// ─── DISTRIBUSI SEIMBANG (Opsi C) ───────────────────────────────
+// Civilian tetap dominan, tapi tidak berlebihan.
+// Hero max 5, Villain max 4, Anti-Hero max 3.
+// Assassin passive 2x jika Hero+Civilian awal ≥ 9.
+//
+// Pemain | H  | C  | V  | A  | Total
+// -------|----|----|----|----|------
+//   5    |  2 |  2 |  1 |  0 |   5
+//   6    |  2 |  2 |  2 |  0 |   6
+//   7    |  2 |  3 |  2 |  0 |   7
+//   8    |  2 |  3 |  2 |  1 |   8
+//   9    |  3 |  3 |  2 |  1 |   9
+//  10    |  3 |  4 |  2 |  1 |  10
+//  11    |  3 |  4 |  3 |  1 |  11
+//  12    |  3 |  5 |  3 |  1 |  12
+//  13    |  4 |  5 |  3 |  1 |  13
+//  14    |  4 |  5 |  3 |  2 |  14
+//  15    |  4 |  6 |  3 |  2 |  15
+//  16    |  4 |  7 |  3 |  2 |  16
+//  17    |  5 |  7 |  3 |  2 |  17
+//  18    |  5 |  7 |  4 |  2 |  18
+//  19    |  5 |  8 |  4 |  2 |  19
+//  20    |  5 |  8 |  4 |  3 |  20
 const ROLE_TABLE = {
-  5:  { h:1, c:3, v:1, a:0 },
+  5:  { h:2, c:2, v:1, a:0 },
   6:  { h:2, c:2, v:2, a:0 },
   7:  { h:2, c:3, v:2, a:0 },
   8:  { h:2, c:3, v:2, a:1 },
   9:  { h:3, c:3, v:2, a:1 },
   10: { h:3, c:4, v:2, a:1 },
-  11: { h:3, c:5, v:2, a:1 },
+  11: { h:3, c:4, v:3, a:1 },
   12: { h:3, c:5, v:3, a:1 },
   13: { h:4, c:5, v:3, a:1 },
-  14: { h:4, c:6, v:3, a:1 },
+  14: { h:4, c:5, v:3, a:2 },
   15: { h:4, c:6, v:3, a:2 },
   16: { h:4, c:7, v:3, a:2 },
-  17: { h:4, c:8, v:3, a:2 },
-  18: { h:4, c:9, v:3, a:2 },
-  19: { h:4, c:10, v:3, a:2 },
-  20: { h:4, c:11, v:3, a:2 },
+  17: { h:5, c:7, v:3, a:2 },
+  18: { h:5, c:7, v:4, a:2 },
+  19: { h:5, c:8, v:4, a:2 },
+  20: { h:5, c:8, v:4, a:3 },
 };
 
 function getRoles(n) {
